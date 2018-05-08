@@ -1,17 +1,17 @@
 REM ******************************************************************
-REM Fecha         : 26/03/2018
-REM Realizado por : TheOverLordKotan
-REM Base de Datos : FS_PCRM_US
+REM Fecha         : 08/05/2018
+REM Realizado por : Master Zen
+REM Base de Datos : FS_AUWEB_US
 REM ******************************************************************
 
-REM USUARIO DEL APLICATIVO PACRIM_US
+REM USUARIO DEL APLICATIVO AUWEB_US
 
-drop user FS_PCRM_US cascade;
+drop user FS_AUWEB_US cascade;
 
-Create user FS_PCRM_US
- Identified by fs_pcrm_us
- Default tablespace TS_PACRIM
- Temporary tablespace TS_TPACRIM    
+Create user FS_AUWEB_US
+ Identified by FS_AUWEB_US
+ Default tablespace TS_AUWEB
+ Temporary tablespace TS_TAUWEB    
  account unlock;
 
 
@@ -23,4 +23,4 @@ Grant RESOURCE,
   CREATE TRIGGER, CREATE USER , CREATE VIEW, CREATE TYPE,
   DROP PUBLIC SYNONYM, EXECUTE ANY PROCEDURE, 
   SELECT ANY SEQUENCE, SELECT ANY TABLE, 
-  UNLIMITED TABLESPACE to FS_PCRM_US;
+  UNLIMITED TABLESPACE to FS_AUWEB_US;

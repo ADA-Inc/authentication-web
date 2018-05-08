@@ -1,72 +1,24 @@
 REM ******************************************************************
-REM Fecha         : 26/03/2018
-REM Realizado por : TheOverLordKotan
-REM Base de Datos : FS_PCRM_US
+REM Fecha         : 08/05/2018
+REM Realizado por : Master Zen
+REM Base de Datos : FS_AUWEB_US
 REM Script : Tables
 REM ******************************************************************
 
-PROMPT EM_TEMNE.sql...
-@@EM_TEMNE.sql
+PROMPT MO_TMODU.sql...
+@@MO_TMODU.sql
 
-PROMPT EM_TEMTE.sql...
-@@EM_TEMTE.sql
+PROMPT MO_TROMO.sql...
+@@MO_TROMO.sql
 
+PROMPT US_TPSNE.sql...
+@@US_TPSNE.sql
 
-PROMPT EM_TTPEM.sql...
-@@EM_TTPEM.sql
+PROMPT US_TPUSR.sql...
+@@US_TPUSR.sql
 
-
-PROMPT NE_TCLNE.sql...
-@@NE_TCLNE.sql
-
-
-PROMPT NE_TEMUS.sql...
-@@NE_TEMUS.sql
-
-
-PROMPT NE_TINEM.sql
-@@NE_TINEM.sql
-
-
-PROMPT NE_TPRNE.sql...
-@@NE_TPRNE.sql
-
-
-
-PROMPT NE_TPVUS.sql...
-@@NE_TPVUS.sql
-
-
-PROMPT NE_TTPCL.sql...
-@@NE_TTPCL.sql
-
-
-PROMPT NE_TTPNE.sql...
-@@NE_TTPNE.sql
-
-
-PROMPT NE_TTPPR.sql...
-@@NE_TTPPR.sql
-
-PROMPT NE_TTPPV.sql...
-@@NE_TTPPV.sql
-
-
-PROMPT NE_TTRPR.sql...
-@@NE_TTRPR.sql
-
-
-PROMPT NE_TTSTC.sql...
-@@NE_TTSTC.sql
-
-
-PROMPT US_TTPRL.sql..
-@@US_TTPRL.sql
+PROMPT US_TRLNE.sql...
+@@US_TRLNE.sql
 
 PROMPT US_TUSNE.sql...
 @@US_TUSNE.sql
-
-
-
-PROMPT NE_TCRTA.sql...
-@@NE_TCRTA.sql

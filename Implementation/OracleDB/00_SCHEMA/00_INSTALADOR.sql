@@ -1,7 +1,7 @@
 REM ******************************************************************
-REM Fecha         : 26/03/2018
-REM Realizado por : TheOverLordKotan
-REM Base de Datos : FS_PCRM_US
+REM Fecha         : 08/05/2018
+REM Realizado por : Master Zen
+REM Base de Datos : FS_AUWEB_US
 REM ******************************************************************
 
 PROMPT CREANDO TABLESPACES
