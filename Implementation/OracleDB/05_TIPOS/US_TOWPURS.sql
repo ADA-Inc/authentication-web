@@ -1,0 +1,1 @@
+create or replace type FS_AUWEB_US.US_TTWPURS is table of FS_AUWEB_US.US_TOWPURS;

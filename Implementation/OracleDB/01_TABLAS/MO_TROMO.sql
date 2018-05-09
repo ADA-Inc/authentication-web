@@ -11,8 +11,8 @@ REM ******************************************************************
 CREATE TABLE  "MO_TROMO"
 (
 	"ROMO_ROMO" NUMBER(22) NOT NULL,    -- Identificador unico modulos con rol
-	"MODU_MODU" NUMBER(22) NULL,
-	"ROLL_ROLL" NUMBER(22) NULL
+	"ROMO_MODU" NUMBER(22) NULL,
+	"ROMO_ROLL" NUMBER(22) NULL
 )
 TABLESPACE	TS_AUWEB
 PCTFREE	10 
