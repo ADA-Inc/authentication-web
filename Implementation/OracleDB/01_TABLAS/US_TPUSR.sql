@@ -11,9 +11,9 @@ REM ******************************************************************
 CREATE TABLE  "US_TPUSR"
 (
 	"PUSR_PUSR" NUMBER(22) NOT NULL,    -- Identificador  unico del usuario rol persona
-	"USNE_USNE" NUMBER(22) NULL,
-	"RLNE_RLNE" NUMBER(22) NULL,
-	"PSNE_PSNE" NUMBER(22) NULL
+	"USER_USER" NUMBER(22) NULL,
+	"ROLL_ROLL" NUMBER(22) NULL,
+	"PSNA_PSNA" NUMBER(22) NULL
 )
 TABLESPACE	TS_AUWEB
 PCTFREE	10 
