@@ -6,7 +6,7 @@ CREATE OR REPLACE PACKAGE FS_PCRM_US.EM_QEMPRESAS IS
     -- ===========================================================
     -- EM_QEMPRESAS
     -- -----------------------------------------------------------
-    -- Re�ne funciones y procedimientos relacionados con la 
+    -- ReÃºne funciones y procedimientos relacionados con la 
     -- gestion de Usuarios. Paquete especializado de negocio
     -- ===========================================================
     --
@@ -14,7 +14,7 @@ CREATE OR REPLACE PACKAGE FS_PCRM_US.EM_QEMPRESAS IS
     --
     -- HISTORIAL DE CAMBIOS
     --
-    -- Versi�n        GAP                Solicitud        Fecha        Realiz�            Descripci�n
+    -- VersiÃ³n        GAP                Solicitud        Fecha        RealizÃ³            DescripciÃ³n
     -- -----------    -------------    -------------    ----------    -------------    ------------------------------------------------------------------------------------------------------------------------------------------
     -- 1000                                             03/03/2018      ownk           Se crean API de servicios para el modulo de Gestion Usuario Pacrim
     -- -----------    -------------    -------------    ----------    -------------    ------------------------------------------------------------------------------------------------------------------------------------------
@@ -30,27 +30,24 @@ CREATE OR REPLACE PACKAGE FS_PCRM_US.EM_QEMPRESAS IS
     
 	PROCEDURE obtenerEmpresaPorTipo
     (
-        p_nombre_empresa      	  IN  EM_TEMNE.EMNE_NOBE%type,
-		p_tempresa_nombre  		  IN  EM_TTPEM.TPEM_DTEM%type,
+    p_nombre_empresa      	  IN  EM_TEMNE.EMNE_NOBE%type,
+		p_tempresa_nombre  		    IN  EM_TTPEM.TPEM_DTEM%type,
 		p_empresa                 OUT EM_TT_EMTP,
 		p_cod_rta          	  	  OUT NE_TCRTA.CRTA_CRTA%type
-		
-
     );
 	
 	PROCEDURE obtenerIdEmpresa
     (
-        p_nombre_empresa      IN   EM_TEMNE.EMNE_NOBE%type,
+    p_nombre_empresa      IN   EM_TEMNE.EMNE_NOBE%type,
 		p_id_empresa          OUT  EM_TEMNE.EMNE_EMNE%type,
 		p_cod_rta          	  OUT NE_TCRTA.CRTA_CRTA%type
-    
     );
  
 	PROCEDURE obtenerIdTEmpresa
     (
-        p_tempresa_nombre  		  IN  EM_TTPEM.TPEM_DTEM%type,
-		p_id_tipo_empresa         OUT EM_TTPEM.TPEM_TPEM%type,
-		p_cod_rta          	  	  OUT NE_TCRTA.CRTA_CRTA%type
+    p_tempresa_nombre  		   IN  EM_TTPEM.TPEM_DTEM%type,
+		p_id_tipo_empresa        OUT EM_TTPEM.TPEM_TPEM%type,
+		p_cod_rta          	  	 OUT NE_TCRTA.CRTA_CRTA%type
     ); 
     -- ------------------------------------------------------------
     

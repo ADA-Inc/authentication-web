@@ -1,22 +1,21 @@
 prompt
-prompt PACKAGE: EM_QEMPRESAS
+prompt PACKAGE: NE_QHOMO
 prompt
-CREATE OR REPLACE PACKAGE FS_PCRM_US.EM_QEMPRESAS IS
+CREATE OR REPLACE PACKAGE FS_PCRM_US.NE_QHOMO IS
     --
     -- ===========================================================
-    -- EM_QEMPRESAS
+    -- NE_QHOMO
     -- -----------------------------------------------------------
-    -- Reúne funciones y procedimientos relacionados con la 
-    -- gestion de Usuarios. Paquete especializado de negocio
+    -- Homologador main de las tablas de modulos y usuarios
     -- ===========================================================
     --
     -- #VERSION:0000001000
     --
     -- HISTORIAL DE CAMBIOS
     --
-    -- Versión        GAP                Solicitud        Fecha        Realizó            Descripción
+    -- Versiï¿½n        GAP                Solicitud        Fecha        Realizï¿½            Descripciï¿½n
     -- -----------    -------------    -------------    ----------    -------------    ------------------------------------------------------------------------------------------------------------------------------------------
-    -- 1000                                             03/03/2018      ownk           Se crean API de servicios para el modulo de Gestion Usuario Pacrim
+    -- 
     -- -----------    -------------    -------------    ----------    -------------    ------------------------------------------------------------------------------------------------------------------------------------------
 
     -- ============================================================
@@ -28,41 +27,37 @@ CREATE OR REPLACE PACKAGE FS_PCRM_US.EM_QEMPRESAS IS
     -- Declaracion de PROCEDIMIENTOS y FUNCIONES
     -- ============================================================
     
-	PROCEDURE obtenerEmpresaPorTipo
+  PROCEDURE homologarCoreWebUsuario
     (
-        p_nombre_empresa      	  IN  EM_TEMNE.EMNE_NOBE%type,
-		p_tempresa_nombre  		  IN  EM_TTPEM.TPEM_DTEM%type,
-		p_empresa                 OUT EM_TT_EMTP,
-		p_cod_rta          	  	  OUT NE_TCRTA.CRTA_CRTA%type
-		
-
+        p_persona_usuario_web          IN  US_TTCPURS%type,
     );
-	
-	PROCEDURE obtenerIdEmpresa
+  
+  PROCEDURE homologarWebCoreUsuario
     (
-        p_nombre_empresa      IN   EM_TEMNE.EMNE_NOBE%type,
-		p_id_empresa          OUT  EM_TEMNE.EMNE_EMNE%type,
-		p_cod_rta          	  OUT NE_TCRTA.CRTA_CRTA%type
-    
+        p_persona_usuario_core         IN  US_TTWPURS%type
     );
  
-	PROCEDURE obtenerIdTEmpresa
+  PROCEDURE homologarCoreWebModulo
     (
-        p_tempresa_nombre  		  IN  EM_TTPEM.TPEM_DTEM%type,
-		p_id_tipo_empresa         OUT EM_TTPEM.TPEM_TPEM%type,
-		p_cod_rta          	  	  OUT NE_TCRTA.CRTA_CRTA%type
+        p_rol_modulo_web              IN  MO_TTCROMO%type
+    ); 
+    
+  PROCEDURE homologarWebCoreModulo
+    (
+        p_tempresa_nombre              IN  MO_TTWROMO%type,
     ); 
     -- ------------------------------------------------------------
     
-END EM_QEMPRESAS;
+END NE_QHOMO;
 /
 
 
 prompt
-prompt PACKAGE BODY:EM_QEMPRESAS
+prompt PACKAGE BODY:NE_QHOMO
 prompt
 
-CREATE OR REPLACE PACKAGE BODY FS_PCRM_US.EM_QEMPRESAS IS
+
+CREATE OR REPLACE PACKAGE BODY FS_PCRM_US.NE_QHOMO IS
 
 
     --
@@ -73,191 +68,177 @@ CREATE OR REPLACE PACKAGE BODY FS_PCRM_US.EM_QEMPRESAS IS
     -- PROCEDURE consultarRolUsuarioEmpresa
     -- -----------------------------------------------------------
     -- Servicio especializado para hacer la consultar del rol dado 
-    -- un usuario registrado en el sistema pacrim
+    -- un usuario regIStrado en el sIStema pacrim
     -- ===========================================================
-	PROCEDURE obtenerIdEmpresa
+    PROCEDURE homologarCoreWebUsuario
     (
-        p_nombre_empresa      IN   EM_TEMNE.EMNE_NOBE%type,
-		p_id_empresa          OUT  EM_TEMNE.EMNE_EMNE%type,
-		p_cod_rta          	  OUT NE_TCRTA.CRTA_CRTA%type
-    
+        p_persona_usuario_web        IN  US_TTCPURS%type,
     )IS
-        
-        cursor c_empresa is
-			SELECT
-				emne_emne
-			FROM
-				fs_pcrm_us.em_temne
-			WHERE
-			   emne_nobe=p_nombre_empresa;
 
-			r_empresa c_empresa%rowtype;
+    CURSOR c_empresa IS
+      SELECT
+          emne_emne
+      FROM
+          fs_pcrm_us.em_temne
+      WHERE
+          emne_nobe=p_nombre_empresa;
+          r_empresa c_empresa%rowtype;
         
-    BEGIN
-      
-        open c_empresa;
-        fetch c_empresa into r_empresa;
-        close c_empresa;
+    BEGIN  
+        OPEN c_empresa;
+        FETCH c_empresa INTO r_empresa;
+        CLOSE c_empresa;
         
-        if(r_empresa.emne_emne is not null) then
-        
-			p_id_empresa := r_empresa.emne_emne;
-            p_cod_rta  := 'OK';
-            
-        else
-            p_id_empresa:= null;
-            p_cod_rta  := 'ER_EMP_NUL';
-        end if;
-    EXCEPTION
-        WHEN OTHERS THEN
-            p_id_empresa:= null;
-            p_cod_rta  := 'ERROR_NC';
+        IF(r_empresa.emne_emne IS NOT NULL) THEN
+           p_id_empresa := r_empresa.emne_emne;
+           p_cod_rta  := 'OK';
+                
+        ELSE
+           p_id_empresa:= NULL;
+           p_cod_rta  := 'ER_EMP_NUL';
+        END IF;
+        EXCEPTION
+            WHEN OTHERS THEN
+                p_id_empresa:= NULL;
+                p_cod_rta  := 'ERROR_NC';
         
     END obtenerIdEmpresa;
-	
-	
+  
+  
         -- ===========================================================
     -- PROCEDURE consultarRolUsuarioEmpresa
     -- -----------------------------------------------------------
     -- Servicio especializado para hacer la consultar del rol dado 
-    -- un usuario registrado en el sistema pacrim
+    -- un usuario regIStrado en el sIStema pacrim
     -- ===========================================================
-	PROCEDURE obtenerIdTEmpresa
+    PROCEDURE homologarWebCoreUsuario
     (
-        p_tempresa_nombre  		  IN  EM_TTPEM.TPEM_DTEM%type,
-		p_id_tipo_empresa         OUT EM_TTPEM.TPEM_TPEM%type,
-		p_cod_rta          	  	  OUT NE_TCRTA.CRTA_CRTA%type
+        p_persona_usuario_core         IN  US_TTWPURS%type
     )IS
         
-        cursor c_tempresa is
-			SELECT
-				tpem_tpem
-			FROM
-				fs_pcrm_us.em_ttpem
-			WHERE
-				tpem_dtem = p_tempresa_nombre;
-				
+    CURSOR c_tempresa IS
+      SELECT
+        tpem_tpem
+      FROM
+        fs_pcrm_us.em_ttpem
+      WHERE
+        tpem_dtem = p_tempresa_nombre;  
         r_tempresa c_tempresa%rowtype;
-		
+    
     BEGIN
+      OPEN c_tempresa;
+      FETCH c_tempresa INTO r_tempresa;
+      CLOSE c_tempresa;
       
-        open c_tempresa;
-        fetch c_tempresa into r_tempresa;
-        close c_tempresa;
-        
-        if(r_tempresa.tpem_tpem is not null) then
-        
-			p_id_tipo_empresa := r_tempresa.tpem_tpem;
-            p_cod_rta  := 'OK';
-            
-        else
-            p_id_tipo_empresa:= null;
-            p_cod_rta  := 'ER_EMP_NUL';
-        end if;
-    EXCEPTION
-        WHEN OTHERS THEN
-            p_id_tipo_empresa:= null;
-            p_cod_rta  := 'ERROR_NC';
+      IF(r_tempresa.tpem_tpem IS NOT NULL) THEN
+      
+          p_id_tipo_empresa := r_tempresa.tpem_tpem;
+          p_cod_rta  := 'OK';
+          
+      ELSE
+          p_id_tipo_empresa:= NULL;
+          p_cod_rta  := 'ER_EMP_NUL';
+      END IF;
+      
+  EXCEPTION
+      WHEN OTHERS THEN
+          p_id_tipo_empresa:= NULL;
+          p_cod_rta  := 'ERROR_NC';
         
     END obtenerIdTEmpresa;
-	
-	
-	     -- ===========================================================
+  
+  
+       -- ===========================================================
     -- PROCEDURE consultarRolUsuarioEmpresa
     -- -----------------------------------------------------------
-    -- Servicio especializado para hacer la consultar del rol dado 
-    -- un usuario registrado en el sistema pacrim
+    -- Servicio especializado para hacer la   consultar del rol dado 
+    -- un usuario regIStrado en el sIStema pacrim
     -- ===========================================================
-	PROCEDURE obtenerEmpresaPorTipo
+  PROCEDURE obtenerEmpresaPorTipo
     (
-        p_nombre_empresa      	  IN  EM_TEMNE.EMNE_NOBE%type,
-		p_tempresa_nombre  		  IN  EM_TTPEM.TPEM_DTEM%type,
-		p_empresa                 OUT EM_TT_EMTP,
-		p_cod_rta          	  	  OUT NE_TCRTA.CRTA_CRTA%type
-		
-
+        p_nombre_empresa          IN  EM_TEMNE.EMNE_NOBE%type,
+        p_tempresa_nombre        IN  EM_TTPEM.TPEM_DTEM%type,
+        p_empresa                 OUT EM_TT_EMTP,
+        p_cod_rta                  OUT NE_TCRTA.CRTA_CRTA%type
     )IS
 
-        cursor c_empresa_tipo 
-		(
-			pc_EMTE_TPEM EM_TTPEM.TPEM_TPEM%type,
-			pc_EMTE_EMNE EM_TEMNE.EMNE_EMNE%type
-		)is
-			SELECT
-			   *
-			FROM
-				em_ttpem te,em_temne e, em_temte es
-			WHERE
-				te.TPEM_TPEM = es.EMTE_TPEM AND
-				e.EMNE_EMNE = es.EMTE_EMNE  AND 
-				es.EMTE_TPEM = pc_EMTE_TPEM AND
-				es.EMTE_EMNE = pc_EMTE_EMNE;
+    CURSOR c_empresa_tipo 
+    (
+      pc_EMTE_TPEM EM_TTPEM.TPEM_TPEM%type,
+      pc_EMTE_EMNE EM_TEMNE.EMNE_EMNE%type
+    )IS
+      SELECT
+         *
+      FROM
+        em_ttpem te,em_temne e, em_temte es
+      WHERE
+        te.TPEM_TPEM = es.EMTE_TPEM AND
+        e.EMNE_EMNE = es.EMTE_EMNE  AND 
+        es.EMTE_TPEM = pc_EMTE_TPEM AND
+        es.EMTE_EMNE = pc_EMTE_EMNE;
 
         r_empresa_tipo c_empresa_tipo%rowtype;
 
-		v_id_nombre_empresa        EM_TTPEM.TPEM_TPEM%type;
-		v_id_nombre_tipo_empresa   EM_TTPEM.TPEM_TPEM%type;
-		v_cod_rta_tipo             NE_TCRTA.CRTA_CRTA%type;
-		v_cod_rta          	  	   NE_TCRTA.CRTA_CRTA%type;
-		v_lista_empresa_tipo	   EM_TO_EMTP;
+    v_id_nombre_empresa        EM_TTPEM.TPEM_TPEM%type;
+    v_id_nombre_tipo_empresa   EM_TTPEM.TPEM_TPEM%type;
+    v_cod_rta_tipo             NE_TCRTA.CRTA_CRTA%type;
+    v_cod_rta                   NE_TCRTA.CRTA_CRTA%type;
+    v_lISta_empresa_tipo       EM_TO_EMTP;
 
-		v_tt_lista_empresa_tipo EM_TT_EMTP := EM_TT_EMTP();
+    v_tt_lISta_empresa_tipo EM_TT_EMTP := EM_TT_EMTP();
     BEGIN
 
-		EM_QEMPRESAS.OBTENERIDTEMPRESA
-		(
+    NE_QHOMO.OBTENERIDTEMPRESA
+    (
             p_tempresa_nombre,
             v_id_nombre_tipo_empresa,
             v_cod_rta_tipo
         );
-		EM_QEMPRESAS.OBTENERIDEMPRESA
-		(
+    NE_QHOMO.OBTENERIDEMPRESA
+    (
             p_nombre_empresa,
             v_id_nombre_empresa,
             v_cod_rta
         );
 
 
-		IF  v_cod_rta_tipo='OK' AND v_cod_rta='OK' THEN
+    IF  v_cod_rta_tipo='OK' AND v_cod_rta='OK' THEN
+       FOR   r_empresa_tipo in c_empresa_tipo(v_id_nombre_tipo_empresa,v_id_nombre_empresa) LOOP
 
-
-
-		   FOR   r_empresa_tipo in c_empresa_tipo(v_id_nombre_tipo_empresa,v_id_nombre_empresa) LOOP
-
-                v_lista_empresa_tipo:=EM_TO_EMTP(
-		            r_empresa_tipo.TPEM_TPEM,
-		            r_empresa_tipo.TPEM_DTEM,
-		            r_empresa_tipo.TPEM_STEM, 
-		            r_empresa_tipo.TPEM_FCCR,
-		            r_empresa_tipo.TPEM_FCMO,
-		            r_empresa_tipo.EMNE_EMNE,
-		            r_empresa_tipo.EMNE_NOBE,
-		            r_empresa_tipo.EMNE_NITE,	 
-		            r_empresa_tipo.EMNE_FECR,	 
-		            r_empresa_tipo.EMNE_FEMO,	 
-		            r_empresa_tipo.EMTE_EMTE, 	 
-		            r_empresa_tipo.EMTE_DTCR,	 
-		            r_empresa_tipo.EMTE_DTMO,	 
-		            r_empresa_tipo.EMTE_TPEM,	 
-		            r_empresa_tipo.EMTE_EMNE	 
-		        );
-                v_tt_lista_empresa_tipo.extend;
-                v_tt_lista_empresa_tipo(v_tt_lista_empresa_tipo.count):=v_lista_empresa_tipo;
+                v_lISta_empresa_tipo:=EM_TO_EMTP(
+                r_empresa_tipo.TPEM_TPEM,
+                r_empresa_tipo.TPEM_DTEM,
+                r_empresa_tipo.TPEM_STEM, 
+                r_empresa_tipo.TPEM_FCCR,
+                r_empresa_tipo.TPEM_FCMO,
+                r_empresa_tipo.EMNE_EMNE,
+                r_empresa_tipo.EMNE_NOBE,
+                r_empresa_tipo.EMNE_NITE,   
+                r_empresa_tipo.EMNE_FECR,   
+                r_empresa_tipo.EMNE_FEMO,   
+                r_empresa_tipo.EMTE_EMTE,    
+                r_empresa_tipo.EMTE_DTCR,   
+                r_empresa_tipo.EMTE_DTMO,   
+                r_empresa_tipo.EMTE_TPEM,   
+                r_empresa_tipo.EMTE_EMNE   
+            );
+                v_tt_lISta_empresa_tipo.extEND;
+                v_tt_lISta_empresa_tipo(v_tt_lISta_empresa_tipo.count):=v_lISta_empresa_tipo;
 
              END LOOP;
-            p_empresa:= v_tt_lista_empresa_tipo;
-			p_cod_rta  := 'OK';
-		ELSE
-            p_empresa:= null;
+            p_empresa:= v_tt_lISta_empresa_tipo;
+      p_cod_rta  := 'OK';
+    ELSE
+            p_empresa:= NULL;
             p_cod_rta  := 'ER_EMP_NUL';
-        end if;
+        END IF;
     EXCEPTION
         WHEN OTHERS THEN
-            p_empresa:= null;
+            p_empresa:= NULL;
             p_cod_rta  := 'ERROR_NC';
 
     END obtenerEmpresaPorTipo;
     
     
-END EM_QEMPRESAS;
+END NE_QHOMO;
 /
