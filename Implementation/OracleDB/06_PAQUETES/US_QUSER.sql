@@ -1,22 +1,21 @@
 prompt
-prompt PACKAGE: EM_QEMPRESAS
+prompt PACKAGE: US_QUSER
 prompt
-CREATE OR REPLACE PACKAGE FS_PCRM_US.EM_QEMPRESAS IS
+CREATE OR REPLACE PACKAGE FS_AUWEB_US.US_QUSER IS
     --
     -- ===========================================================
-    -- EM_QEMPRESAS
+    -- US_QUSER
     -- -----------------------------------------------------------
-    -- Reúne funciones y procedimientos relacionados con la 
-    -- gestion de Usuarios. Paquete especializado de negocio
+    -- Todas las funciones del usuario
     -- ===========================================================
     --
     -- #VERSION:0000001000
     --
     -- HISTORIAL DE CAMBIOS
     --
-    -- Versión        GAP                Solicitud        Fecha        Realizó            Descripción
+    -- Versiï¿½n        GAP                Solicitud        Fecha        Realizï¿½            Descripciï¿½n
     -- -----------    -------------    -------------    ----------    -------------    ------------------------------------------------------------------------------------------------------------------------------------------
-    -- 1000                                             03/03/2018      ownk           Se crean API de servicios para el modulo de Gestion Usuario Pacrim
+    -- 
     -- -----------    -------------    -------------    ----------    -------------    ------------------------------------------------------------------------------------------------------------------------------------------
 
     -- ============================================================
@@ -28,41 +27,47 @@ CREATE OR REPLACE PACKAGE FS_PCRM_US.EM_QEMPRESAS IS
     -- Declaracion de PROCEDIMIENTOS y FUNCIONES
     -- ============================================================
     
-	PROCEDURE obtenerEmpresaPorTipo
+  PROCEDURE loginUsuario
     (
-        p_nombre_empresa      	  IN  EM_TEMNE.EMNE_NOBE%type,
-		p_tempresa_nombre  		  IN  EM_TTPEM.TPEM_DTEM%type,
-		p_empresa                 OUT EM_TT_EMTP,
-		p_cod_rta          	  	  OUT NE_TCRTA.CRTA_CRTA%type
-		
-
+        p_nombre_usuario               IN  US_TUSER.USER_ALAS%type,
+        p_password_usuario             IN  US_TUSER.USER_PSWD%type,
+        p_log_usuario                  OUT BOOLEAN,
+        p_cod_rta                      OUT NE_TCRTA.CRTA_CRTA%type
     );
-	
-	PROCEDURE obtenerIdEmpresa
+  
+  PROCEDURE crearUsuario
     (
-        p_nombre_empresa      IN   EM_TEMNE.EMNE_NOBE%type,
-		p_id_empresa          OUT  EM_TEMNE.EMNE_EMNE%type,
-		p_cod_rta          	  OUT NE_TCRTA.CRTA_CRTA%type
-    
+        p_nombre_usuario               IN  US_TUSER.USER_ALAS%type,
+        p_password_usuario             IN  US_TUSER.USER_PSWD%type,
+        p_cod_rta                      OUT NE_TCRTA.CRTA_CRTA%type
     );
  
-	PROCEDURE obtenerIdTEmpresa
+  PROCEDURE buscarUsuarioPorNombre
     (
-        p_tempresa_nombre  		  IN  EM_TTPEM.TPEM_DTEM%type,
-		p_id_tipo_empresa         OUT EM_TTPEM.TPEM_TPEM%type,
-		p_cod_rta          	  	  OUT NE_TCRTA.CRTA_CRTA%type
+        p_nombre_usuario               IN  US_TUSER.USER_ALAS%type,
+        p_id_usuario                   OUT US_TUSER.USER_USER%type,
+        p_cod_rta                      OUT NE_TCRTA.CRTA_CRTA%type
+    ); 
+    
+  PROCEDURE actualizarUsuario
+    (
+        p_id_usuario                   IN  US_TUSER.USER_USER%type,
+        p_nombre_usuario               IN  US_TUSER.USER_ALAS%type,
+        p_password_usuario             IN  US_TUSER.USER_PSWD%type,
+        p_cod_rta                      OUT NE_TCRTA.CRTA_CRTA%type
     ); 
     -- ------------------------------------------------------------
     
-END EM_QEMPRESAS;
+END US_QUSER;
 /
 
 
 prompt
-prompt PACKAGE BODY:EM_QEMPRESAS
+prompt PACKAGE BODY:US_QUSER
 prompt
 
-CREATE OR REPLACE PACKAGE BODY FS_PCRM_US.EM_QEMPRESAS IS
+
+CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QUSER IS
 
 
     --
@@ -70,194 +75,212 @@ CREATE OR REPLACE PACKAGE BODY FS_PCRM_US.EM_QEMPRESAS IS
     --
     
     -- ===========================================================
-    -- PROCEDURE consultarRolUsuarioEmpresa
+    -- PROCEDURE loginUsuario
     -- -----------------------------------------------------------
-    -- Servicio especializado para hacer la consultar del rol dado 
-    -- un usuario registrado en el sistema pacrim
+    -- permite el logueo del usuario dado un nombre de usuario 
+    -- y password
     -- ===========================================================
-	PROCEDURE obtenerIdEmpresa
+    PROCEDURE loginUsuario
     (
-        p_nombre_empresa      IN   EM_TEMNE.EMNE_NOBE%type,
-		p_id_empresa          OUT  EM_TEMNE.EMNE_EMNE%type,
-		p_cod_rta          	  OUT NE_TCRTA.CRTA_CRTA%type
+        p_nombre_usuario               IN  US_TUSER.USER_ALAS%type,
+        p_password_usuario             IN  US_TUSER.USER_ALAS%type,
+        p_log_usuario                  OUT BOOLEAN
+    )IS
+
+    CURSOR c_usuario IS
+        SELECT 
+            USER_USER
+        FROM
+            FS_AUWEB_US.US_TUSER
+        WHERE
+            USER_ALAS = p_nombre_usuario        AND
+            USER_ALAS = p_password_usuario;
+
+        r_usuario c_usuario%rowtype;
+
+    BEGIN  
+
+        OPEN  c_usuario;
+        FETCH c_usuario INTO r_usuario;
+        CLOSE c_usuario;
+          
+        IF(r_usuario.USER_USER IS NOT NULL) THEN
+          p_log_usuario := TRUE;
+          p_cod_rta     := 'login exitoso';
+        ELSE
+          p_log_usuario := FALSE;
+          p_cod_rta     := 'usuario o password equivocados';
+        END IF;
+        EXCEPTION
+            WHEN OTHERS THEN
+                p_cod_rta  := 'ERROR_NC';
+        
+    END loginUsuario;
+  
+    --
+    -- #VERSION:0000001000
+    --
     
-    )IS
-        
-        cursor c_empresa is
-			SELECT
-				emne_emne
-			FROM
-				fs_pcrm_us.em_temne
-			WHERE
-			   emne_nobe=p_nombre_empresa;
-
-			r_empresa c_empresa%rowtype;
-        
-    BEGIN
-      
-        open c_empresa;
-        fetch c_empresa into r_empresa;
-        close c_empresa;
-        
-        if(r_empresa.emne_emne is not null) then
-        
-			p_id_empresa := r_empresa.emne_emne;
-            p_cod_rta  := 'OK';
-            
-        else
-            p_id_empresa:= null;
-            p_cod_rta  := 'ER_EMP_NUL';
-        end if;
-    EXCEPTION
-        WHEN OTHERS THEN
-            p_id_empresa:= null;
-            p_cod_rta  := 'ERROR_NC';
-        
-    END obtenerIdEmpresa;
-	
-	
-        -- ===========================================================
-    -- PROCEDURE consultarRolUsuarioEmpresa
-    -- -----------------------------------------------------------
-    -- Servicio especializado para hacer la consultar del rol dado 
-    -- un usuario registrado en el sistema pacrim
     -- ===========================================================
-	PROCEDURE obtenerIdTEmpresa
-    (
-        p_tempresa_nombre  		  IN  EM_TTPEM.TPEM_DTEM%type,
-		p_id_tipo_empresa         OUT EM_TTPEM.TPEM_TPEM%type,
-		p_cod_rta          	  	  OUT NE_TCRTA.CRTA_CRTA%type
-    )IS
-        
-        cursor c_tempresa is
-			SELECT
-				tpem_tpem
-			FROM
-				fs_pcrm_us.em_ttpem
-			WHERE
-				tpem_dtem = p_tempresa_nombre;
-				
-        r_tempresa c_tempresa%rowtype;
-		
-    BEGIN
-      
-        open c_tempresa;
-        fetch c_tempresa into r_tempresa;
-        close c_tempresa;
-        
-        if(r_tempresa.tpem_tpem is not null) then
-        
-			p_id_tipo_empresa := r_tempresa.tpem_tpem;
-            p_cod_rta  := 'OK';
-            
-        else
-            p_id_tipo_empresa:= null;
-            p_cod_rta  := 'ER_EMP_NUL';
-        end if;
-    EXCEPTION
-        WHEN OTHERS THEN
-            p_id_tipo_empresa:= null;
-            p_cod_rta  := 'ERROR_NC';
-        
-    END obtenerIdTEmpresa;
-	
-	
-	     -- ===========================================================
-    -- PROCEDURE consultarRolUsuarioEmpresa
+    -- PROCEDURE crearUsuario
     -- -----------------------------------------------------------
-    -- Servicio especializado para hacer la consultar del rol dado 
-    -- un usuario registrado en el sistema pacrim
+    -- creacion de usuaio dado atributos
     -- ===========================================================
-	PROCEDURE obtenerEmpresaPorTipo
+    PROCEDURE crearUsuario
     (
-        p_nombre_empresa      	  IN  EM_TEMNE.EMNE_NOBE%type,
-		p_tempresa_nombre  		  IN  EM_TTPEM.TPEM_DTEM%type,
-		p_empresa                 OUT EM_TT_EMTP,
-		p_cod_rta          	  	  OUT NE_TCRTA.CRTA_CRTA%type
-		
-
+        p_nombre_usuario               IN  US_TUSER.USER_ALAS%type,
+        p_password_usuario             IN  US_TUSER.USER_PSWD%type,
+        p_cod_rta                      OUT NE_TCRTA.CRTA_CRTA%type
     )IS
 
-        cursor c_empresa_tipo 
-		(
-			pc_EMTE_TPEM EM_TTPEM.TPEM_TPEM%type,
-			pc_EMTE_EMNE EM_TEMNE.EMNE_EMNE%type
-		)is
-			SELECT
-			   *
-			FROM
-				em_ttpem te,em_temne e, em_temte es
-			WHERE
-				te.TPEM_TPEM = es.EMTE_TPEM AND
-				e.EMNE_EMNE = es.EMTE_EMNE  AND 
-				es.EMTE_TPEM = pc_EMTE_TPEM AND
-				es.EMTE_EMNE = pc_EMTE_EMNE;
+        r_usuario               c_usuario%rowtype;
+        v_existencia_usuario    BOOLEAN;
+        v_secuencia             NUMBER;
+        v_cod_rta_tipo          NE_TCRTA.CRTA_CRTA%type;
 
-        r_empresa_tipo c_empresa_tipo%rowtype;
+    BEGIN  
+        v_secuencia := US_SETPUSR.NextVal;
 
-		v_id_nombre_empresa        EM_TTPEM.TPEM_TPEM%type;
-		v_id_nombre_tipo_empresa   EM_TTPEM.TPEM_TPEM%type;
-		v_cod_rta_tipo             NE_TCRTA.CRTA_CRTA%type;
-		v_cod_rta          	  	   NE_TCRTA.CRTA_CRTA%type;
-		v_lista_empresa_tipo	   EM_TO_EMTP;
-
-		v_tt_lista_empresa_tipo EM_TT_EMTP := EM_TT_EMTP();
-    BEGIN
-
-		EM_QEMPRESAS.OBTENERIDTEMPRESA
-		(
-            p_tempresa_nombre,
-            v_id_nombre_tipo_empresa,
+        US_QVUSER.validarUsuarioPorNombre
+        (
+            p_nombre_usuario,
+            v_existencia_usuario,
             v_cod_rta_tipo
         );
-		EM_QEMPRESAS.OBTENERIDEMPRESA
-		(
-            p_nombre_empresa,
-            v_id_nombre_empresa,
-            v_cod_rta
+          
+        IF(v_existencia_usuario) THEN
+          INSERT INTO US_TUSER(
+            USER_USER,
+            USER_ALAS,
+            USER_PSWD
+          )
+          VALUES(
+            v_secuencia,
+            p_nombre_usuario,
+            p_password_usuario
+          );
+           p_cod_rta     := 'creacion de usuario exitosa';
+        ELSE
+           p_cod_rta     := 'el usuario ya existe';
+        END IF;
+        EXCEPTION
+            WHEN OTHERS THEN
+                p_cod_rta  := 'ERROR_NC';
+        
+    END crearUsuario;
+
+    --
+    -- #VERSION:0000001000
+    --
+    
+    -- ===========================================================
+    -- PROCEDURE homologarCoreWebModulo
+    -- -----------------------------------------------------------
+    -- insersion type table core en type table web de roles y 
+    -- modulos
+    -- ===========================================================
+    PROCEDURE buscarUsuarioPorNombre
+    (
+        p_nombre_usuario               IN  US_TUSER.USER_ALAS%type,
+        p_id_usuario                   OUT US_TUSER.USER_USER%type,
+        p_cod_rta                      OUT NE_TCRTA.CRTA_CRTA%type
+    )IS
+
+    CURSOR c_usuario IS
+        SELECT 
+            USER_USER
+        FROM
+            FS_AUWEB_US.US_TUSER
+        WHERE
+            USER_ALAS = p_nombre_usuario;
+
+        r_usuario c_usuario%rowtype;
+
+    BEGIN  
+
+        OPEN  c_usuario;
+        FETCH c_usuario INTO r_usuario;
+        CLOSE c_usuario;
+          
+        IF(r_usuario.USER_USER IS NOT NULL) THEN
+          p_id_usuario  :=  r_usuario.USER_USER
+          p_cod_rta     := 'busqueda exitosa';
+        ELSE
+          p_cod_rta     := 'no se encontro el nombre de usuario';
+        END IF;
+        EXCEPTION
+            WHEN OTHERS THEN
+                p_cod_rta  := 'ERROR_NC';
+        
+    END buscarUsuarioPorNombre;
+    --
+    -- #VERSION:0000001000
+    --
+    
+    -- ===========================================================
+    -- PROCEDURE homologarWebCoreModulo
+    -- -----------------------------------------------------------
+    -- insersion type table web en type table core de roles y
+    -- modulos
+    -- ===========================================================
+    PROCEDURE actualizarUsuario
+    (
+        p_nombre_usuario               IN  US_TUSER.USER_ALAS%type,
+        p_password_usuario             IN  US_TUSER.USER_PSWD%type,
+        p_cod_rta                      OUT NE_TCRTA.CRTA_CRTA%type
+    )IS
+
+    CURSOR c_usuario
+    (
+        pc_USER_USER                   OUT US_TUSER.USER_USER%type
+    ) IS
+        SELECT 
+            USER_ALAS,
+            USER_PSWD
+        FROM
+            FS_AUWEB_US.US_TUSER
+        WHERE
+            USER_USER = pc_USER_USER;
+
+        r_usuario               c_usuario%rowtype;
+        v_id_usuario            US_TUSER.USER_USER%type;
+        v_cod_rta_tipo          NE_TCRTA.CRTA_CRTA%type;
+
+    BEGIN  
+
+        US_QVUSER.buscarUsuarioPorNombre
+        (
+            p_nombre_usuario,             
+            v_id_usuario,
+            v_cod_rta_tipo                      
         );
 
+        OPEN  c_usuario;
+        FETCH c_usuario
+        (
+            v_id_usuario
+        )
+        INTO r_usuario;
+        CLOSE c_usuario;
 
-		IF  v_cod_rta_tipo='OK' AND v_cod_rta='OK' THEN
+        IF(r_usuario.USER_USER IS NOT NULL) THEN
 
+            UPDATE 
+                FS_AUWEB_US.US_TUSER
+            SET 
+                USER_ALAS = p_nombre_usuario, 
+                USER_PSWD = p_password_usuario
+            WHERE 
+                USER_USER = r_usuario.USER_USER;
 
-
-		   FOR   r_empresa_tipo in c_empresa_tipo(v_id_nombre_tipo_empresa,v_id_nombre_empresa) LOOP
-
-                v_lista_empresa_tipo:=EM_TO_EMTP(
-		            r_empresa_tipo.TPEM_TPEM,
-		            r_empresa_tipo.TPEM_DTEM,
-		            r_empresa_tipo.TPEM_STEM, 
-		            r_empresa_tipo.TPEM_FCCR,
-		            r_empresa_tipo.TPEM_FCMO,
-		            r_empresa_tipo.EMNE_EMNE,
-		            r_empresa_tipo.EMNE_NOBE,
-		            r_empresa_tipo.EMNE_NITE,	 
-		            r_empresa_tipo.EMNE_FECR,	 
-		            r_empresa_tipo.EMNE_FEMO,	 
-		            r_empresa_tipo.EMTE_EMTE, 	 
-		            r_empresa_tipo.EMTE_DTCR,	 
-		            r_empresa_tipo.EMTE_DTMO,	 
-		            r_empresa_tipo.EMTE_TPEM,	 
-		            r_empresa_tipo.EMTE_EMNE	 
-		        );
-                v_tt_lista_empresa_tipo.extend;
-                v_tt_lista_empresa_tipo(v_tt_lista_empresa_tipo.count):=v_lista_empresa_tipo;
-
-             END LOOP;
-            p_empresa:= v_tt_lista_empresa_tipo;
-			p_cod_rta  := 'OK';
-		ELSE
-            p_empresa:= null;
-            p_cod_rta  := 'ER_EMP_NUL';
-        end if;
-    EXCEPTION
-        WHEN OTHERS THEN
-            p_empresa:= null;
-            p_cod_rta  := 'ERROR_NC';
-
-    END obtenerEmpresaPorTipo;
-    
-    
-END EM_QEMPRESAS;
-/
+              p_log_usuario := TRUE;
+              p_cod_rta     := 'actualizacion exitosa';
+        ELSE
+          p_log_usuario := FALSE;
+          p_cod_rta     := 'actualizacion fallida';
+        END IF;
+        EXCEPTION
+            WHEN OTHERS THEN
+                p_cod_rta  := 'ERROR_NC';
+        
+    END actualizarUsuario;

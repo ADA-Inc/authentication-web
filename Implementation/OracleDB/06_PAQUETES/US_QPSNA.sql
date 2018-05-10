@@ -145,19 +145,19 @@ CREATE OR REPLACE PACKAGE BODY FS_PCRM_US.EM_QEMPRESAS IS
         fetch c_tempresa into r_tempresa;
         close c_tempresa;
         
-        if(r_tempresa.tpem_tpem is not null) then
+        if(r_tempresa.tpem_tpem IS NOT NULL) THEN
         
 			p_id_tipo_empresa := r_tempresa.tpem_tpem;
-            p_cod_rta  := 'OK';
+            p_cod_rta         := 'OK';
             
         else
-            p_id_tipo_empresa:= null;
-            p_cod_rta  := 'ER_EMP_NUL';
+            p_id_tipo_empresa := null;
+            p_cod_rta         := 'ER_EMP_NUL';
         end if;
     EXCEPTION
         WHEN OTHERS THEN
-            p_id_tipo_empresa:= null;
-            p_cod_rta  := 'ERROR_NC';
+            p_id_tipo_empresa := null;
+            p_cod_rta         := 'ERROR_NC';
         
     END obtenerIdTEmpresa;
 	

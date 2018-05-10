@@ -1,7 +1,7 @@
 prompt
 prompt PACKAGE: NE_QHOMO
 prompt
-CREATE OR REPLACE PACKAGE FS_PCRM_US.NE_QHOMO IS
+CREATE OR REPLACE PACKAGE FS_AUWEB_US.NE_QHOMO IS
     --
     -- ===========================================================
     -- NE_QHOMO
@@ -29,22 +29,30 @@ CREATE OR REPLACE PACKAGE FS_PCRM_US.NE_QHOMO IS
     
   PROCEDURE homologarCoreWebUsuario
     (
-        p_persona_usuario_web          IN  US_TTCPURS%type,
+        p_persona_usuario_web          IN   US_TTCPURS%type,
+        p_persona_usuario_web          OUT  US_TTWPURS,
+        p_cod_rta                      OUT  NE_TCRTA.CRTA_CRTA%type
     );
   
   PROCEDURE homologarWebCoreUsuario
     (
-        p_persona_usuario_core         IN  US_TTWPURS%type
+        p_persona_usuario_core         IN   US_TTWPURS%type,
+        p_persona_usuario_core         OUT  US_TTCPURS,
+        p_cod_rta                      OUT  NE_TCRTA.CRTA_CRTA%type
     );
  
   PROCEDURE homologarCoreWebModulo
     (
-        p_rol_modulo_web              IN  MO_TTCROMO%type
+        p_rol_modulo_web               IN   MO_TTCROMO%type,
+        p_modulo_web                   OUT  US_TTWROMO,
+        p_cod_rta                      OUT  NE_TCRTA.CRTA_CRTA%type
     ); 
     
   PROCEDURE homologarWebCoreModulo
     (
-        p_tempresa_nombre              IN  MO_TTWROMO%type,
+        p_tempresa_nombre              IN   MO_TTWROMO%type,
+        p_modulo_core                  OUT  US_TTCROMO,
+        p_cod_rta                      OUT  NE_TCRTA.CRTA_CRTA%type
     ); 
     -- ------------------------------------------------------------
     
@@ -57,7 +65,7 @@ prompt PACKAGE BODY:NE_QHOMO
 prompt
 
 
-CREATE OR REPLACE PACKAGE BODY FS_PCRM_US.NE_QHOMO IS
+CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.NE_QHOMO IS
 
 
     --
@@ -65,180 +73,202 @@ CREATE OR REPLACE PACKAGE BODY FS_PCRM_US.NE_QHOMO IS
     --
     
     -- ===========================================================
-    -- PROCEDURE consultarRolUsuarioEmpresa
+    -- PROCEDURE homologarCoreWebUsuario
     -- -----------------------------------------------------------
-    -- Servicio especializado para hacer la consultar del rol dado 
-    -- un usuario regIStrado en el sIStema pacrim
+    -- insersion type table core en type table web de roles, 
+    -- personas y usuarios
     -- ===========================================================
     PROCEDURE homologarCoreWebUsuario
     (
-        p_persona_usuario_web        IN  US_TTCPURS%type,
+        p_persona_usuario_core         IN   US_TTCPURS,
+        p_persona_usuario_web          OUT  US_TTWPURS,
+        p_cod_rta                      OUT  NE_TCRTA.CRTA_CRTA%type
     )IS
 
-    CURSOR c_empresa IS
-      SELECT
-          emne_emne
-      FROM
-          fs_pcrm_us.em_temne
-      WHERE
-          emne_nobe=p_nombre_empresa;
-          r_empresa c_empresa%rowtype;
-        
+    v_tt_persona_usuario_web     US_TTWPURS := US_TTWPURS();
+    v_to_persona_usuario_web     US_TOWPURS;
     BEGIN  
-        OPEN c_empresa;
-        FETCH c_empresa INTO r_empresa;
-        CLOSE c_empresa;
-        
-        IF(r_empresa.emne_emne IS NOT NULL) THEN
-           p_id_empresa := r_empresa.emne_emne;
-           p_cod_rta  := 'OK';
-                
+          
+        IF(p_persona_usuario_core.COUNT != 0) THEN
+          FOR i IN p_persona_usuario_core.FIRST .. p_persona_usuario_core.LAST
+            v_to_persona_usuario_web:=US_TOWPURS(
+                      i.USER_ALAS,
+                      i.PSNA_NOBE,
+                      i.PSNA_APDO,
+                      i.PSNA_DIRN,
+                      i.PSNA_TLFN,
+                      i.PSNA_EMAL,
+                      i.PSNA_PAIS,
+                      i.PSNA_NRID,
+                      i.ROLL_RLDN
+              );
+            v_tt_persona_usuario_web.extend;
+            v_tt_persona_usuario_web(v_tt_persona_usuario_web.COUNT) :=v_to_persona_usuario_web;
+            --
+          END LOOP;
+
+          p_persona_usuario_web := v_tt_persona_usuario_web;
+          p_cod_rta  := 'Transferencia relizada';
         ELSE
-           p_id_empresa:= NULL;
-           p_cod_rta  := 'ER_EMP_NUL';
+          p_persona_usuario_web := NULL;
+          p_cod_rta  := 'p_persona_usuario_core NULL';
         END IF;
         EXCEPTION
             WHEN OTHERS THEN
-                p_id_empresa:= NULL;
                 p_cod_rta  := 'ERROR_NC';
         
-    END obtenerIdEmpresa;
+    END homologarCoreWebUsuario;
   
-  
-        -- ===========================================================
-    -- PROCEDURE consultarRolUsuarioEmpresa
+    --
+    -- #VERSION:0000001000
+    --
+    
+    -- ===========================================================
+    -- PROCEDURE homologarWebCoreUsuario
     -- -----------------------------------------------------------
-    -- Servicio especializado para hacer la consultar del rol dado 
-    -- un usuario regIStrado en el sIStema pacrim
+    -- insersion type table web en type table core de roles, 
+    -- personas y usuarios
     -- ===========================================================
     PROCEDURE homologarWebCoreUsuario
     (
-        p_persona_usuario_core         IN  US_TTWPURS%type
+        p_persona_usuario_web          IN   US_TTWPURS,
+        p_persona_usuario_core         OUT  US_TTCPURS,
+        p_cod_rta                      OUT  NE_TCRTA.CRTA_CRTA%type
     )IS
-        
-    CURSOR c_tempresa IS
-      SELECT
-        tpem_tpem
-      FROM
-        fs_pcrm_us.em_ttpem
-      WHERE
-        tpem_dtem = p_tempresa_nombre;  
-        r_tempresa c_tempresa%rowtype;
     
-    BEGIN
-      OPEN c_tempresa;
-      FETCH c_tempresa INTO r_tempresa;
-      CLOSE c_tempresa;
-      
-      IF(r_tempresa.tpem_tpem IS NOT NULL) THEN
-      
-          p_id_tipo_empresa := r_tempresa.tpem_tpem;
-          p_cod_rta  := 'OK';
+    v_tt_persona_usuario_core     US_TTCPURS := US_TTCPURS();
+    v_to_persona_usuario_core     US_TOCPURS;
+    BEGIN  
           
-      ELSE
-          p_id_tipo_empresa:= NULL;
-          p_cod_rta  := 'ER_EMP_NUL';
-      END IF;
-      
-  EXCEPTION
-      WHEN OTHERS THEN
-          p_id_tipo_empresa:= NULL;
-          p_cod_rta  := 'ERROR_NC';
-        
-    END obtenerIdTEmpresa;
-  
-  
-       -- ===========================================================
-    -- PROCEDURE consultarRolUsuarioEmpresa
-    -- -----------------------------------------------------------
-    -- Servicio especializado para hacer la   consultar del rol dado 
-    -- un usuario regIStrado en el sIStema pacrim
-    -- ===========================================================
-  PROCEDURE obtenerEmpresaPorTipo
-    (
-        p_nombre_empresa          IN  EM_TEMNE.EMNE_NOBE%type,
-        p_tempresa_nombre        IN  EM_TTPEM.TPEM_DTEM%type,
-        p_empresa                 OUT EM_TT_EMTP,
-        p_cod_rta                  OUT NE_TCRTA.CRTA_CRTA%type
-    )IS
+        IF(p_persona_usuario_web.COUNT != 0) THEN
+          FOR i IN p_persona_usuario_web.FIRST .. p_persona_usuario_web.LAST
+            v_to_persona_usuario_core:=US_TOCPURS(
+                      NULL,
+                      i.USER_ALAS,
+                      NULL,
+                      NULL,
+                      i.PSNA_NOBE,
+                      i.PSNA_APDO,
+                      i.PSNA_DIRN,
+                      i.PSNA_TLFN,
+                      i.PSNA_EMAL,
+                      i.PSNA_PAIS,
+                      i.PSNA_NRID,
+                      NULL,
+                      i.ROLL_RLDN,
+                      sysdate,
+                      NULL,
+                      NULL,
+                      NULL,
+                      NULL
+              );
+            v_tt_persona_usuario_core.extend;
+            v_tt_persona_usuario_core(v_tt_persona_usuario_core.COUNT) :=v_to_persona_usuario_core;
+            --
+          END LOOP;
 
-    CURSOR c_empresa_tipo 
-    (
-      pc_EMTE_TPEM EM_TTPEM.TPEM_TPEM%type,
-      pc_EMTE_EMNE EM_TEMNE.EMNE_EMNE%type
-    )IS
-      SELECT
-         *
-      FROM
-        em_ttpem te,em_temne e, em_temte es
-      WHERE
-        te.TPEM_TPEM = es.EMTE_TPEM AND
-        e.EMNE_EMNE = es.EMTE_EMNE  AND 
-        es.EMTE_TPEM = pc_EMTE_TPEM AND
-        es.EMTE_EMNE = pc_EMTE_EMNE;
-
-        r_empresa_tipo c_empresa_tipo%rowtype;
-
-    v_id_nombre_empresa        EM_TTPEM.TPEM_TPEM%type;
-    v_id_nombre_tipo_empresa   EM_TTPEM.TPEM_TPEM%type;
-    v_cod_rta_tipo             NE_TCRTA.CRTA_CRTA%type;
-    v_cod_rta                   NE_TCRTA.CRTA_CRTA%type;
-    v_lISta_empresa_tipo       EM_TO_EMTP;
-
-    v_tt_lISta_empresa_tipo EM_TT_EMTP := EM_TT_EMTP();
-    BEGIN
-
-    NE_QHOMO.OBTENERIDTEMPRESA
-    (
-            p_tempresa_nombre,
-            v_id_nombre_tipo_empresa,
-            v_cod_rta_tipo
-        );
-    NE_QHOMO.OBTENERIDEMPRESA
-    (
-            p_nombre_empresa,
-            v_id_nombre_empresa,
-            v_cod_rta
-        );
-
-
-    IF  v_cod_rta_tipo='OK' AND v_cod_rta='OK' THEN
-       FOR   r_empresa_tipo in c_empresa_tipo(v_id_nombre_tipo_empresa,v_id_nombre_empresa) LOOP
-
-                v_lISta_empresa_tipo:=EM_TO_EMTP(
-                r_empresa_tipo.TPEM_TPEM,
-                r_empresa_tipo.TPEM_DTEM,
-                r_empresa_tipo.TPEM_STEM, 
-                r_empresa_tipo.TPEM_FCCR,
-                r_empresa_tipo.TPEM_FCMO,
-                r_empresa_tipo.EMNE_EMNE,
-                r_empresa_tipo.EMNE_NOBE,
-                r_empresa_tipo.EMNE_NITE,   
-                r_empresa_tipo.EMNE_FECR,   
-                r_empresa_tipo.EMNE_FEMO,   
-                r_empresa_tipo.EMTE_EMTE,    
-                r_empresa_tipo.EMTE_DTCR,   
-                r_empresa_tipo.EMTE_DTMO,   
-                r_empresa_tipo.EMTE_TPEM,   
-                r_empresa_tipo.EMTE_EMNE   
-            );
-                v_tt_lISta_empresa_tipo.extEND;
-                v_tt_lISta_empresa_tipo(v_tt_lISta_empresa_tipo.count):=v_lISta_empresa_tipo;
-
-             END LOOP;
-            p_empresa:= v_tt_lISta_empresa_tipo;
-      p_cod_rta  := 'OK';
-    ELSE
-            p_empresa:= NULL;
-            p_cod_rta  := 'ER_EMP_NUL';
+          p_persona_usuario_core := v_tt_persona_usuario_core;
+          p_cod_rta  := 'Transferencia relizada';
+        ELSE
+          p_persona_usuario_core := NULL;
+          p_cod_rta  := 'p_persona_usuario_web NULL';
         END IF;
-    EXCEPTION
-        WHEN OTHERS THEN
-            p_empresa:= NULL;
-            p_cod_rta  := 'ERROR_NC';
+        EXCEPTION
+            WHEN OTHERS THEN
+                p_cod_rta  := 'ERROR_NC';
+        
+    END homologarWebCoreUsuario;
 
-    END obtenerEmpresaPorTipo;
+    --
+    -- #VERSION:0000001000
+    --
     
+    -- ===========================================================
+    -- PROCEDURE homologarCoreWebModulo
+    -- -----------------------------------------------------------
+    -- insersion type table core en type table web de roles y 
+    -- modulos
+    -- ===========================================================
+    PROCEDURE homologarCoreWebModulo
+    (
+        p_modulo_core                  IN   US_TTCROMO,
+        p_modulo_web                   OUT  US_TTWROMO,
+        p_cod_rta                      OUT  NE_TCRTA.CRTA_CRTA%type
+    )IS
     
-END NE_QHOMO;
-/
+    v_tt_modulo_web     US_TTWROMO := US_TTWROMO();
+    v_to_modulo_web     US_TOWROMO;
+    BEGIN  
+          
+        IF(p_modulo_core.COUNT != 0) THEN
+          FOR i IN p_modulo_core.FIRST .. p_modulo_core.LAST
+            v_to_modulo_web:=US_TOWROMO(
+                      i.ROLL_RLDN,
+                      i.MODU_NAME
+              );
+            v_tt_modulo_web.extend;
+            v_tt_modulo_web(v_tt_modulo_web.COUNT) :=v_to_modulo_web;
+            --
+          END LOOP;
+
+          p_modulo_web := v_tt_modulo_web;
+          p_cod_rta  := 'Transferencia relizada';
+        ELSE
+          p_modulo_web := NULL;
+          p_cod_rta  := 'p_modulo_core NULL';
+        END IF;
+        EXCEPTION
+            WHEN OTHERS THEN
+                p_cod_rta  := 'ERROR_NC';
+        
+    END homologarCoreWebModulo;
+    --
+    -- #VERSION:0000001000
+    --
+    
+    -- ===========================================================
+    -- PROCEDURE homologarWebCoreModulo
+    -- -----------------------------------------------------------
+    -- insersion type table web en type table core de roles y
+    -- modulos
+    -- ===========================================================
+    PROCEDURE homologarWebCoreModulo
+    (
+        p_modulo_web                   IN   US_TTWROMO,
+        p_modulo_core                  OUT  US_TTCROMO,
+        p_cod_rta                      OUT  NE_TCRTA.CRTA_CRTA%type
+    )IS
+    
+    v_tt_modulo_core     US_TTCROMO := US_TTCROMO();
+    v_to_modulo_core     US_TOCROMO;
+    BEGIN  
+          
+        IF(p_modulo_web.COUNT != 0) THEN
+          FOR i IN p_modulo_web.FIRST .. p_modulo_web.LAST
+            v_to_modulo_core:=US_TOCROMO(
+                      NULL,
+                      i.ROLL_RLDN,
+                      NULL,
+                      sysdate,
+                      i.MODU_NAME,
+                      NULL,
+                      NULL,
+                      NULL,
+                      NULL
+              );
+            v_tt_modulo_core.extend;
+            v_tt_modulo_core(v_tt_modulo_core.COUNT) :=v_to_modulo_core;
+            --
+          END LOOP;
+
+          p_modulo_core := v_tt_modulo_core;
+          p_cod_rta  := 'Transferencia relizada';
+        ELSE
+          p_modulo_core := NULL;
+          p_cod_rta  := 'p_modulo_web NULL';
+        END IF;
+        EXCEPTION
+            WHEN OTHERS THEN
+                p_cod_rta  := 'ERROR_NC';
+        
+    END homologarWebCoreModulo;

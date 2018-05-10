@@ -1,1 +1,8 @@
-create or replace type FS_AUWEB_US.MO_TTWROMO is table of FS_AUWEB_US.MO_TOWROMO;
+create or replace TYPE FS_AUWEB_US.MO_TOWROMO IS
+
+OBJECT (
+		ROLL_RLDN VARCHAR2(50),
+		MODU_NAME VARCHAR2(50)
+		);
+		
+/
