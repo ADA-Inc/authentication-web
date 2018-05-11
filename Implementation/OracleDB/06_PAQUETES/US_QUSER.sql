@@ -52,7 +52,8 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.US_QUSER IS
   PROCEDURE actualizarUsuario
     (
         p_nombre_usuario               IN  US_TUSER.USER_ALAS%type,
-        p_password_usuario             IN  US_TUSER.USER_PSWD%type,
+        p_nombre_usuario_act           IN  US_TUSER.USER_ALAS%type,
+        p_password_usuario_act         IN  US_TUSER.USER_PSWD%type,
         p_cod_rta                      OUT NE_TCRTA.CRTA_CRTA%type
     ); 
     -- ------------------------------------------------------------
@@ -94,7 +95,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QUSER IS
             FS_AUWEB_US.US_TUSER
         WHERE
             USER_ALAS = p_nombre_usuario        AND
-            USER_ALAS = p_password_usuario;
+            USER_PSWD = p_password_usuario;
 
         r_usuario c_usuario%rowtype;
 
@@ -138,7 +139,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QUSER IS
         v_cod_rta_tipo          NE_TCRTA.CRTA_CRTA%type;
 
     BEGIN  
-        v_secuencia := US_SETPUSR.NextVal;
+        v_secuencia := US_SETUSER.NextVal;
 
         US_QVUSER.validarUsuarioPorNombre
         (
@@ -225,24 +226,11 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QUSER IS
     PROCEDURE actualizarUsuario
     (
         p_nombre_usuario               IN  US_TUSER.USER_ALAS%type,
-        p_password_usuario             IN  US_TUSER.USER_PSWD%type,
+        p_nombre_usuario_act           IN  US_TUSER.USER_ALAS%type,
+        p_password_usuario_act         IN  US_TUSER.USER_PSWD%type,
         p_cod_rta                      OUT NE_TCRTA.CRTA_CRTA%type
     )IS
-
-    CURSOR c_usuario
-    (
-        pc_USER_USER                   OUT US_TUSER.USER_USER%type
-    ) IS
-        SELECT 
-            USER_USER,
-            USER_ALAS,
-            USER_PSWD
-        FROM
-            FS_AUWEB_US.US_TUSER
-        WHERE
-            USER_USER = pc_USER_USER;
-
-        r_usuario               c_usuario%rowtype;
+    
         v_id_usuario            US_TUSER.USER_USER%type;
         v_cod_rta_tipo          NE_TCRTA.CRTA_CRTA%type;
 
@@ -255,28 +243,24 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QUSER IS
             v_cod_rta_tipo                      
         );
 
-        OPEN  c_usuario(v_id_usuario);
-        FETCH c_usuario INTO r_usuario;
-        CLOSE c_usuario;
-
-        IF(r_usuario.USER_USER IS NOT NULL) THEN
+        IF(v_id_usuario IS NOT NULL) THEN
 
             UPDATE 
                 FS_AUWEB_US.US_TUSER
             SET 
-                USER_ALAS = p_nombre_usuario, 
-                USER_PSWD = p_password_usuario
+                USER_ALAS = p_nombre_usuario_act, 
+                USER_PSWD = p_password_usuario_act
             WHERE 
-                USER_USER = r_usuario.USER_USER;
+                USER_USER = v_id_usuario;
 
               p_cod_rta     := 'actualizacion exitosa';
         ELSE
-              p_cod_rta     := 'actualizacion fallida';
+              p_cod_rta     := v_cod_rta_tipo;
         END IF;
         EXCEPTION
             WHEN OTHERS THEN
                 p_cod_rta  := 'ERROR_NC';
-        
+
     END actualizarUsuario;
 END US_QUSER;
 /

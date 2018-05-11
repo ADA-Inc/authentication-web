@@ -67,7 +67,9 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QVPSNA IS
             SELECT
                 PSNA_NRID
             FROM
-                FS_AUWEB_US.US_TPSNA;
+                FS_AUWEB_US.US_TPSNA
+            WHERE
+                PSNA_NRID = p_documento_persona;
 
             r_persona c_persona%rowtype;
         

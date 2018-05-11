@@ -6,7 +6,7 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.MO_QVMODU IS
     -- ===========================================================
     -- MO_QVMODU
     -- -----------------------------------------------------------
-    -- validador de existencia de modulo por documento
+    -- validador de existencia de modulo por Nombre
     -- ===========================================================
     --
     -- #VERSION:0000001000
@@ -27,9 +27,9 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.MO_QVMODU IS
     -- Declaracion de PROCEDIMIENTOS y FUNCIONES
     -- ============================================================
     
-  PROCEDURE validarModuloPorDocumento
+  PROCEDURE validarModuloPorNombre
     (
-        p_documento_modulo               IN  MO_TMODU.MODU_NAME%type,
+        p_nombre_modulo               IN  MO_TMODU.MODU_NAME%type,
         p_existencia_modulo              OUT BOOLEAN,
         p_cod_rta                        OUT NE_TCRTA.CRTA_CRTA%type
     ); 
@@ -52,13 +52,13 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QVMODU IS
     --
     
     -- ===========================================================
-    -- PROCEDURE validarmoduloPorDocumento
+    -- PROCEDURE validarmoduloPorNombre
     -- -----------------------------------------------------------
-    -- validar existencia de modulo por documento
+    -- validar existencia de modulo por Nombre
     -- ===========================================================
-    PROCEDURE validarModuloPorDocumento
+    PROCEDURE validarModuloPorNombre
     (
-        p_documento_modulo               IN  MO_TMODU.MODU_NAME%type,
+        p_nombre_modulo                  IN  MO_TMODU.MODU_NAME%type,
         p_existencia_modulo              OUT BOOLEAN,
         p_cod_rta                        OUT NE_TCRTA.CRTA_CRTA%type
     )IS
@@ -67,7 +67,9 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QVMODU IS
             SELECT
                 MODU_NAME
             FROM
-                FS_AUWEB_US.MO_TMODU;
+                FS_AUWEB_US.MO_TMODU
+            WHERE
+                MODU_NAME = p_nombre_modulo;
 
             r_modulo c_modulo%rowtype;
         
@@ -91,7 +93,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QVMODU IS
             p_existencia_modulo := FALSE;
             p_cod_rta           := 'ERROR_NC';
         
-    END validarmoduloPorDocumento;
+    END validarmoduloPorNombre;
     
 END MO_QVMODU;
 /
