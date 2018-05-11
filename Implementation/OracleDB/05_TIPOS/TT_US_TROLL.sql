@@ -1,0 +1,5 @@
+prompt
+prompt TYPE OBJECT:TT_US_TROLL
+prompt
+create or replace type FS_AUWEB_US.TT_US_TROLL is table of TO_US_TROLL;
+/
