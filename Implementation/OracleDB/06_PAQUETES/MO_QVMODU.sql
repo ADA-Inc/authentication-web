@@ -67,7 +67,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QVMODU IS
             SELECT
                 MODU_NAME
             FROM
-                FS_AUWEB_US.MO_TMODU
+                FS_AUWEB_US.MO_TMODU;
 
             r_modulo c_modulo%rowtype;
         

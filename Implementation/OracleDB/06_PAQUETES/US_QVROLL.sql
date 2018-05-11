@@ -67,7 +67,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QVROLL IS
             SELECT
                 ROLL_RLDN
             FROM
-                FS_AUWEB_US.US_TROLL
+                FS_AUWEB_US.US_TROLL;
 
             r_roll c_roll%rowtype;
         

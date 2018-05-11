@@ -16,7 +16,7 @@ CREATE OR REPLACE PACKAGE FS_PCRM_US.EM_QEMPRESAS IS
     --
     -- VersiÃ³n        GAP                Solicitud        Fecha        RealizÃ³            DescripciÃ³n
     -- -----------    -------------    -------------    ----------    -------------    ------------------------------------------------------------------------------------------------------------------------------------------
-    -- 1000                                             03/03/2018      ownk           Se crean API de servicios para el modulo de Gestion Usuario Pacrim
+    -- 1000                                             03/03/2018      ownk           Se crean API de servicios para el modulo de Gestion Usuario AUWEB
     -- -----------    -------------    -------------    ----------    -------------    ------------------------------------------------------------------------------------------------------------------------------------------
 
     -- ============================================================
@@ -70,7 +70,7 @@ CREATE OR REPLACE PACKAGE BODY FS_PCRM_US.EM_QEMPRESAS IS
     -- PROCEDURE consultarRolUsuarioEmpresa
     -- -----------------------------------------------------------
     -- Servicio especializado para hacer la consultar del rol dado 
-    -- un usuario registrado en el sistema pacrim
+    -- un usuario registrado en el sistema AUWEB
     -- ===========================================================
 	PROCEDURE obtenerIdEmpresa
     (
@@ -117,7 +117,7 @@ CREATE OR REPLACE PACKAGE BODY FS_PCRM_US.EM_QEMPRESAS IS
     -- PROCEDURE consultarRolUsuarioEmpresa
     -- -----------------------------------------------------------
     -- Servicio especializado para hacer la consultar del rol dado 
-    -- un usuario registrado en el sistema pacrim
+    -- un usuario registrado en el sistema AUWEB
     -- ===========================================================
 	PROCEDURE obtenerIdTEmpresa
     (
@@ -163,7 +163,7 @@ CREATE OR REPLACE PACKAGE BODY FS_PCRM_US.EM_QEMPRESAS IS
     -- PROCEDURE consultarRolUsuarioEmpresa
     -- -----------------------------------------------------------
     -- Servicio especializado para hacer la consultar del rol dado 
-    -- un usuario registrado en el sistema pacrim
+    -- un usuario registrado en el sistema AUWEB
     -- ===========================================================
 	PROCEDURE obtenerEmpresaPorTipo
     (

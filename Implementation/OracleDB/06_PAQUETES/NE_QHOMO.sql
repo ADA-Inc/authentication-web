@@ -29,29 +29,29 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.NE_QHOMO IS
     
   PROCEDURE homologarCoreWebUsuario
     (
-        p_persona_usuario_web          IN   US_TTCPURS%type,
+        p_persona_usuario_core         IN   US_TTCPURS,
         p_persona_usuario_web          OUT  US_TTWPURS,
         p_cod_rta                      OUT  NE_TCRTA.CRTA_CRTA%type
     );
   
   PROCEDURE homologarWebCoreUsuario
     (
-        p_persona_usuario_core         IN   US_TTWPURS%type,
+        p_persona_usuario_web          IN   US_TTWPURS,
         p_persona_usuario_core         OUT  US_TTCPURS,
         p_cod_rta                      OUT  NE_TCRTA.CRTA_CRTA%type
     );
  
   PROCEDURE homologarCoreWebModulo
     (
-        p_rol_modulo_web               IN   MO_TTCROMO%type,
-        p_modulo_web                   OUT  US_TTWROMO,
+        p_modulo_core                  IN   MO_TTCROMO,
+        p_modulo_web                   OUT  MO_TTWROMO,
         p_cod_rta                      OUT  NE_TCRTA.CRTA_CRTA%type
     ); 
     
   PROCEDURE homologarWebCoreModulo
     (
-        p_tempresa_nombre              IN   MO_TTWROMO%type,
-        p_modulo_core                  OUT  US_TTCROMO,
+        p_modulo_web                   IN   MO_TTWROMO,
+        p_modulo_core                  OUT  MO_TTCROMO,
         p_cod_rta                      OUT  NE_TCRTA.CRTA_CRTA%type
     ); 
     -- ------------------------------------------------------------
@@ -90,17 +90,17 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.NE_QHOMO IS
     BEGIN  
           
         IF(p_persona_usuario_core.COUNT != 0) THEN
-          FOR i IN p_persona_usuario_core.FIRST .. p_persona_usuario_core.LAST
+          FOR i IN p_persona_usuario_core.FIRST .. p_persona_usuario_core.LAST LOOP
             v_to_persona_usuario_web:=US_TOWPURS(
-                      i.USER_ALAS,
-                      i.PSNA_NOBE,
-                      i.PSNA_APDO,
-                      i.PSNA_DIRN,
-                      i.PSNA_TLFN,
-                      i.PSNA_EMAL,
-                      i.PSNA_PAIS,
-                      i.PSNA_NRID,
-                      i.ROLL_RLDN
+                      p_persona_usuario_core(i).USER_ALAS,
+                      p_persona_usuario_core(i).PSNA_NOBE,
+                      p_persona_usuario_core(i).PSNA_APDO,
+                      p_persona_usuario_core(i).PSNA_DIRN,
+                      p_persona_usuario_core(i).PSNA_TLFN,
+                      p_persona_usuario_core(i).PSNA_EMAL,
+                      p_persona_usuario_core(i).PSNA_PAIS,
+                      p_persona_usuario_core(i).PSNA_NRID,
+                      p_persona_usuario_core(i).ROLL_RLDN
               );
             v_tt_persona_usuario_web.extend;
             v_tt_persona_usuario_web(v_tt_persona_usuario_web.COUNT) :=v_to_persona_usuario_web;
@@ -141,21 +141,21 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.NE_QHOMO IS
     BEGIN  
           
         IF(p_persona_usuario_web.COUNT != 0) THEN
-          FOR i IN p_persona_usuario_web.FIRST .. p_persona_usuario_web.LAST
+          FOR i IN p_persona_usuario_web.FIRST .. p_persona_usuario_web.LAST LOOP
             v_to_persona_usuario_core:=US_TOCPURS(
                       NULL,
-                      i.USER_ALAS,
+                      p_persona_usuario_web(i).USER_ALAS,
                       NULL,
                       NULL,
-                      i.PSNA_NOBE,
-                      i.PSNA_APDO,
-                      i.PSNA_DIRN,
-                      i.PSNA_TLFN,
-                      i.PSNA_EMAL,
-                      i.PSNA_PAIS,
-                      i.PSNA_NRID,
+                      p_persona_usuario_web(i).PSNA_NOBE,
+                      p_persona_usuario_web(i).PSNA_APDO,
+                      p_persona_usuario_web(i).PSNA_DIRN,
+                      p_persona_usuario_web(i).PSNA_TLFN,
+                      p_persona_usuario_web(i).PSNA_EMAL,
+                      p_persona_usuario_web(i).PSNA_PAIS,
+                      p_persona_usuario_web(i).PSNA_NRID,
                       NULL,
-                      i.ROLL_RLDN,
+                      p_persona_usuario_web(i).ROLL_RLDN,
                       sysdate,
                       NULL,
                       NULL,
@@ -191,20 +191,20 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.NE_QHOMO IS
     -- ===========================================================
     PROCEDURE homologarCoreWebModulo
     (
-        p_modulo_core                  IN   US_TTCROMO,
-        p_modulo_web                   OUT  US_TTWROMO,
+        p_modulo_core              IN   MO_TTCROMO,
+        p_modulo_web                   OUT  MO_TTWROMO,
         p_cod_rta                      OUT  NE_TCRTA.CRTA_CRTA%type
     )IS
     
-    v_tt_modulo_web     US_TTWROMO := US_TTWROMO();
-    v_to_modulo_web     US_TOWROMO;
+    v_tt_modulo_web     MO_TTWROMO := MO_TTWROMO();
+    v_to_modulo_web     MO_TOWROMO;
     BEGIN  
           
         IF(p_modulo_core.COUNT != 0) THEN
-          FOR i IN p_modulo_core.FIRST .. p_modulo_core.LAST
-            v_to_modulo_web:=US_TOWROMO(
-                      i.ROLL_RLDN,
-                      i.MODU_NAME
+          FOR i IN p_modulo_core.FIRST .. p_modulo_core.LAST LOOP
+            v_to_modulo_web:=MO_TOWROMO(
+                      p_modulo_core(i).ROLL_RLDN,
+                      p_modulo_core(i).MODU_NAME
               );
             v_tt_modulo_web.extend;
             v_tt_modulo_web(v_tt_modulo_web.COUNT) :=v_to_modulo_web;
@@ -234,30 +234,30 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.NE_QHOMO IS
     -- ===========================================================
     PROCEDURE homologarWebCoreModulo
     (
-        p_modulo_web                   IN   US_TTWROMO,
-        p_modulo_core                  OUT  US_TTCROMO,
+        p_modulo_web                   IN   MO_TTWROMO,
+        p_modulo_core                   OUT  MO_TTCROMO,
         p_cod_rta                      OUT  NE_TCRTA.CRTA_CRTA%type
     )IS
     
-    v_tt_modulo_core     US_TTCROMO := US_TTCROMO();
-    v_to_modulo_core     US_TOCROMO;
+    v_tt_modulo_core     MO_TTCROMO := MO_TTCROMO();
+    v_to_modulo_core     MO_TOCROMO;
     BEGIN  
           
         IF(p_modulo_web.COUNT != 0) THEN
-          FOR i IN p_modulo_web.FIRST .. p_modulo_web.LAST
-            v_to_modulo_core:=US_TOCROMO(
+          FOR i IN p_modulo_web.FIRST .. p_modulo_web.LAST LOOP
+            v_to_modulo_core:=MO_TOCROMO(
                       NULL,
-                      i.ROLL_RLDN,
-                      NULL,
+                      p_modulo_web(i).ROLL_RLDN,
                       sysdate,
-                      i.MODU_NAME,
+                      NULL,
+                      p_modulo_web(i).MODU_NAME,
                       NULL,
                       NULL,
                       NULL,
                       NULL
               );
             v_tt_modulo_core.extend;
-            v_tt_modulo_core(v_tt_modulo_core.COUNT) :=v_to_modulo_core;
+            v_tt_modulo_core(v_tt_modulo_core.COUNT) := v_to_modulo_core;
             --
           END LOOP;
 
@@ -272,3 +272,5 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.NE_QHOMO IS
                 p_cod_rta  := 'ERROR_NC';
         
     END homologarWebCoreModulo;
+END NE_QHOMO;
+/

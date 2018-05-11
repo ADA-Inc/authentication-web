@@ -67,7 +67,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QVUSER IS
 			SELECT
 				USER_ALAS
 			FROM
-				FS_AUWEB_US.US_TUSER
+				FS_AUWEB_US.US_TUSER;
 
 			r_usuario c_usuario%rowtype;
         

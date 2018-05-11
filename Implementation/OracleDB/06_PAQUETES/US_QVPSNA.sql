@@ -59,15 +59,15 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QVPSNA IS
     PROCEDURE validarPersonaPorDocumento
     (
         p_documento_persona               IN  US_TPSNA.PSNA_NRID%type,
-        p_existencia_persona           OUT BOOLEAN,
-        p_cod_rta                   OUT NE_TCRTA.CRTA_CRTA%type
+        p_existencia_persona              OUT BOOLEAN,
+        p_cod_rta                         OUT NE_TCRTA.CRTA_CRTA%type
     )IS
         
         CURSOR c_persona IS
             SELECT
                 PSNA_NRID
             FROM
-                FS_AUWEB_US.US_TPSNA
+                FS_AUWEB_US.US_TPSNA;
 
             r_persona c_persona%rowtype;
         

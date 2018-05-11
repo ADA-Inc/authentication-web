@@ -48,7 +48,7 @@ Prompt
 alter TABLE FS_AUWEB_US.NE_TCRTA
   add constraint PK_NE_TCRTA primary key (CRTA_CRTA, CRTA_PRCS,CRTA_IDIOMA)
   using index 
-  TABLESPACE TS_IPACRIM
+  TABLESPACE TS_IAUWEB
   pctfree 10
   initrans 2
   maxtrans 255
