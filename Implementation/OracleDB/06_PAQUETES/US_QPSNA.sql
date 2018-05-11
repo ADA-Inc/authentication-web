@@ -78,7 +78,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QPSNA IS
     -- ===========================================================
     -- PROCEDURE crearPersona
     -- -----------------------------------------------------------
-    -- creacion de perosna dado atributos
+    -- creacion de perSona dado atributos
     -- ===========================================================
     PROCEDURE crearPersona
     (
