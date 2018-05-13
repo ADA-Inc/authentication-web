@@ -262,10 +262,10 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.NE_QHOMO IS
           END LOOP;
 
           p_modulo_core := v_tt_modulo_core;
-          p_cod_rta  := 'Transferencia relizada';
+          p_cod_rta  := 'OK';
         ELSE
           p_modulo_core := NULL;
-          p_cod_rta  := 'p_modulo_web NULL';
+          p_cod_rta  := 'ER_EMP_NUL';
         END IF;
         EXCEPTION
             WHEN OTHERS THEN

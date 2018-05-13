@@ -102,9 +102,9 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QMODU IS
             p_nombre_modulo,
             p_descripcion_modulo
           );
-           p_cod_rta     := 'creacion de MODU exitosa';
+           p_cod_rta     := 'OK';
         ELSE
-           p_cod_rta     := 'el MODU ya existe';
+           p_cod_rta     := 'ER_NULL';
         END IF;
         EXCEPTION
             WHEN OTHERS THEN
@@ -126,7 +126,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QMODU IS
     (
         p_nombre_modulo               IN  MO_TMODU.MODU_NAME%type,
         p_id_modulo                   OUT MO_TMODU.MODU_MODU%type,
-        p_cod_rta                      OUT NE_TCRTA.CRTA_CRTA%type
+        p_cod_rta                     OUT NE_TCRTA.CRTA_CRTA%type
     )IS
 
     CURSOR c_MODU IS
@@ -147,9 +147,9 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QMODU IS
           
         IF(r_MODU.MODU_MODU IS NOT NULL) THEN
           p_id_modulo  :=  r_MODU.MODU_MODU;
-          p_cod_rta     := 'busqueda exitosa';
+          p_cod_rta     := 'OK';
         ELSE
-          p_cod_rta     := 'no se encontro el nombre de MODU';
+          p_cod_rta     := 'ER_NULL';
         END IF;
         EXCEPTION
             WHEN OTHERS THEN
@@ -196,7 +196,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QMODU IS
             WHERE 
                 MODU_MODU = v_id_modulo;
 
-              p_cod_rta     := 'actualizacion exitosa';
+              p_cod_rta     := 'OK';
         ELSE
               p_cod_rta     := v_cod_rta_tipo;
         END IF;

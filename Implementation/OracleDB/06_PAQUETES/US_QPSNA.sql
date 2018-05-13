@@ -36,6 +36,7 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.US_QPSNA IS
         p_telefono_persona          IN  US_TPSNA.PSNA_TLFN%type,
         p_email_persona             IN  US_TPSNA.PSNA_EMAL%type,
         p_pais_persona              IN  US_TPSNA.PSNA_PAIS%type,
+        p_id_persona                OUT US_TPSNA.PSNA_PSNA%type,
         p_cod_rta                   OUT NE_TCRTA.CRTA_CRTA%type
     );
  
@@ -71,7 +72,7 @@ prompt
 
 CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QPSNA IS
   
-     --
+    --
     -- #VERSION:0000001000
     --
     
@@ -89,6 +90,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QPSNA IS
         p_telefono_persona          IN  US_TPSNA.PSNA_TLFN%type,
         p_email_persona             IN  US_TPSNA.PSNA_EMAL%type,
         p_pais_persona              IN  US_TPSNA.PSNA_PAIS%type,
+        p_id_persona                OUT US_TPSNA.PSNA_PSNA%type,
         p_cod_rta                   OUT NE_TCRTA.CRTA_CRTA%type
     )IS
 
@@ -127,9 +129,10 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QPSNA IS
             p_email_persona,
             p_pais_persona     
           );
-           p_cod_rta     := 'creacion de PSNA exitosa';
+           p_id_persona  := v_secuencia;
+           p_cod_rta     := 'OK';
         ELSE
-           p_cod_rta     := 'el PSNA ya existe';
+           p_cod_rta     := 'ER_NULL';
         END IF;
         EXCEPTION
             WHEN OTHERS THEN
@@ -171,9 +174,9 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QPSNA IS
           
         IF(r_persona.PSNA_PSNA IS NOT NULL) THEN
           p_id_persona  :=  r_persona.PSNA_PSNA;
-          p_cod_rta     := 'busqueda exitosa';
+          p_cod_rta     := 'OK';
         ELSE
-          p_cod_rta     := 'no se encontro el documento de PSNA';
+          p_cod_rta     := 'ER_NULL';
         END IF;
         EXCEPTION
             WHEN OTHERS THEN
@@ -229,7 +232,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QPSNA IS
             WHERE 
                 PSNA_PSNA = v_id_persona;
 
-              p_cod_rta     := 'actualizacion exitosa';
+              p_cod_rta     := 'OK';
         ELSE
               p_cod_rta     := v_cod_rta_tipo;
         END IF;
