@@ -191,7 +191,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.NE_QHOMO IS
     -- ===========================================================
     PROCEDURE homologarCoreWebModulo
     (
-        p_modulo_core              IN   MO_TTCROMO,
+        p_modulo_core                  IN   MO_TTCROMO,
         p_modulo_web                   OUT  MO_TTWROMO,
         p_cod_rta                      OUT  NE_TCRTA.CRTA_CRTA%type
     )IS

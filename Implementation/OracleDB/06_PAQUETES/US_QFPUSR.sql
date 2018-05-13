@@ -6,7 +6,7 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.US_QFPUSR IS
     -- ===========================================================
     -- US_QFPUSR
     -- -----------------------------------------------------------
-    -- Todas las funciones del PSNA
+    -- Todas las funciones del persona usuario y rol
     -- ===========================================================
     --
     -- #VERSION:0000001000
@@ -29,9 +29,9 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.US_QFPUSR IS
 
   PROCEDURE obtenerUsperoId
     (
-        p_nombre_roll             IN  US_TROLL.ROLL_ROLL%type,
-        p_nombre_usuario          IN  US_TUSER.USER_USER%type,
-        p_documento_persona       IN  US_TPSNA.PSNA_PSNA%type,
+        p_nombre_roll             IN  US_TROLL.ROLL_RLDN%type,
+        p_nombre_usuario          IN  US_TUSER.USER_ALAS%type,
+        p_documento_persona       IN  US_TPSNA.PSNA_NRID%type,
         p_id_uspero               OUT US_TPUSR.PUSR_PUSR%type,
         p_cod_rta                 OUT NE_TCRTA.CRTA_CRTA%type
     );
@@ -72,9 +72,9 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QFPUSR IS
     -- ===========================================================
     PROCEDURE obtenerUsperoId
     (
-        p_nombre_roll             IN  US_TROLL.ROLL_ROLL%type,
-        p_nombre_usuario          IN  US_TUSER.USER_USER%type,
-        p_documento_persona       IN  US_TPSNA.PSNA_PSNA%type,
+        p_nombre_roll             IN  US_TROLL.ROLL_RLDN%type,
+        p_nombre_usuario          IN  US_TUSER.USER_ALAS%type,
+        p_documento_persona       IN  US_TPSNA.PSNA_NRID%type,
         p_id_uspero               OUT US_TPUSR.PUSR_PUSR%type,
         p_cod_rta                 OUT NE_TCRTA.CRTA_CRTA%type
     )IS
@@ -85,7 +85,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QFPUSR IS
             pc_PSNA_PSNA US_TPSNA.PSNA_PSNA%type
         )is
             SELECT
-               *
+               PUSR_PUSR
             FROM
                 US_TROLL ro,
                 US_TUSER us, 
@@ -137,7 +137,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QFPUSR IS
             p_cod_rta   := 'OK';
         ELSE
             p_id_uspero := NULL;
-            p_cod_rta   := 'ER_EMP_NUL';
+            p_cod_rta   := 'ER_NULL';
         END if;
         EXCEPTION
             WHEN OTHERS THEN

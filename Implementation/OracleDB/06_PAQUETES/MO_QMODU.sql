@@ -189,7 +189,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QMODU IS
         IF(v_id_modulo IS NOT NULL) THEN
 
             UPDATE 
-                FS_AUWEB_US.MO_TMODU
+                MO_TMODU
             SET 
                 MODU_NAME = p_nombre_modulo_act,
                 MODU_DESC = p_descripcion_modulo_act,
