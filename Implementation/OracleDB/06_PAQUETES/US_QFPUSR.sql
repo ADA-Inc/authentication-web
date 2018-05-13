@@ -180,7 +180,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QFPUSR IS
     BEGIN  
         v_secuencia := US_SETPUSR.NextVal;
 
-        US_QROLL.crearRoll
+        US_QROLL.buscarRollPorNombre
         (
             p_nombre_roll,
             v_id_roll,
