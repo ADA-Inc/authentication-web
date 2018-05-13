@@ -131,7 +131,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QFPUSR IS
         FETCH c_uspero INTO r_uspero;
         CLOSE c_uspero;
 
-        IF  v_cod_rta_roll='OK' AND v_cod_rta_usuario='OK' AND v_cod_rta_persona='OK' THEN
+        IF  v_cod_rta_roll='OK' AND v_cod_rta_usuario='OK' AND v_cod_rta_persona='OK' AND r_uspero.PUSR_PUSR IS NOT NULL THEN
 
             p_id_uspero := r_uspero.PUSR_PUSR;
             p_cod_rta   := 'OK';
