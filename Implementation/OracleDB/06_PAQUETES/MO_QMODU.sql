@@ -175,7 +175,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QMODU IS
     )IS
     
         v_id_modulo            MO_TMODU.MODU_MODU%type;
-        v_cod_rta_tipo       NE_TCRTA.CRTA_CRTA%type;
+        v_cod_rta_tipo         NE_TCRTA.CRTA_CRTA%type;
 
     BEGIN  
 
@@ -192,7 +192,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QMODU IS
                 MO_TMODU
             SET 
                 MODU_NAME = p_nombre_modulo_act,
-                MODU_DESC = p_descripcion_modulo_act,
+                MODU_DESC = p_descripcion_modulo_act
             WHERE 
                 MODU_MODU = v_id_modulo;
 

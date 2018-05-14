@@ -29,7 +29,7 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.MO_QVMODU IS
     
   PROCEDURE validarModuloPorNombre
     (
-        p_nombre_modulo               IN  MO_TMODU.MODU_NAME%type,
+        p_nombre_modulo                  IN  MO_TMODU.MODU_NAME%type,
         p_existencia_modulo              OUT BOOLEAN,
         p_cod_rta                        OUT NE_TCRTA.CRTA_CRTA%type
     ); 

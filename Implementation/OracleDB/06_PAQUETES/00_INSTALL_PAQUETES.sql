@@ -5,6 +5,9 @@ REM Base de Datos : FS_AUWEB_US
 REM Script : Paquetes
 REM ******************************************************************
 
+PROMPT US_QVAFPUSR.sql...
+@@US_QVAFPUSR.sql
+
 PROMPT MO_QMODU.sql...
 @@MO_QMODU.sql
 
@@ -19,9 +22,6 @@ PROMPT US_QVROLL.sql...
 
 PROMPT US_QVUSER.sql...
 @@US_QVUSER.sql
-
--- PROMPT NE_QHOMO.sql...
--- @@NE_QHOMO.sql
 
 PROMPT US_QPSNA.sql...
 @@US_QPSNA.sql
