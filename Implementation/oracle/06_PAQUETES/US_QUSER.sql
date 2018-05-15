@@ -89,20 +89,26 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QUSER IS
         p_cod_rta                      OUT NE_TCRTA.CRTA_CRTA%type
     )IS
 
-    CURSOR c_usuario IS
+    CURSOR c_usuario
+       (
+            pc_password_md5          VARCHAR2
+        ) IS
         SELECT 
             USER_USER
         FROM
             FS_AUWEB_US.US_TUSER
         WHERE
             USER_ALAS = p_nombre_usuario        AND
-            USER_PSWD = p_password_usuario;
+            USER_PSWD = pc_password_md5;
 
-        r_usuario c_usuario%rowtype;
+        r_usuario               c_usuario%rowtype;
+        v_password_md5          VARCHAR2(30);
 
     BEGIN  
 
-        OPEN  c_usuario;
+        v_password_md5 := DBMS_OBFUSCATION_TOOLKIT.MD5(INPUT_STRING => p_password_usuario); 
+
+        OPEN  c_usuario(v_password_md5);
         FETCH c_usuario INTO r_usuario;
         CLOSE c_usuario;
           
@@ -139,9 +145,11 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QUSER IS
         v_existencia_usuario    BOOLEAN;
         v_secuencia             NUMBER;
         v_cod_rta_tipo          NE_TCRTA.CRTA_CRTA%type;
+        v_password_md5          VARCHAR2(30);
 
     BEGIN  
         v_secuencia := US_SETUSER.NextVal;
+        v_password_md5 := DBMS_OBFUSCATION_TOOLKIT.MD5(INPUT_STRING => p_password_usuario);
 
         US_QVUSER.validarUsuarioPorNombre
         (
@@ -159,7 +167,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QUSER IS
           VALUES(
             v_secuencia,
             p_nombre_usuario,
-            p_password_usuario
+            v_password_md5
           );
            p_id_usuario  := v_secuencia;
            p_cod_rta     := 'OK';
