@@ -40,7 +40,7 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.MO_QFROMO IS
         p_nombre_modulo             IN  MO_TMODU.MODU_NAME%type,
         p_cod_rta                   OUT NE_TCRTA.CRTA_CRTA%type
     );
-  PROCEDURE ModulosAccesoPorNombreUsuario
+  PROCEDURE modulosAccesoPorNombreUsuario
     (
         p_nombre_usuario          IN  US_TUSER.USER_ALAS%type,
         p_tt_usmo                 OUT MO_QFROMO.TT_USMO,
@@ -71,11 +71,11 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QFROMO IS
     --
     
     -- ===========================================================
-    -- PROCEDURE ModulosAccesoPorNombreUsuario
+    -- PROCEDURE modulosAccesoPorNombreUsuario
     -- -----------------------------------------------------------
     -- obtiene el los modulos alos cuales el usuario puede acceder 
     -- ===========================================================
-    PROCEDURE ModulosAccesoPorNombreUsuario
+    PROCEDURE modulosAccesoPorNombreUsuario
     (
         p_nombre_usuario          IN  US_TUSER.USER_ALAS%type,
         p_tt_usmo                 OUT MO_QFROMO.TT_USMO,
@@ -134,7 +134,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QFROMO IS
                 p_tt_usmo:= NULL;
                 p_cod_rta  := 'ERROR_NC';
             
-    END ModulosAccesoPorNombreUsuario;
+    END modulosAccesoPorNombreUsuario;
 
     --
     -- #VERSION:0000001000

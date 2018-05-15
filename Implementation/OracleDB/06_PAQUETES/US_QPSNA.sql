@@ -101,7 +101,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QPSNA IS
     BEGIN  
         v_secuencia := US_SETPSNA.NextVal;
 
-        US_QVPSNA.validarPersonaPordocumento
+        US_QVPSNA.validarPersonaPorDoct
         (
             p_documento_persona,
             v_existencia_persona,

@@ -27,7 +27,7 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.US_QVPSNA IS
     -- Declaracion de PROCEDIMIENTOS y FUNCIONES
     -- ============================================================
     
-  PROCEDURE validarPersonaPorDocumento
+  PROCEDURE validarPersonaPorDoct
     (
         p_documento_persona               IN  US_TPSNA.PSNA_NRID%type,
         p_existencia_persona              OUT BOOLEAN,
@@ -52,11 +52,11 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QVPSNA IS
     --
     
     -- ===========================================================
-    -- PROCEDURE validarPersonaPorDocumento
+    -- PROCEDURE validarPersonaPorDoct
     -- -----------------------------------------------------------
     -- validar existencia de persona por documento
     -- ===========================================================
-    PROCEDURE validarPersonaPorDocumento
+    PROCEDURE validarPersonaPorDoct
     (
         p_documento_persona               IN  US_TPSNA.PSNA_NRID%type,
         p_existencia_persona              OUT BOOLEAN,
@@ -93,7 +93,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QVPSNA IS
             p_existencia_persona := FALSE;
             p_cod_rta            := 'ERROR_NC';
         
-    END validarPersonaPorDocumento;
+    END validarPersonaPorDoct;
     
 END US_QVPSNA;
 /
