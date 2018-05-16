@@ -12,7 +12,7 @@ package org.ada.security.model.persitencia.usuario;
 
 /**
  *
- * <h1>UsuarioDBDto
+ * <h1>UsuarioDBDto</h1>
  *
  * Description
  *
