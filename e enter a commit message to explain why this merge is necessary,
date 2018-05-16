@@ -1,0 +1,174 @@
+[33mcommit 286053bda70b4e7764c6dc711f0167e1bd798c35[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Merge: 0f4a59a b386f08
+Author: Master-Zen <daalpiva@gmail.com>
+Date:   Wed May 16 11:29:51 2018 -0500
+
+    Merge branch 'master' of https://github.com/ADA-Inc/authentication-web
+    
+    # Please enter a commit message to explain why this merge is necessary,
+    # especially if it merges an updated upstream into a topic branch.
+    #
+    # Lines starting with '#' will be ignored, and an empty message aborts
+    # the commit.
+
+[33mcommit 0f4a59a3379844c4d975183de722f93197c7c8a0[m
+Author: Master-Zen <daalpiva@gmail.com>
+Date:   Wed May 16 10:58:11 2018 -0500
+
+    op
+
+[33mcommit b386f082ef6a70ab2f1b80fbbd32206007bac59e[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: unknown <you@example.com>
+Date:   Tue May 15 11:15:56 2018 -0500
+
+    crack
+
+[33mcommit 3fdafb9f405c527c60c8185f9785350bcf6c1648[m
+Author: Master-Zen <daalpiva@gmail.com>
+Date:   Mon May 14 22:45:55 2018 -0500
+
+    pass
+
+[33mcommit 6e66493f88fa95d2c77c5b44905849a81b5b2041[m
+Author: Master-Zen <daalpiva@gmail.com>
+Date:   Mon May 14 21:26:12 2018 -0500
+
+    java-core
+
+[33mcommit 319e7ce7b7ff26ad89e95275cffbc054765c9a0c[m
+Author: Master-Zen <daalpiva@gmail.com>
+Date:   Mon May 14 19:59:24 2018 -0500
+
+    crack
+
+[33mcommit 073912d45902a8ead25c81883f2f734d7c0fb132[m
+Author: Master-Zen <daalpiva@gmail.com>
+Date:   Mon May 14 13:13:25 2018 -0500
+
+    crack
+
+[33mcommit 2c1e00a358472552b883a147c40e7086e51325c2[m
+Author: Master-Zen <daalpiva@gmail.com>
+Date:   Sun May 13 22:17:58 2018 -0500
+
+    hello
+
+[33mcommit 44aef554341b2be49d0629f4251a1471660c5122[m
+Author: Master-Zen <daalpiva@gmail.com>
+Date:   Sun May 13 10:34:37 2018 -0500
+
+    hi
+
+[33mcommit 2a3a767cf1b30b7752e50e21173a3893a7a8d821[m
+Author: Master-Zen <daalpiva@gmail.com>
+Date:   Sun May 13 10:25:45 2018 -0500
+
+    crack
+
+[33mcommit e8428fada12ed0044ced18008156800a1abd4c5b[m
+Author: Master-Zen <daalpiva@gmail.com>
+Date:   Sat May 12 20:43:36 2018 -0500
+
+    crack
+
+[33mcommit 6fe110f848615417b7fb63bbb37364bbfa225f12[m
+Author: Master-Zen <daalpiva@gmail.com>
+Date:   Sat May 12 20:22:43 2018 -0500
+
+    hp
+
+[33mcommit 5291761834a658245e8820bacedeb21b8943b44f[m
+Author: Master-Zen <daalpiva@gmail.com>
+Date:   Sat May 12 16:30:30 2018 -0500
+
+    hola
+
+[33mcommit 4098e084b51026e02d5104c3c5c73f2815081691[m
+Author: unknown <you@example.com>
+Date:   Fri May 11 18:33:21 2018 -0500
+
+    hi
+
+[33mcommit e9232a9886f757fe4db8fbd93ef4cce520cad5c3[m
+Author: unknown <you@example.com>
+Date:   Fri May 11 17:41:06 2018 -0500
+
+    message
+
+[33mcommit d61b90dc8a3590cfb7241a68f8adbeeba7caf7bc[m
+Author: EroDubai <daalpiva@gmail.com>
+Date:   Fri May 11 01:04:41 2018 -0500
+
+    crud pro
+
+[33mcommit f3b32e98a548ea4d2e691b15a68aab46925667d5[m
+Author: EroDubai <daalpiva@gmail.com>
+Date:   Thu May 10 23:00:11 2018 -0500
+
+    pro compila
+
+[33mcommit 524be0a0c6a922dbc1803e628ccb21e53b56f2d2[m
+Author: unknown <you@example.com>
+Date:   Thu May 10 18:46:12 2018 -0500
+
+    hello
+
+[33mcommit f7f92f77c5b1e8981127b5683033fbf77ab4894e[m
+Author: EroDubai <daalpiva@gmail.com>
+Date:   Thu May 10 08:33:02 2018 -0500
+
+    Last
+
+[33mcommit b475bcee5081b4fcc20c8c16a4a5c4e36bf358e0[m
+Author: unknown <you@example.com>
+Date:   Wed May 9 18:06:43 2018 -0500
+
+    listo para pl
+
+[33mcommit 2e058f0c7736ca6ec5655ba81366988a768e15d8[m
+Author: unknown <you@example.com>
+Date:   Wed May 9 12:05:17 2018 -0500
+
+    last
+
+[33mcommit c29174a585b2e0d8762fc8838782fd2c3f72023d[m
+Author: unknown <you@example.com>
+Date:   Tue May 8 17:45:29 2018 -0500
+
+    abc
+
+[33mcommit 2c9afef1f9a82d24367bcdc3ba3d03f117ade31f[m
+Author: unknown <you@example.com>
+Date:   Tue May 8 17:22:04 2018 -0500
+
+    Creacion de tablas instalacion inicial
+
+[33mcommit c5a0cb66bbdc38ee0d99df0677e3b3d230c84b52[m
+Author: unknown <you@example.com>
+Date:   Mon May 7 18:29:37 2018 -0500
+
+    hello
+
+[33mcommit 0806f277dfbd98090f35f0225b5cf038cc3d6302[m
+Author: EroDubai <daalpiva@gmail.com>
+Date:   Sat May 5 15:16:41 2018 -0500
+
+    test
+
+[33mcommit 7440c9d3d4416508bc6fbf0be716ddb14395ceb0[m
+Author: EroDubai <daalpiva@gmail.com>
+Date:   Sat May 5 15:14:54 2018 -0500
+
+    EA
+
+[33mcommit f27d0e16e7590cd115ed0e0844006cdbd8f93127[m
+Author: EroDubai <daalpiva@gmail.com>
+Date:   Sat May 5 10:59:04 2018 -0500
+
+    Esta es la estructura de directorios estandar
+
+[33mcommit 20f0a5085f58791db176baa37811b3fe7e48d469[m
+Author: David Alejandro Piracoca Vargas <daalpiva@gmail.com>
+Date:   Sat May 5 10:53:43 2018 -0500
+
+    Initial commit
