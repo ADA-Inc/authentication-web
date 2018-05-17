@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 public interface GestionadorUsuariosMapper {
 	
+	public void loginUsuario(HashMap<Object, Object> parametros);
+	
 	public void crearUsuarioConRol(HashMap<Object, Object> parametros);
 	
 	public void actualizarUsuarioPersona(HashMap<Object, Object> parametros);

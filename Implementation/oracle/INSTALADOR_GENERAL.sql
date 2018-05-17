@@ -35,7 +35,7 @@ spool off
 set feedback on
 set pages 200
 
-prompt Si la ejecuciÃ³n del script no presenta ningÃºn problema por favor haga COMMIT, 
+prompt Si la ejecución del script no presenta ningún problema por favor haga COMMIT, 
 prompt de lo contrario haga ROLLBACK y comuniquese con Dajo INC
 prompt
 

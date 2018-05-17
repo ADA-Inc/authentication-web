@@ -6,7 +6,7 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.PC_API_WEB IS
     -- ===========================================================
     -- PC_API_WEB
     -- -----------------------------------------------------------
-    -- ReÃºne funciones y procedimientos relacionados con la 
+    -- Reúne funciones y procedimientos relacionados con la 
     -- gestion de negocio 
     -- ===========================================================
     --
@@ -14,7 +14,7 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.PC_API_WEB IS
     --
     -- HISTORIAL DE CAMBIOS
     --
-    -- VersiÃ³n        GAP               Solicitud        Fecha        RealizÃ³            DescripciÃ³n
+    -- Versión        GAP               Solicitud        Fecha        Realizó            Descripción
     -- -----------    -------------    -------------    ----------    -------------    ------------------------------------------------------------------------------------------------------------------------------------------
     -- 
     -- -----------    -------------    -------------    ----------    -------------    ------------------------------------------------------------------------------------------------------------------------------------------
@@ -37,7 +37,7 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.PC_API_WEB IS
         (
             p_nombre_usuario               IN  US_TUSER.USER_ALAS%type,
             p_password_usuario             IN  US_TUSER.USER_PSWD%type,
-            p_log_usuario                  OUT BOOLEAN,
+            p_id_usuario                   OUT US_TUSER.USER_USER%type,
             p_cod_rta                      OUT NE_TCRTA.CRTA_CRTA%type,
             p_msj_rta                      OUT NE_TCRTA.CRTA_DESCRI%type
         );
@@ -152,11 +152,12 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
         (
             p_nombre_usuario               IN  US_TUSER.USER_ALAS%type,
             p_password_usuario             IN  US_TUSER.USER_PSWD%type,
-            p_log_usuario                  OUT BOOLEAN,
+            p_id_usuario                   OUT US_TUSER.USER_USER%type,
             p_cod_rta                      OUT NE_TCRTA.CRTA_CRTA%type,
             p_msj_rta                      OUT NE_TCRTA.CRTA_DESCRI%type
         )IS
-        
+
+          v_id_usuario                 US_TUSER.USER_USER%type,
           v_cod_rta_ruser              NE_TCRTA.CRTA_CRTA%type;
           v_cod_rta                    NE_TCRTA.CRTA_CRTA%type;
           v_msj_rta                    NE_TCRTA.CRTA_DESCRI%type;
@@ -166,23 +167,26 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
             (
                 p_nombre_usuario     ,
                 p_password_usuario   ,
-                p_log_usuario        ,
+                v_id_usuario         ,
                 v_cod_rta_ruser     
             );
               
-            IF(p_log_usuario) THEN
+            IF(v_cod_rta_ruser = 'OK') THEN
               v_cod_rta     := 'OK';
-              v_msj_rta := 'Login de usuario exitoso';
+              p_id_usuario  :=  v_id_usuario;
+              v_msj_rta     := 'Login de usuario exitoso';
             ELSE
+                p_id_usuario  :=  NULL;
                 v_cod_rta     := 'ERR_INSR_USER';
-                v_msj_rta := 'Usuario o password incorrectos';
+                v_msj_rta     := 'Usuario o password incorrectos';
             END IF;
             p_cod_rta  := v_cod_rta;
             p_msj_rta  := v_msj_rta;
         EXCEPTION
             WHEN OTHERS THEN
-                p_cod_rta  := 'ERROR_NC';
-                p_msj_rta  := 'Error Negocio No se registro el usuario';
+                p_id_usuario  :=  NULL;
+                p_cod_rta     := 'ERROR_NC';
+                p_msj_rta     := 'Error Negocio No se registro el usuario';
             
         END loginUsuario;
         -- ===========================================================
@@ -287,10 +291,10 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
               
             IF(v_cod_rta_ruser = 'OK') THEN
               v_cod_rta     := 'OK';
-              v_msj_rta := 'Se actualizando correctamente el usuario';
+              v_msj_rta     := 'Se actualizando correctamente el usuario';
             ELSE
-                v_cod_rta     := 'ERR_ACT_USER';
-                v_msj_rta := 'No se actualizando el usuario';
+                v_cod_rta   := 'ERR_ACT_USER';
+                v_msj_rta   := 'No se actualizando el usuario';
             END IF;
             p_cod_rta  := v_cod_rta;
             p_msj_rta  := v_msj_rta;

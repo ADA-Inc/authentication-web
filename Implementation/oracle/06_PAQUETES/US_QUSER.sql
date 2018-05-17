@@ -13,7 +13,7 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.US_QUSER IS
     --
     -- HISTORIAL DE CAMBIOS
     --
-    -- Versiï¿½n        GAP                Solicitud        Fecha        Realizï¿½            Descripciï¿½n
+    -- Versión        GAP              Solicitud        Fecha         Realizó          Descripción
     -- -----------    -------------    -------------    ----------    -------------    ------------------------------------------------------------------------------------------------------------------------------------------
     -- 
     -- -----------    -------------    -------------    ----------    -------------    ------------------------------------------------------------------------------------------------------------------------------------------
@@ -31,7 +31,7 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.US_QUSER IS
     (
         p_nombre_usuario               IN  US_TUSER.USER_ALAS%type,
         p_password_usuario             IN  US_TUSER.USER_PSWD%type,
-        p_log_usuario                  OUT BOOLEAN,
+        p_id_usuario                   OUT US_TUSER.USER_USER%type,
         p_cod_rta                      OUT NE_TCRTA.CRTA_CRTA%type
     );
   
@@ -85,7 +85,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QUSER IS
     (
         p_nombre_usuario               IN  US_TUSER.USER_ALAS%type,
         p_password_usuario             IN  US_TUSER.USER_PSWD%type,
-        p_log_usuario                  OUT BOOLEAN,
+        p_id_usuario                   OUT US_TUSER.USER_USER%type,
         p_cod_rta                      OUT NE_TCRTA.CRTA_CRTA%type
     )IS
 
@@ -113,14 +113,15 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QUSER IS
         CLOSE c_usuario;
           
         IF(r_usuario.USER_USER IS NOT NULL) THEN
-          p_log_usuario := TRUE;
+          p_id_usuario := r_usuario.USER_USER;
           p_cod_rta     := 'OK';
         ELSE
-          p_log_usuario := FALSE;
+          p_id_usuario := NULL;
           p_cod_rta     := 'ER_NULLL';
         END IF;
         EXCEPTION
             WHEN OTHERS THEN
+                p_id_usuario := NULL;
                 p_cod_rta  := 'ERROR_NC';
         
     END loginUsuario;

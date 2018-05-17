@@ -26,6 +26,80 @@ public class ServicioRestGestionadorUsuario {
 
 	@Autowired
 	GestionadorUsuarioControllerDB gestionadorUsuarioControllerDB;
+	
+	@RequestMapping(value = ConstantesApiPathRest.PATH_REGISTRO_USUARIO, method = RequestMethod.POST)
+	public ResponseEntity<ProcesoRespuestaApiRest> loginUsuario(@RequestBody UsuarioRestDto usuarioRestDto) {
+
+		/*
+		 * ==============================================
+		 * Se realiza instacia de objetos que se utilizaran 
+		 * en el medoto.
+		 * ************************************************* 
+		 */
+		UsuarioDBDto usuarioDBDto = null;
+		ProcesoRespuestaApiRest procesoRespuestaApiRest = null;
+		ProcesoRespuestaApiDb procesoRespuestaApiDb = null;
+
+		/*
+		 * ==============================================
+		 * Se se realiza el mapeo de los parametros 
+		 * de entrada que necesita el servicio ofrecido por 
+		 * la API y se llama el controller
+		 * ************************************************* 
+		 */
+
+		/*
+		 * =====================================
+		 * Este if se encarga de ...
+		 * =====================================
+		 */
+		if (usuarioRestDto.getDocumentoPersona()!=null && usuarioRestDto.getNombreRol()!=null && usuarioRestDto.getNombreUsuario()!=null) {
+
+
+			try {
+				usuarioDBDto = new UsuarioDBDto();
+				usuarioDBDto.setP_NOMBRE_USUARIO(usuarioRestDto.getNombreUsuario());
+				usuarioDBDto.setP_PASSWORD_USUARIO(usuarioRestDto.getClaveUsuario());
+
+				procesoRespuestaApiDb = gestionadorUsuarioControllerDB.loginUsuario(usuarioDBDto);
+
+				/*
+				 * =====================================
+				 * Este if se encarga de ...
+				 * =====================================
+				 */
+				if (procesoRespuestaApiDb!= null && procesoRespuestaApiDb.getCodigoRespuestaApi()!=null ) {
+					procesoRespuestaApiRest = new ProcesoRespuestaApiRest();
+					procesoRespuestaApiRest.setIdUsuario(procesoRespuestaApiDb.getIdUsuario());
+					procesoRespuestaApiRest.setCodigoRespuestaApi(procesoRespuestaApiDb.getCodigoRespuestaApi());
+					procesoRespuestaApiRest.setMensajeRespuestaApi(procesoRespuestaApiDb.getMensajeRespuestaApi());
+
+				}else {
+					procesoRespuestaApiRest = new ProcesoRespuestaApiRest();
+					procesoRespuestaApiRest.setCodigoRespuestaApi(ConstantesCodigosAplicacion.CODIGO_ERROR_SERVICIO);
+					procesoRespuestaApiRest.setMensajeRespuestaApi(ConstantesMensajesAplicacion.CODIGO_MENSAJE_ERROR_SERVICIO);
+				}
+
+			} catch (Exception e) {
+				procesoRespuestaApiRest = new ProcesoRespuestaApiRest();
+				procesoRespuestaApiRest.setCodigoRespuestaApi(ConstantesCodigosAplicacion.CODIGO_ERROR_SERVICIO);
+				procesoRespuestaApiRest.setMensajeRespuestaApi(ConstantesMensajesAplicacion.CODIGO_MENSAJE_ERROR_SERVICIO);
+			}
+
+		}else {
+			procesoRespuestaApiRest = new ProcesoRespuestaApiRest();
+			procesoRespuestaApiRest.setCodigoRespuestaApi(ConstantesCodigosAplicacion.CODIGO_ERROR_PARAMETROS_SERVICIO);
+			procesoRespuestaApiRest.setMensajeRespuestaApi(ConstantesMensajesAplicacion.CODIGO_MENSAJE_ERROR_PARAMETROS_SERVICIO);
+		}
+
+		if(procesoRespuestaApiRest.getCodigoRespuestaApi()!=null){
+			return new ResponseEntity<ProcesoRespuestaApiRest>(procesoRespuestaApiRest,HttpStatus.OK);
+		}else {
+			return new ResponseEntity<ProcesoRespuestaApiRest>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+		}
+
+
+	}
 
 	@RequestMapping(value = ConstantesApiPathRest.PATH_REGISTRO_USUARIO, method = RequestMethod.POST)
 	public ResponseEntity<ProcesoRespuestaApiRest> registrarUsuarioRol(@RequestBody UsuarioRestDto usuarioRestDto) {

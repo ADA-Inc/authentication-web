@@ -193,7 +193,7 @@ public class ServicioRestGestionadorModulo {
 	}
 
 	@RequestMapping(value = ConstantesApiPathRest.PATH_ASIGNAR_MODULO, method = RequestMethod.POST)
-	public ResponseEntity<ProcesoRespuestaApiRest> asignarRolModuloPersona(@RequestBody ModuloRestDto moduloRestDto) {
+	public ResponseEntity<ProcesoRespuestaApiRest> asignarRolModulo(@RequestBody ModuloRestDto moduloRestDto) {
 
 		/*
 		 * ==============================================
@@ -225,7 +225,6 @@ public class ServicioRestGestionadorModulo {
 				
 				moduloDBDto.setP_NOMBRE_ROLL(moduloRestDto.getnombreRoll());
 				moduloDBDto.setP_NOMBRE_MODULO(moduloRestDto.getNombreModulo());
-				moduloDBDto.setP_DESCRIPCION_MODULO(moduloRestDto.getdescripcionModulo());
 
 
 				procesoRespuestaApiDb = gestionadorModuloControllerDB.asignarRolModulo(moduloDBDto);

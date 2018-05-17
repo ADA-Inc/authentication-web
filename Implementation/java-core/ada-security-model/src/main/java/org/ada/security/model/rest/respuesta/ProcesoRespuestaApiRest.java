@@ -22,9 +22,16 @@ package org.ada.security.model.rest.respuesta;
  */
 public class ProcesoRespuestaApiRest {
 	
+	private String idUsuario;
 	private String codigoRespuesta;
 	private String mensajeRespuesta;
 	
+	public String getIdUsuario() {
+		return idUsuario;
+	}
+	public void setIdUsuario(String idUsuario) {
+		this.idUsuario = idUsuario;
+	}
 	public String getCodigoRespuestaApi() {
 		return codigoRespuesta;
 	}

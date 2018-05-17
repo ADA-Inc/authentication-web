@@ -37,6 +37,51 @@ public class GestionadorUsuarioControllerDB {
 
 	@Autowired
 	GestionadorUsuariosMapper gestionUsuariosMapper;
+	
+	public ProcesoRespuestaApiDb loginUsuario( UsuarioDBDto usuarioDBDto)  throws Exception{
+
+
+		/*
+		 * ==============================================
+		 * Se realiza instacia de objetos que se utilizaran 
+		 * en el medoto.
+		 * ************************************************* 
+		 */
+
+		HashMap<Object, Object> parametrosInOout = new HashMap<Object, Object>();
+		ProcesoRespuestaApiDb  respuestaApiDb = null;
+
+
+
+		/*
+		 * ==============================================
+		 * Se se realiza el mapeo de los parametros 
+		 * de entrada que necesita el servicio ofrecido por 
+		 * la API 
+		 * ************************************************* 
+		 */
+		parametrosInOout.put("p_nombre_usuario",usuarioDBDto.getP_NOMBRE_USUARIO() );
+		parametrosInOout.put("p_password_usuario",usuarioDBDto.getP_PASSWORD_USUARIO() );
+		
+		parametrosInOout.put("p_id_usuario", null);
+		parametrosInOout.put("p_cod_rta", null);
+		parametrosInOout.put("p_msj_rta", null);
+		gestionUsuariosMapper.loginUsuario(parametrosInOout);
+		respuestaApiDb = new ProcesoRespuestaApiDb();
+		
+		respuestaApiDb.setIdUsuario( 		  (String) parametrosInOout.get("p_id_usuario"));
+		respuestaApiDb.setCodigoRespuestaApi( (String) parametrosInOout.get("p_cod_rta"));
+		respuestaApiDb.setMensajeRespuestaApi((String) parametrosInOout.get("p_msj_rta"));
+
+		if (respuestaApiDb!=null && respuestaApiDb.getCodigoRespuestaApi()!=null) {
+
+			return respuestaApiDb;
+
+		}else {
+			return null;
+		}
+
+	}
 
 	public ProcesoRespuestaApiDb registrarUsuarioRol( UsuarioDBDto usuarioDBDto)  throws Exception{
 

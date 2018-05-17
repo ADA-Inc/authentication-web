@@ -22,9 +22,16 @@ package org.ada.security.model.persistencia.respuesta;
  */
 public class ProcesoRespuestaApiDb {
 	
+	private String idUsuario;
 	private String codigoRespuestaApi;
 	private String mensajeRespuestaApi;
 	
+	public String getIdUsuario() {
+		return idUsuario;
+	}
+	public void setIdUsuario(String idUsuario) {
+		this.idUsuario = idUsuario;
+	}
 	public String getCodigoRespuestaApi() {
 		return codigoRespuestaApi;
 	}
