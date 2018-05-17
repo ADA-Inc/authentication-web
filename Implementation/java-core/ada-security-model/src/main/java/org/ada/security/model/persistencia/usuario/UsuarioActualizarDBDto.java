@@ -8,11 +8,11 @@
  * 
  */
 
-package org.ada.security.model.persitencia.usuario;
+package org.ada.security.model.persistencia.usuario;
 
 /**
  *
- * <h1>UsuarioActualizarDBDto
+ * <h1>UsuarioActualizarDBDto</h1>
  *
  * Description
  *

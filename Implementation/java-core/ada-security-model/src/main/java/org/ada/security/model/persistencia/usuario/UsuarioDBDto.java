@@ -8,7 +8,7 @@
  * 
  */
 
-package org.ada.security.model.persitencia.usuario;
+package org.ada.security.model.persistencia.usuario;
 
 /**
  *

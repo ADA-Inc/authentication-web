@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ada.data.access.percistencia.mapper.GestionadorModulosMapper">
+	
+	<select id="crearModulo" statementType="CALLABLE" parameterType="java.util.Map">
+		{call PC_API_WEB.actualizarModulo
+            (
+		        #{p_nombre_modulo       ,jdbcType=VARCHAR  ,javaType=java.lang.String  , mode=IN },
+		        #{p_descripcion_modulo  ,jdbcType=VARCHAR  ,javaType=java.lang.String  , mode=IN },
+                #{p_cod_rta 			,jdbcType=VARCHAR  ,javaType=java.lang.String  , mode=OUT },
+		        #{p_msj_rta 			,jdbcType=VARCHAR  ,javaType=java.lang.String  , mode=OUT }
+            )         
+		}
+	</select>
+
+	<select id="actualizarModulo" statementType="CALLABLE" parameterType="java.util.Map">
+		{call PC_API_WEB.actualizarModulo
+            (
+		        #{p_nombre_modulo        	,jdbcType=VARCHAR  ,javaType=java.lang.String  , mode=IN },
+		        #{p_nombre_modulo_act       ,jdbcType=VARCHAR  ,javaType=java.lang.String  , mode=IN },
+                #{p_descripcion_modulo_act  ,jdbcType=VARCHAR  ,javaType=java.lang.String  , mode=IN },
+		        #{p_cod_rta   				,jdbcType=VARCHAR  ,javaType=java.lang.String  , mode=OUT },
+		        #{p_msj_rta  				,jdbcType=VARCHAR  ,javaType=java.lang.String  , mode=OUT }
+            )         
+		}
+	</select>
+
+    <select id="asignarRolModulo" statementType="CALLABLE" parameterType="java.util.Map">
+		{call PC_API_WEB.crearRomo
+            (
+                #{p_nombre_roll          ,jdbcType=VARCHAR  ,javaType=java.lang.String  , mode=IN },
+                #{p_nombre_modulo        ,jdbcType=VARCHAR  ,javaType=java.lang.String  , mode=IN },
+                #{p_cod_rta              ,jdbcType=VARCHAR  ,javaType=java.lang.String  , mode=OUT},
+                #{p_msj_rta              ,jdbcType=VARCHAR  ,javaType=java.lang.String  , mode=OUT}
+            )         
+		}
+	</select>
+
+</mapper>

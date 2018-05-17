@@ -1,13 +1,13 @@
-package org.ada.business.logic.api.rest.usuario;
+package org.ada.business.logic.api.rest.modulo;
 
-import org.ada.data.access.percistencia.gestion.usuario.controlador.GestionadorUsuarioControllerDB;
+import org.ada.data.access.percistencia.gestion.modulo.controlador.GestionadorModuloControllerDB;
 import org.ada.security.model.persistencia.respuesta.ProcesoRespuestaApiDb;
-import org.ada.security.model.persistencia.usuario.UsuarioActualizarDBDto;
-import org.ada.security.model.persistencia.usuario.UsuarioDBDto;
+import org.ada.security.model.persistencia.modulo.ModuloActualizarDBDto;
+import org.ada.security.model.persistencia.modulo.ModuloDBDto;
 import org.ada.security.model.rest.respuesta.ProcesoRespuestaApiRest;
-import org.ada.security.model.rest.usuario.FuncionalidadUsuarioRestDto;
-import org.ada.security.model.rest.usuario.UsuarioActualizarRestDto;
-import org.ada.security.model.rest.usuario.UsuarioRestDto;
+import org.ada.security.model.rest.modulo.FuncionalidadModuloRestDto;
+import org.ada.security.model.rest.modulo.ModuloActualizarRestDto;
+import org.ada.security.model.rest.modulo.ModuloRestDto;
 import org.ada.util.constantes.ConstantesApiPathRest;
 import org.ada.util.constantes.ConstantesCodigosAplicacion;
 import org.ada.util.constantes.ConstantesMensajesAplicacion;
@@ -22,13 +22,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-public class ServicioRestGestionadorUsuario {
+public class ServicioRestGestionadorModulo {
 
 	@Autowired
-	GestionadorUsuarioControllerDB gestionadorUsuarioControllerDB;
+	GestionadorModuloControllerDB gestionadorModuloControllerDB;
 
-	@RequestMapping(value = ConstantesApiPathRest.PATH_REGISTRO_USUARIO, method = RequestMethod.POST)
-	public ResponseEntity<ProcesoRespuestaApiRest> registrarUsuarioRol(@RequestBody UsuarioRestDto usuarioRestDto) {
+	@RequestMapping(value = ConstantesApiPathRest.PATH_REGISTRO_MODULO, method = RequestMethod.POST)
+	public ResponseEntity<ProcesoRespuestaApiRest> registrarModulo(@RequestBody ModuloRestDto moduloRestDto) {
 
 		/*
 		 * ==============================================
@@ -36,7 +36,7 @@ public class ServicioRestGestionadorUsuario {
 		 * en el medoto.
 		 * ************************************************* 
 		 */
-		UsuarioDBDto usuarioDBDto = null;
+		ModuloDBDto moduloDBDto = null;
 		ProcesoRespuestaApiRest procesoRespuestaApiRest = null;
 		ProcesoRespuestaApiDb procesoRespuestaApiDb = null;
 
@@ -53,23 +53,15 @@ public class ServicioRestGestionadorUsuario {
 		 * Este if se encarga de ...
 		 * =====================================
 		 */
-		if (usuarioRestDto.getDocumentoPersona()!=null && usuarioRestDto.getNombreRol()!=null && usuarioRestDto.getNombreUsuario()!=null) {
+		if (moduloRestDto.getNombreModulo()!=null) {
 
 
 			try {
-				usuarioDBDto = new UsuarioDBDto();
-				usuarioDBDto.setP_APELLIDO_PERSONA(usuarioRestDto.getApellidoPersona());
-				usuarioDBDto.setP_DIRECCION_PERSONA(usuarioRestDto.getDireccionPersona());
-				usuarioDBDto.setP_DOCUMENTO_PERSONA(usuarioRestDto.getDocumentoPersona());
-				usuarioDBDto.setP_EMAIL_PERSONA(usuarioRestDto.getEmailPersona());
-				usuarioDBDto.setP_NOMBRE_ROLL(usuarioRestDto.getNombreRol());
-				usuarioDBDto.setP_NOMBRE_USUARIO(usuarioRestDto.getNombreUsuario());
-				usuarioDBDto.setP_NOMBRES_PERSONA(usuarioRestDto.getNombresPersona());
-				usuarioDBDto.setP_PAIS_PERSONA(usuarioRestDto.getPaisPersona());
-				usuarioDBDto.setP_PASSWORD_USUARIO(usuarioRestDto.getClaveUsuario());
-				usuarioDBDto.setP_TELEFONO_PERSONA(usuarioRestDto.getTelefonoPersona());
+				moduloDBDto = new ModuloDBDto();
+				moduloDBDto.setP_NOMBRE_MODULO(moduloRestDto.getNombreModulo());
+				moduloDBDto.setP_DESCRIPCION_MODULO(moduloRestDto.getdescripcionModulo());
 
-				procesoRespuestaApiDb = gestionadorUsuarioControllerDB.registrarUsuarioRol(usuarioDBDto);
+				procesoRespuestaApiDb = gestionadorModuloControllerDB.registrarModulo(moduloDBDto);
 
 				/*
 				 * =====================================
@@ -108,8 +100,8 @@ public class ServicioRestGestionadorUsuario {
 
 	}
 
-	@RequestMapping(value = ConstantesApiPathRest.PATH_ACTUALIZAR_USUARIO, method = RequestMethod.POST)
-	public ResponseEntity<ProcesoRespuestaApiRest> actualizarUsuarioPersona(@RequestBody FuncionalidadUsuarioRestDto  funcionalidadUsuarioRestDto) {
+	@RequestMapping(value = ConstantesApiPathRest.PATH_ACTUALIZAR_MODULO, method = RequestMethod.POST)
+	public ResponseEntity<ProcesoRespuestaApiRest> actualizarModuloPersona(@RequestBody FuncionalidadModuloRestDto  funcionalidadModuloRestDto) {
 
 		/*
 		 * ==============================================
@@ -117,10 +109,10 @@ public class ServicioRestGestionadorUsuario {
 		 * en el medoto.
 		 * ************************************************* 
 		 */
-		UsuarioDBDto usuarioDBDto = null;
-		UsuarioRestDto usuarioRestDto  = null;
-		UsuarioActualizarRestDto usuarioActualizarRestDto  = null;
-		UsuarioActualizarDBDto usuarioActualizarDBDto= null;
+		ModuloDBDto moduloDBDto = null;
+		ModuloRestDto moduloRestDto  = null;
+		ModuloActualizarRestDto moduloActualizarRestDto  = null;
+		ModuloActualizarDBDto moduloActualizarDBDto= null;
 		ProcesoRespuestaApiRest procesoRespuestaApiRest = null;
 		ProcesoRespuestaApiDb procesoRespuestaApiDb = null;
 
@@ -129,9 +121,9 @@ public class ServicioRestGestionadorUsuario {
 		  * Este if se encarga de ...
 		  * =====================================
 		*/
-		if (funcionalidadUsuarioRestDto.getUsuarioRestDto()!= null && funcionalidadUsuarioRestDto.getActualizarRestDto()!= null) {
-			usuarioRestDto = funcionalidadUsuarioRestDto.getUsuarioRestDto();
-			usuarioActualizarRestDto = funcionalidadUsuarioRestDto.getActualizarRestDto();
+		if (funcionalidadModuloRestDto.getModuloRestDto()!= null && funcionalidadModuloRestDto.getActualizarRestDto()!= null) {
+			moduloRestDto = funcionalidadModuloRestDto.getModuloRestDto();
+			moduloActualizarRestDto = funcionalidadModuloRestDto.getActualizarRestDto();
 
 		/*
 		 * ==============================================
@@ -146,27 +138,18 @@ public class ServicioRestGestionadorUsuario {
 		 * Este if se encarga de ...
 		 * =====================================
 		 */
-		if (usuarioRestDto.getDocumentoPersona()!=null && usuarioRestDto.getNombreUsuario()!=null) {
+		if (moduloRestDto.getNombreModulo()!=null) {
 			try {
 				
 	
 				
-				usuarioDBDto = new UsuarioDBDto();
-				usuarioActualizarDBDto = new UsuarioActualizarDBDto();
+				moduloDBDto = new ModuloDBDto();
+				moduloDBDto.setP_NOMBRE_MODULO(moduloRestDto.getNombreModulo());
 				
-				usuarioDBDto.setP_NOMBRE_USUARIO(usuarioRestDto.getNombreUsuario());
-				usuarioDBDto.setP_DOCUMENTO_PERSONA(usuarioRestDto.getDocumentoPersona());
-				
-				usuarioActualizarDBDto.setP_APELLIDO_PERSONA_ACT(usuarioActualizarRestDto.getApellidoPersonaActualizar());
-				usuarioActualizarDBDto.setP_DOCUMENTO_PERSONA_ACT(usuarioActualizarRestDto.getDocumentoPersonaActualizar());
-				usuarioActualizarDBDto.setP_DIRECCION_PERSONA_ACT(usuarioActualizarRestDto.getDireccionPersonaActualizar());
-				usuarioActualizarDBDto.setP_EMAIL_PERSONA_ACT(usuarioActualizarRestDto.getEmailPersonaActualizar());
-				usuarioActualizarDBDto.setP_NOMBRES_PERSONA_ACT(usuarioActualizarRestDto.getNombresPersonaActualizar());
-				usuarioActualizarDBDto.setP_PAIS_PERSONA_ACT(usuarioActualizarRestDto.getPaisPersonaActualizar());
-				usuarioActualizarDBDto.setP_PASSWORD_USUARIO_ACT(usuarioActualizarRestDto.getClaveUsuarioActualizar());
-				usuarioActualizarDBDto.setP_TELEFONO_PERSONA_ACT(usuarioActualizarRestDto.getTelefonoPersonaActualizar());
+				moduloActualizarDBDto.setP_NOMBRE_MODULO_ACT(moduloActualizarRestDto.getnombreModuloActualizar());
+				moduloActualizarDBDto.setP_DESCRIPCION_MODULO_ACT(moduloActualizarRestDto.getdescripcionModuloActualizar());
 
-				procesoRespuestaApiDb = gestionadorUsuarioControllerDB.actualizarUsuarioPersona(usuarioDBDto,usuarioActualizarDBDto);
+				procesoRespuestaApiDb = gestionadorModuloControllerDB.actualizarModuloPersona(moduloDBDto,moduloActualizarDBDto);
 
 				/*
 				 * =====================================
@@ -209,8 +192,8 @@ public class ServicioRestGestionadorUsuario {
 
 	}
 
-	@RequestMapping(value = ConstantesApiPathRest.PATH_ASIGNAR_USUARIO, method = RequestMethod.POST)
-	public ResponseEntity<ProcesoRespuestaApiRest> asignarRolUsuarioPersona(@RequestBody UsuarioRestDto usuarioRestDto) {
+	@RequestMapping(value = ConstantesApiPathRest.PATH_ASIGNAR_MODULO, method = RequestMethod.POST)
+	public ResponseEntity<ProcesoRespuestaApiRest> asignarRolModuloPersona(@RequestBody ModuloRestDto moduloRestDto) {
 
 		/*
 		 * ==============================================
@@ -218,7 +201,7 @@ public class ServicioRestGestionadorUsuario {
 		 * en el medoto.
 		 * ************************************************* 
 		 */
-		UsuarioDBDto usuarioDBDto = null;
+		ModuloDBDto moduloDBDto = null;
 		ProcesoRespuestaApiRest procesoRespuestaApiRest = null;
 		ProcesoRespuestaApiDb procesoRespuestaApiDb = null;
 
@@ -235,17 +218,17 @@ public class ServicioRestGestionadorUsuario {
 		 * Este if se encarga de ...
 		 * =====================================
 		 */
-		if (usuarioRestDto.getDocumentoPersona()!=null && usuarioRestDto.getNombreUsuario()!=null && usuarioRestDto.getNombreRol()!=null) {
+		if (moduloRestDto.getNombreModulo()!=null && moduloRestDto.getnombreRoll()!=null) {
 			try {
-				usuarioDBDto = new UsuarioDBDto();
+				moduloDBDto = new ModuloDBDto();
 
 				
-				usuarioDBDto.setP_NOMBRE_USUARIO(usuarioRestDto.getNombreUsuario());
-				usuarioDBDto.setP_DOCUMENTO_PERSONA(usuarioRestDto.getDocumentoPersona());
-				usuarioDBDto.setP_NOMBRE_ROLL(usuarioRestDto.getNombreRol());
+				moduloDBDto.setP_NOMBRE_ROLL(moduloRestDto.getnombreRoll());
+				moduloDBDto.setP_NOMBRE_MODULO(moduloRestDto.getNombreModulo());
+				moduloDBDto.setP_DESCRIPCION_MODULO(moduloRestDto.getdescripcionModulo());
 
 
-				procesoRespuestaApiDb = gestionadorUsuarioControllerDB.asignarRolUsuarioPersona(usuarioDBDto);
+				procesoRespuestaApiDb = gestionadorModuloControllerDB.asignarRolModulo(moduloDBDto);
 
 				/*
 				 * =====================================

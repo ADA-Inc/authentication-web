@@ -15,7 +15,7 @@
   </properties>
 
   <dependencies>
-<dependency>
+		<dependency>
 			<groupId>org.ada.core</groupId>
 			<artifactId>ada-business-logic</artifactId>
 			<version>0.0.1-SNAPSHOT</version>

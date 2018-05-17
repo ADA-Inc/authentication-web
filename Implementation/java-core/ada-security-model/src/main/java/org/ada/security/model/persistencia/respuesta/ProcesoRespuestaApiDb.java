@@ -8,7 +8,7 @@
  * 
  */
 
-package org.ada.security.model.persitencia.respuesta;
+package org.ada.security.model.persistencia.respuesta;
 
 /**
  *
