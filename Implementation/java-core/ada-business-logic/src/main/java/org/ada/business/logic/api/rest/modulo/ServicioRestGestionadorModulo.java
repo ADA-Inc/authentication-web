@@ -33,7 +33,7 @@ public class ServicioRestGestionadorModulo {
 		/*
 		 * ==============================================
 		 * Se realiza instacia de objetos que se utilizaran 
-		 * en el medoto.
+		 * en el medoto.EXISTEN ERRORES  EN LAS VALIDACIONES DE PARAMETROS NEGOCIO PARA EL SERVICIO
 		 * ************************************************* 
 		 */
 		ModuloDBDto moduloDBDto = null;
@@ -101,7 +101,7 @@ public class ServicioRestGestionadorModulo {
 	}
 
 	@RequestMapping(value = ConstantesApiPathRest.PATH_ACTUALIZAR_MODULO, method = RequestMethod.POST)
-	public ResponseEntity<ProcesoRespuestaApiRest> actualizarModuloPersona(@RequestBody FuncionalidadModuloRestDto  funcionalidadModuloRestDto) {
+	public ResponseEntity<ProcesoRespuestaApiRest> actualizarModulo(@RequestBody FuncionalidadModuloRestDto  funcionalidadModuloRestDto) {
 
 		/*
 		 * ==============================================
@@ -142,7 +142,7 @@ public class ServicioRestGestionadorModulo {
 			try {
 				
 	
-				
+				moduloActualizarDBDto = new ModuloActualizarDBDto();
 				moduloDBDto = new ModuloDBDto();
 				moduloDBDto.setP_NOMBRE_MODULO(moduloRestDto.getNombreModulo());
 				

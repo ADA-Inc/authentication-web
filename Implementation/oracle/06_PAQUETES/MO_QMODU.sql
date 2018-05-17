@@ -13,7 +13,7 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.MO_QMODU IS
     --
     -- HISTORIAL DE CAMBIOS
     --
-    -- Versi�n        GAP                Solicitud        Fecha        Realiz�            Descripci�n
+    -- Version        GAP                Solicitud        Fecha        Realiza            Descripcion
     -- -----------    -------------    -------------    ----------    -------------    ------------------------------------------------------------------------------------------------------------------------------------------
     -- 
     -- -----------    -------------    -------------    ----------    -------------    ------------------------------------------------------------------------------------------------------------------------------------------
@@ -68,7 +68,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QMODU IS
     -- ===========================================================
     -- PROCEDURE crearModulo
     -- -----------------------------------------------------------
-    -- creacion de usuaio dado atributos
+    -- creacion de modulo dado atributos
     -- ===========================================================
     PROCEDURE crearModulo
     (
@@ -76,10 +76,8 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QMODU IS
         p_descripcion_modulo          IN  MO_TMODU.MODU_DESC%type,
         p_cod_rta                     OUT NE_TCRTA.CRTA_CRTA%type
     )IS
-
-        v_existencia_modulo     BOOLEAN;
         v_secuencia             NUMBER;
-        v_cod_rta_tipo          NE_TCRTA.CRTA_CRTA%type;
+        v_cod_rta_modulo          NE_TCRTA.CRTA_CRTA%type;
 
     BEGIN  
         v_secuencia := MO_SETMODU.NextVal;
@@ -87,11 +85,10 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QMODU IS
         MO_QVMODU.validarModuloPorNombre
         (
             p_nombre_modulo,
-            v_existencia_modulo,
-            v_cod_rta_tipo
+            v_cod_rta_modulo
         );
-          
-        IF(v_existencia_modulo) THEN
+
+        IF(v_cod_rta_modulo <> 'OK') THEN
           INSERT INTO MO_TMODU(
             MODU_MODU,
             MODU_NAME,
@@ -109,7 +106,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QMODU IS
         EXCEPTION
             WHEN OTHERS THEN
                 p_cod_rta  := 'ERROR_NC';
-        
+
     END crearModulo;
 
     --

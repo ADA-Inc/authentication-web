@@ -30,7 +30,6 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.MO_QVMODU IS
   PROCEDURE validarModuloPorNombre
     (
         p_nombre_modulo                  IN  MO_TMODU.MODU_NAME%type,
-        p_existencia_modulo              OUT BOOLEAN,
         p_cod_rta                        OUT NE_TCRTA.CRTA_CRTA%type
     ); 
 
@@ -59,7 +58,6 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QVMODU IS
     PROCEDURE validarModuloPorNombre
     (
         p_nombre_modulo                  IN  MO_TMODU.MODU_NAME%type,
-        p_existencia_modulo              OUT BOOLEAN,
         p_cod_rta                        OUT NE_TCRTA.CRTA_CRTA%type
     )IS
         
@@ -72,27 +70,23 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QVMODU IS
                 MODU_NAME = p_nombre_modulo;
 
             r_modulo c_modulo%rowtype;
-        
+
     BEGIN
-      
+
         OPEN  c_modulo;
         FETCH c_modulo INTO r_modulo;
         CLOSE c_modulo;
-        
-        IF(r_modulo.MODU_NAME IS NULL) then
-        
-            p_existencia_modulo := TRUE;
+
+        IF(r_modulo.MODU_NAME IS NOT NULL) then
             p_cod_rta           := 'OK';
-            
+
         ELSE
-            p_existencia_modulo := FALSE;
             p_cod_rta           := 'ER_EMP_NUL';
         END IF;
     EXCEPTION
         WHEN OTHERS THEN
-            p_existencia_modulo := FALSE;
             p_cod_rta           := 'ERROR_NC';
-        
+
     END validarmoduloPorNombre;
     
 END MO_QVMODU;

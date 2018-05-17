@@ -8,9 +8,6 @@ REM ******************************************************************
 PROMPT MO_TMODU.sql...
 @@MO_TMODU.sql
 
-PROMPT MO_TROMO.sql...
-@@MO_TROMO.
-
 PROMPT US_TROLL.sql...
 @@US_TROLL.sql
 

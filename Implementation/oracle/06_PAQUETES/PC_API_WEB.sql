@@ -14,9 +14,9 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.PC_API_WEB IS
     --
     -- HISTORIAL DE CAMBIOS
     --
-    -- Versión        GAP                Solicitud        Fecha        Realizó            Descripción
+    -- Versión        GAP               Solicitud        Fecha        Realizó            Descripción
     -- -----------    -------------    -------------    ----------    -------------    ------------------------------------------------------------------------------------------------------------------------------------------
-    -- 1000                                             03/03/2018      DAJO INC           Se crean API de servicios para el modulo de Gestion Usuario Pacrim
+    -- 
     -- -----------    -------------    -------------    ----------    -------------    ------------------------------------------------------------------------------------------------------------------------------------------
 
     

@@ -2,7 +2,7 @@
     <wb-module deploy-name="ada-core-0.0.1-SNAPSHOT">
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/ear-resources"/>
         <wb-resource deploy-path="/" source-path="/content" tag="defaultRootSource"/>
-        <dependent-module archiveName="ada-business-logic-0.0.1-SNAPSHOT.war" deploy-path="/" handle="module:/resource/ada-business-logic/ada-business-logic">
+        <dependent-module archiveName="ada-business-logic.war" deploy-path="/" handle="module:/resource/ada-business-logic/ada-business-logic">
             <dependency-type>uses</dependency-type>
         </dependent-module>
     </wb-module>

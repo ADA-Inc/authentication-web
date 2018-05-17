@@ -34,6 +34,14 @@
 					<generateApplicationXml>false</generateApplicationXml>
 					<version>6</version>
 					<defaultLibBundleDir>lib</defaultLibBundleDir>
+					<skinnyWars>true</skinnyWars>
+					<modules>
+							<webModule>
+								<groupId>org.ada.core</groupId>
+								<artifactId>ada-business-logic</artifactId>
+								<bundleFileName>ada-business-logic.war</bundleFileName>
+							</webModule>
+						</modules>
 				</configuration>
 			</plugin>
 		</plugins>

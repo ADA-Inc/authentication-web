@@ -4,7 +4,7 @@
 <mapper namespace="org.ada.data.access.percistencia.mapper.GestionadorModulosMapper">
 	
 	<select id="crearModulo" statementType="CALLABLE" parameterType="java.util.Map">
-		{call PC_API_WEB.actualizarModulo
+		{call PC_API_WEB.crearModulo
             (
 		        #{p_nombre_modulo       ,jdbcType=VARCHAR  ,javaType=java.lang.String  , mode=IN },
 		        #{p_descripcion_modulo  ,jdbcType=VARCHAR  ,javaType=java.lang.String  , mode=IN },
