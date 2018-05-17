@@ -27,7 +27,7 @@ public class ServicioRestGestionadorUsuario {
 	@Autowired
 	GestionadorUsuarioControllerDB gestionadorUsuarioControllerDB;
 	
-	@RequestMapping(value = ConstantesApiPathRest.PATH_REGISTRO_USUARIO, method = RequestMethod.POST)
+	@RequestMapping(value = ConstantesApiPathRest.PATH_LOGIN_USUARIO, method = RequestMethod.POST)
 	public ResponseEntity<ProcesoRespuestaApiRest> loginUsuario(@RequestBody UsuarioRestDto usuarioRestDto) {
 
 		/*
@@ -53,7 +53,7 @@ public class ServicioRestGestionadorUsuario {
 		 * Este if se encarga de ...
 		 * =====================================
 		 */
-		if (usuarioRestDto.getDocumentoPersona()!=null && usuarioRestDto.getNombreRol()!=null && usuarioRestDto.getNombreUsuario()!=null) {
+		if (usuarioRestDto.getNombreUsuario()!=null) {
 
 
 			try {
