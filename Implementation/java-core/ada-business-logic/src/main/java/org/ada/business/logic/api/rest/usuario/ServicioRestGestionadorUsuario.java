@@ -357,4 +357,74 @@ public class ServicioRestGestionadorUsuario {
 
 	}
 	
+	@RequestMapping(value = ConstantesApiPathRest.PATH_OBTENER_MODULO, method = RequestMethod.POST)
+	public ResponseEntity<ProcesoRespuestaApiRest> obtenerUsuarioModulos(@RequestBody UsuarioRestDto usuarioRestDto) {
+
+		/*
+		 * ==============================================
+		 * Se realiza instacia de objetos que se utilizaran 
+		 * en el medoto.
+		 * ************************************************* 
+		 */
+		UsuarioDBDto usuarioDBDto = null;
+		ProcesoRespuestaApiRest procesoRespuestaApiRest = null;
+		ProcesoRespuestaApiDb procesoRespuestaApiDb = null;
+
+		/*
+		 * ==============================================
+		 * Se se realiza el mapeo de los parametros 
+		 * de entrada que necesita el servicio ofrecido por 
+		 * la API y se llama el controller
+		 * ************************************************* 
+		 */
+
+		/*
+		 * =====================================
+		 * Este if se encarga de ...
+		 * =====================================
+		 */
+		if (usuarioRestDto.getNombreUsuario()!=null) {
+			try {
+				usuarioDBDto = new UsuarioDBDto();
+				
+				usuarioDBDto.setP_NOMBRE_USUARIO(usuarioRestDto.getNombreUsuario());
+
+				procesoRespuestaApiDb = gestionadorUsuarioControllerDB.obtenerUsuarioModulos(usuarioDBDto);
+
+				/*
+				 * =====================================
+				 * Este if se encarga de ...
+				 * =====================================
+				 */
+				if (procesoRespuestaApiDb!= null && procesoRespuestaApiDb.getCodigoRespuestaApi()!=null ) {
+					procesoRespuestaApiRest = new ProcesoRespuestaApiRest();
+					procesoRespuestaApiRest.setModulos(procesoRespuestaApiDb.getModulos());
+					procesoRespuestaApiRest.setCodigoRespuestaApi(procesoRespuestaApiDb.getCodigoRespuestaApi());
+					procesoRespuestaApiRest.setMensajeRespuestaApi(procesoRespuestaApiDb.getMensajeRespuestaApi());
+
+				}else {
+					procesoRespuestaApiRest = new ProcesoRespuestaApiRest();
+					procesoRespuestaApiRest.setCodigoRespuestaApi(ConstantesCodigosAplicacion.CODIGO_ERROR_SERVICIO);
+					procesoRespuestaApiRest.setMensajeRespuestaApi(ConstantesMensajesAplicacion.CODIGO_MENSAJE_ERROR_SERVICIO);
+				}
+
+			} catch (Exception e) {
+				procesoRespuestaApiRest = new ProcesoRespuestaApiRest();
+				procesoRespuestaApiRest.setCodigoRespuestaApi(ConstantesCodigosAplicacion.CODIGO_ERROR_SERVICIO);
+				procesoRespuestaApiRest.setMensajeRespuestaApi(ConstantesMensajesAplicacion.CODIGO_MENSAJE_ERROR_SERVICIO);
+			}
+
+		}else {
+			procesoRespuestaApiRest = new ProcesoRespuestaApiRest();
+			procesoRespuestaApiRest.setCodigoRespuestaApi(ConstantesCodigosAplicacion.CODIGO_ERROR_PARAMETROS_SERVICIO);
+			procesoRespuestaApiRest.setMensajeRespuestaApi(ConstantesMensajesAplicacion.CODIGO_MENSAJE_ERROR_PARAMETROS_SERVICIO);
+		}
+		if(procesoRespuestaApiRest.getCodigoRespuestaApi()!=null){
+			return new ResponseEntity<ProcesoRespuestaApiRest>(procesoRespuestaApiRest,HttpStatus.OK);
+		}else {
+			return new ResponseEntity<ProcesoRespuestaApiRest>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+		}
+
+
+	}
 }

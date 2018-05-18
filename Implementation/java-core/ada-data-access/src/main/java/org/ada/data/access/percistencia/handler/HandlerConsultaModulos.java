@@ -18,7 +18,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.ada.security.model.usuario.MostrarA;
+import org.ada.security.model.usuario.UsuarioModuloArray;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
 
@@ -32,7 +32,7 @@ import org.apache.ibatis.type.TypeHandler;
  * @version 1.0
  * 
  */
-public class HandlerConsultaConvocatoria implements TypeHandler<Object> {
+public class HandlerConsultaModulos implements TypeHandler<Object> {
 
 	public void setParameter(PreparedStatement ps, int i, Object parameter, JdbcType jdbcType) throws SQLException {
 			/*
@@ -78,12 +78,12 @@ public class HandlerConsultaConvocatoria implements TypeHandler<Object> {
 		 * Declaracion de varibles 
 		 * =======================
 		*/
-	 List<MostrarA> lista = new ArrayList<MostrarA>();
+	  List<UsuarioModuloArray> lista = new ArrayList<UsuarioModuloArray>();
 	  Object[] structArray = null;
-	  BigDecimal valor = null;
+	  String valor = null;
 	  Object[] structAttr;
 	  java.sql.Struct mystruct = null;
-	  MostrarA solicitudMostrarEquipo = null;
+	  UsuarioModuloArray solicitudMostrarModulos = null;
 	
 		//Inicio logica
 
@@ -91,30 +91,16 @@ public class HandlerConsultaConvocatoria implements TypeHandler<Object> {
 		  structArray = (Object[]) cs.getArray(columnIndex).getArray();
 		  if (structArray != null && structArray.length>0) {
 			  for (Object structObj : structArray) {
-				  solicitudMostrarEquipo = new MostrarA();
+				  
+				  solicitudMostrarModulos = new UsuarioModuloArray();
 				  mystruct = (java.sql.Struct) structObj;
-
 				  structAttr = mystruct.getAttributes();
-				  
-				  try{
-					  BigDecimal big = (BigDecimal) structAttr[0];
-					  valor = big;
-				  } catch (Exception e) {
-					  valor = null;
-				  }
-				  solicitudMostrarEquipo.setIdConvocatoria(valor);
-				  try{
-					  BigDecimal big = (BigDecimal) structAttr[1];
-					  valor = big;
-				  } catch (Exception e) {
-					  valor = null;
-				  }
-				  solicitudMostrarEquipo.setIdEquipo(valor);
-				  
-				  solicitudMostrarEquipo.setNombreEquipo((String) structAttr[2]);
-				  
-				  lista.add(solicitudMostrarEquipo);
 
+				  solicitudMostrarModulos.setIdModulo((String) structAttr[0]);
+				  
+				  solicitudMostrarModulos.setNombreModulo((String) structAttr[1]);
+				  
+				  lista.add(solicitudMostrarModulos);
 			  }
 		  }
 	  }catch (Exception e) {

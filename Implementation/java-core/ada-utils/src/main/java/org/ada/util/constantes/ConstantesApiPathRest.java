@@ -44,6 +44,7 @@ public class ConstantesApiPathRest {
 	public static final String PATH_REGISTRO_MODULO   = "/api/modulo/registrar/modulo";
 	public static final String PATH_ACTUALIZAR_MODULO = "/api/modulo/actualizar/modulo";
 	public static final String PATH_ASIGNAR_MODULO    = "/api/modulo/asignar/modulo";
+	public static final String PATH_OBTENER_MODULO    = "/api/modulo/obtener/modulo";
 	
 	
 	/**

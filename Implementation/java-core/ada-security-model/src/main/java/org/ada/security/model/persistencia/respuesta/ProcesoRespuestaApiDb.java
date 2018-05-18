@@ -10,6 +10,10 @@
 
 package org.ada.security.model.persistencia.respuesta;
 
+import java.util.List;
+
+import org.ada.security.model.usuario.UsuarioModuloArray;
+
 /**
  *
  * <h1>ProcesoRespuestaApiDb
@@ -23,9 +27,17 @@ package org.ada.security.model.persistencia.respuesta;
 public class ProcesoRespuestaApiDb {
 	
 	private String idUsuario;
+	private List<UsuarioModuloArray> modulos;
 	private String codigoRespuestaApi;
 	private String mensajeRespuestaApi;
 	
+	
+	public List<UsuarioModuloArray> getModulos() {
+		return modulos;
+	}
+	public void setModulos(List<UsuarioModuloArray> modulos) {
+		this.modulos = modulos;
+	}
 	public String getIdUsuario() {
 		return idUsuario;
 	}

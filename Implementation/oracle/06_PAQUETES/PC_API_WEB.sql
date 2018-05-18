@@ -6,7 +6,7 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.PC_API_WEB IS
     -- ===========================================================
     -- PC_API_WEB
     -- -----------------------------------------------------------
-    -- Reúne funciones y procedimientos relacionados con la 
+    -- ReÃºne funciones y procedimientos relacionados con la 
     -- gestion de negocio 
     -- ===========================================================
     --
@@ -14,7 +14,7 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.PC_API_WEB IS
     --
     -- HISTORIAL DE CAMBIOS
     --
-    -- Versión        GAP               Solicitud        Fecha        Realizó            Descripción
+    -- VersiÃ³n        GAP               Solicitud        Fecha        RealizÃ³            DescripciÃ³n
     -- -----------    -------------    -------------    ----------    -------------    ------------------------------------------------------------------------------------------------------------------------------------------
     -- 
     -- -----------    -------------    -------------    ----------    -------------    ------------------------------------------------------------------------------------------------------------------------------------------
@@ -119,10 +119,10 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.PC_API_WEB IS
         );
         -- ------------------------------------------------------------
 
-        PROCEDURE modulosAccesoPorNombreUsuario
+        PROCEDURE modulosAccesoUsuario
         (
             p_nombre_usuario              IN  US_TUSER.USER_ALAS%type,
-            p_tt_usmo                     OUT MO_QFROMO.TT_USMO,
+            p_tt_usmo                     OUT TT_USMO,
             p_cod_rta                     OUT NE_TCRTA.CRTA_CRTA%type,
             p_msj_rta                     OUT NE_TCRTA.CRTA_DESCRI%type
         );
@@ -157,7 +157,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
             p_msj_rta                      OUT NE_TCRTA.CRTA_DESCRI%type
         )IS
 
-          v_id_usuario                 US_TUSER.USER_USER%type,
+          v_id_usuario                 US_TUSER.USER_USER%type;
           v_cod_rta_ruser              NE_TCRTA.CRTA_CRTA%type;
           v_cod_rta                    NE_TCRTA.CRTA_CRTA%type;
           v_msj_rta                    NE_TCRTA.CRTA_DESCRI%type;
@@ -479,15 +479,15 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
         END crearRomo;
 
         -- ===========================================================
-        -- PROCEDURE modulosAccesoPorNombreUsuario
+        -- PROCEDURE modulosAccesoUsuario
         -- -----------------------------------------------------------
         -- Permite obtener los modulos de acceso que tiene permitido 
         -- ingresar el usuario
         -- ===========================================================
-        PROCEDURE modulosAccesoPorNombreUsuario
+        PROCEDURE modulosAccesoUsuario
         (
             p_nombre_usuario              IN  US_TUSER.USER_ALAS%type,
-            p_tt_usmo                     OUT MO_QFROMO.TT_USMO,
+            p_tt_usmo                     OUT TT_USMO,
             p_cod_rta                     OUT NE_TCRTA.CRTA_CRTA%type,
             p_msj_rta                     OUT NE_TCRTA.CRTA_DESCRI%type
         )IS
@@ -497,7 +497,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
           v_msj_rta                       NE_TCRTA.CRTA_DESCRI%type;
         BEGIN  
         
-            MO_QFROMO.modulosAccesoPorNombreUsuario
+            MO_QFROMO.modulosAccesoUsuario
             (
                 p_nombre_usuario      ,
                 p_tt_usmo             ,
@@ -518,7 +518,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
                 p_cod_rta  := 'ERROR_NC';
                 p_msj_rta  := 'Error Negocio No encontro el resultado';
             
-        END modulosAccesoPorNombreUsuario;
+        END modulosAccesoUsuario;
     -- ___________________________________________________________  
         
 END PC_API_WEB;

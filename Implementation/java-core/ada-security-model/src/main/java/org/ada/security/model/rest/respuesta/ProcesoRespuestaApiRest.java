@@ -10,6 +10,10 @@
 
 package org.ada.security.model.rest.respuesta;
 
+import java.util.List;
+
+import org.ada.security.model.usuario.UsuarioModuloArray;
+
 /**
  *
  * <h1>ProcesoRespuestaApiDb
@@ -23,6 +27,13 @@ package org.ada.security.model.rest.respuesta;
 public class ProcesoRespuestaApiRest {
 	
 	private String idUsuario;
+	private List<UsuarioModuloArray> modulos;
+	public List<UsuarioModuloArray> getModulos() {
+		return modulos;
+	}
+	public void setModulos(List<UsuarioModuloArray> modulos) {
+		this.modulos = modulos;
+	}
 	private String codigoRespuesta;
 	private String mensajeRespuesta;
 	

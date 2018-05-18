@@ -5,3 +5,8 @@ REM Base de Datos : FS_AUWEB_US
 REM Script : Tipos
 REM ******************************************************************
 
+PROMPT TO_USMO.sql...
+@@TO_USMO.sql
+
+PROMPT TT_USMO.sql...
+@@TT_USMO.sql

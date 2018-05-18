@@ -65,5 +65,18 @@
             )         
 		}
 	</select>
-
+	
+	 <select id="modulosAccesoUsuario" statementType="CALLABLE" parameterType="java.util.Map">
+		{call PC_API_WEB.modulosAccesoUsuario
+            (
+                #{p_nombre_usuario       			,jdbcType=VARCHAR  ,javaType=java.lang.String  , mode=IN },
+                #{p_tt_usmo				 			,jdbcType=ARRAY    ,javaType=Object   		   , mode=OUT,
+                jdbcTypeName=TT_USMO				,typeHandler=org.ada.data.access.percistencia.handler.HandlerConsultaModulos},
+                #{p_cod_rta                     	,jdbcType=VARCHAR  ,javaType=java.lang.String  , mode=OUT},
+                #{p_msj_rta              	    	,jdbcType=VARCHAR  ,javaType=java.lang.String  , mode=OUT}
+                
+            )         
+		}
+	</select>
+	
 </mapper>

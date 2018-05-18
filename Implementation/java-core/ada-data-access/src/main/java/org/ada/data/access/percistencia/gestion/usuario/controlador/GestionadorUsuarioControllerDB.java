@@ -11,11 +11,13 @@
 package org.ada.data.access.percistencia.gestion.usuario.controlador;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.ada.data.access.percistencia.mapper.GestionadorUsuariosMapper;
 import org.ada.security.model.persistencia.respuesta.ProcesoRespuestaApiDb;
 import org.ada.security.model.persistencia.usuario.UsuarioActualizarDBDto;
 import org.ada.security.model.persistencia.usuario.UsuarioDBDto;
+import org.ada.security.model.usuario.UsuarioModuloArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -233,6 +235,52 @@ public class GestionadorUsuarioControllerDB {
 
 			return respuestaApiDb;
 
+		}else {
+			return null;
+		}
+
+	}	
+	
+	public ProcesoRespuestaApiDb obtenerUsuarioModulos(UsuarioDBDto usuarioDBDto)  throws Exception{
+
+
+		/*
+		 * ==============================================
+		 * Se realiza instacia de objetos que se utilizaran 
+		 * en el medoto.
+		 * ************************************************* 
+		 */
+
+		HashMap<Object, Object> parametrosInOout = new HashMap<Object, Object>();
+		ProcesoRespuestaApiDb  respuestaApiDb = null;
+		
+		List<UsuarioModuloArray> modulos = null;
+		String setCodRespuesta;
+		
+
+		/*
+		 * ==============================================
+		 * Se se realiza el mapeo de los parametros 
+		 * de entrada que necesita el servicio ofrecido por 
+		 * la API 
+		 * ************************************************* 
+		 */
+		
+		parametrosInOout.put("p_nombre_usuario",usuarioDBDto.getP_NOMBRE_USUARIO() );
+		
+		parametrosInOout.put("p_tt_usmo", null);
+		parametrosInOout.put("p_cod_rta", null);
+		parametrosInOout.put("p_msj_rta", null);
+		gestionUsuariosMapper.modulosAccesoUsuario(parametrosInOout);
+		respuestaApiDb = new ProcesoRespuestaApiDb();
+		
+		respuestaApiDb.setModulos((List<UsuarioModuloArray>) parametrosInOout.get("p_tt_usmo"));
+		respuestaApiDb.setCodigoRespuestaApi( (String) parametrosInOout.get("p_cod_rta"));
+		respuestaApiDb.setMensajeRespuestaApi( (String) parametrosInOout.get("p_msj_rta"));
+
+		if (respuestaApiDb!=null && respuestaApiDb.getCodigoRespuestaApi()!=null) {
+			
+			return respuestaApiDb;
 		}else {
 			return null;
 		}

@@ -40,19 +40,11 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.MO_QFROMO IS
         p_nombre_modulo             IN  MO_TMODU.MODU_NAME%type,
         p_cod_rta                   OUT NE_TCRTA.CRTA_CRTA%type
     );
-  PROCEDURE modulosAccesoPorNombreUsuario
+  PROCEDURE modulosAccesoUsuario
     (
         p_nombre_usuario          IN  US_TUSER.USER_ALAS%type,
-        p_tt_usmo                 OUT MO_QFROMO.TT_USMO,
+        p_tt_usmo                 OUT TT_USMO,
         p_cod_rta                 OUT NE_TCRTA.CRTA_CRTA%type
-    );
-
-    TYPE TT_USMO IS TABLE OF MO_QFROMO.TO_USMO;
-    
-    type TO_USMO IS RECORD
-    (
-        MODU_MODU    MO_TMODU.MODU_MODU%type,
-        MODU_NAME    MO_TMODU.MODU_NAME%type
     );
 
 END MO_QFROMO;
@@ -71,16 +63,17 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QFROMO IS
     --
     
     -- ===========================================================
-    -- PROCEDURE modulosAccesoPorNombreUsuario
+    -- PROCEDURE modulosAccesoUsuario
     -- -----------------------------------------------------------
     -- obtiene el los modulos alos cuales el usuario puede acceder 
     -- ===========================================================
-    PROCEDURE modulosAccesoPorNombreUsuario
+   PROCEDURE modulosAccesoUsuario
     (
         p_nombre_usuario          IN  US_TUSER.USER_ALAS%type,
-        p_tt_usmo                 OUT MO_QFROMO.TT_USMO,
+        p_tt_usmo                 OUT TT_USMO,
         p_cod_rta                 OUT NE_TCRTA.CRTA_CRTA%type
     )IS
+       
         cursor c_usmo 
         (
             pc_USER_USER          US_TUSER.USER_USER%type
@@ -98,11 +91,12 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QFROMO IS
                 ro.ROLL_ROLL  = rm.ROMO_ROLL AND
                 mo.MODU_MODU  = rm.ROMO_MODU AND
                 pur.PUSR_USER = pc_USER_USER;
-                
 
-        v_tt_usmo               MO_QFROMO.TT_USMO :=  MO_QFROMO.TT_USMO();
-        v_id_usuario            US_TUSER.USER_USER%type;
-        v_cod_rta_usuario       NE_TCRTA.CRTA_CRTA%type;
+
+        v_to_usmo                TO_USMO; 
+        v_tt_usmo                TT_USMO := TT_USMO();
+        v_id_usuario             US_TUSER.USER_USER%type;
+        v_cod_rta_usuario        NE_TCRTA.CRTA_CRTA%type;
 
     BEGIN 
 
@@ -115,9 +109,13 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QFROMO IS
 
         IF  v_cod_rta_usuario='OK' THEN
 
-            OPEN c_usmo(v_id_usuario);
-            FETCH c_usmo BULK COLLECT INTO v_tt_usmo;
-            CLOSE c_usmo;
+            FOR i IN c_usmo(v_id_usuario) LOOP
+         
+                v_to_usmo:=TO_USMO(i.MODU_MODU,i.MODU_NAME);
+                v_tt_usmo.extend;
+                v_tt_usmo(v_tt_usmo.count):=v_to_usmo;
+         
+             END LOOP;
 
              IF (v_tt_usmo.COUNT > 0) THEN 
                 p_tt_usmo   := v_tt_usmo;
@@ -133,8 +131,8 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QFROMO IS
             WHEN OTHERS THEN
                 p_tt_usmo:= NULL;
                 p_cod_rta  := 'ERROR_NC';
-            
-    END modulosAccesoPorNombreUsuario;
+
+    END modulosAccesoUsuario;
 
     --
     -- #VERSION:0000001000
