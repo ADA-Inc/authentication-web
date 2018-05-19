@@ -32,7 +32,6 @@ public class ConstantesApiPathRest {
 	 * 
 	 * CRUD usuario
 	 */
-	public static final String PATH_LOGIN_USUARIO      = "/api/usuario/login/usuario";
 	public static final String PATH_REGISTRO_USUARIO   = "/api/usuario/registrar/usuario";
 	public static final String PATH_ACTUALIZAR_USUARIO = "/api/usuario/actualizar/usuario";
 	public static final String PATH_ASIGNAR_USUARIO    = "/api/usuario/asignar/usuario";
@@ -50,7 +49,7 @@ public class ConstantesApiPathRest {
 	/**
 	 * LOGIN
 	 */
-	public static final String PATH_LOGIN= "/login";
+	public static final String PATH_LOGIN      = "/login";
 	
 	
 	/**

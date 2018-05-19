@@ -24,11 +24,18 @@ import org.ada.security.model.usuario.UsuarioModuloArray;
  * @version 1.0
  * 
  */
-public class ProcesoRespuestaApiRest {
+public class ProcesoRespuestaApiRestLogin {
 	
+	private String idUsuario;
 	private String codigoRespuesta;
 	private String mensajeRespuesta;
 	
+	public String getIdUsuario() {
+		return idUsuario;
+	}
+	public void setIdUsuario(String idUsuario) {
+		this.idUsuario = idUsuario;
+	}
 	public String getCodigoRespuestaApi() {
 		return codigoRespuesta;
 	}

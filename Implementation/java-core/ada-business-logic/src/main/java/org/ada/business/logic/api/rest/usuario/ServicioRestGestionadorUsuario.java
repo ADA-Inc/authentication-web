@@ -5,6 +5,8 @@ import org.ada.security.model.persistencia.respuesta.ProcesoRespuestaApiDb;
 import org.ada.security.model.persistencia.usuario.UsuarioActualizarDBDto;
 import org.ada.security.model.persistencia.usuario.UsuarioDBDto;
 import org.ada.security.model.rest.respuesta.ProcesoRespuestaApiRest;
+import org.ada.security.model.rest.respuesta.ProcesoRespuestaApiRestLogin;
+import org.ada.security.model.rest.respuesta.ProcesoRespuestaApiRestModulos;
 import org.ada.security.model.rest.usuario.FuncionalidadUsuarioRestDto;
 import org.ada.security.model.rest.usuario.UsuarioActualizarRestDto;
 import org.ada.security.model.rest.usuario.UsuarioRestDto;
@@ -27,8 +29,8 @@ public class ServicioRestGestionadorUsuario {
 	@Autowired
 	GestionadorUsuarioControllerDB gestionadorUsuarioControllerDB;
 	
-	@RequestMapping(value = ConstantesApiPathRest.PATH_LOGIN_USUARIO, method = RequestMethod.POST)
-	public ResponseEntity<ProcesoRespuestaApiRest> loginUsuario(@RequestBody UsuarioRestDto usuarioRestDto) {
+	@RequestMapping(value = ConstantesApiPathRest.PATH_LOGIN, method = RequestMethod.POST)
+	public ResponseEntity<ProcesoRespuestaApiRestLogin> loginUsuario(@RequestBody UsuarioRestDto usuarioRestDto) {
 
 		/*
 		 * ==============================================
@@ -37,7 +39,7 @@ public class ServicioRestGestionadorUsuario {
 		 * ************************************************* 
 		 */
 		UsuarioDBDto usuarioDBDto = null;
-		ProcesoRespuestaApiRest procesoRespuestaApiRest = null;
+		ProcesoRespuestaApiRestLogin procesoRespuestaApiRestLogin = null;
 		ProcesoRespuestaApiDb procesoRespuestaApiDb = null;
 
 		/*
@@ -69,33 +71,33 @@ public class ServicioRestGestionadorUsuario {
 				 * =====================================
 				 */
 				if (procesoRespuestaApiDb!= null && procesoRespuestaApiDb.getCodigoRespuestaApi()!=null ) {
-					procesoRespuestaApiRest = new ProcesoRespuestaApiRest();
-					procesoRespuestaApiRest.setIdUsuario(procesoRespuestaApiDb.getIdUsuario());
-					procesoRespuestaApiRest.setCodigoRespuestaApi(procesoRespuestaApiDb.getCodigoRespuestaApi());
-					procesoRespuestaApiRest.setMensajeRespuestaApi(procesoRespuestaApiDb.getMensajeRespuestaApi());
+					procesoRespuestaApiRestLogin = new ProcesoRespuestaApiRestLogin();
+					procesoRespuestaApiRestLogin.setIdUsuario(procesoRespuestaApiDb.getIdUsuario());
+					procesoRespuestaApiRestLogin.setCodigoRespuestaApi(procesoRespuestaApiDb.getCodigoRespuestaApi());
+					procesoRespuestaApiRestLogin.setMensajeRespuestaApi(procesoRespuestaApiDb.getMensajeRespuestaApi());
 
 				}else {
-					procesoRespuestaApiRest = new ProcesoRespuestaApiRest();
-					procesoRespuestaApiRest.setCodigoRespuestaApi(ConstantesCodigosAplicacion.CODIGO_ERROR_SERVICIO);
-					procesoRespuestaApiRest.setMensajeRespuestaApi(ConstantesMensajesAplicacion.CODIGO_MENSAJE_ERROR_SERVICIO);
+					procesoRespuestaApiRestLogin = new ProcesoRespuestaApiRestLogin();
+					procesoRespuestaApiRestLogin.setCodigoRespuestaApi(ConstantesCodigosAplicacion.CODIGO_ERROR_SERVICIO);
+					procesoRespuestaApiRestLogin.setMensajeRespuestaApi(ConstantesMensajesAplicacion.CODIGO_MENSAJE_ERROR_SERVICIO);
 				}
 
 			} catch (Exception e) {
-				procesoRespuestaApiRest = new ProcesoRespuestaApiRest();
-				procesoRespuestaApiRest.setCodigoRespuestaApi(ConstantesCodigosAplicacion.CODIGO_ERROR_SERVICIO);
-				procesoRespuestaApiRest.setMensajeRespuestaApi(ConstantesMensajesAplicacion.CODIGO_MENSAJE_ERROR_SERVICIO);
+				procesoRespuestaApiRestLogin = new ProcesoRespuestaApiRestLogin();
+				procesoRespuestaApiRestLogin.setCodigoRespuestaApi(ConstantesCodigosAplicacion.CODIGO_ERROR_SERVICIO);
+				procesoRespuestaApiRestLogin.setMensajeRespuestaApi(ConstantesMensajesAplicacion.CODIGO_MENSAJE_ERROR_SERVICIO);
 			}
 
 		}else {
-			procesoRespuestaApiRest = new ProcesoRespuestaApiRest();
-			procesoRespuestaApiRest.setCodigoRespuestaApi(ConstantesCodigosAplicacion.CODIGO_ERROR_PARAMETROS_SERVICIO);
-			procesoRespuestaApiRest.setMensajeRespuestaApi(ConstantesMensajesAplicacion.CODIGO_MENSAJE_ERROR_PARAMETROS_SERVICIO);
+			procesoRespuestaApiRestLogin = new ProcesoRespuestaApiRestLogin();
+			procesoRespuestaApiRestLogin.setCodigoRespuestaApi(ConstantesCodigosAplicacion.CODIGO_ERROR_PARAMETROS_SERVICIO);
+			procesoRespuestaApiRestLogin.setMensajeRespuestaApi(ConstantesMensajesAplicacion.CODIGO_MENSAJE_ERROR_PARAMETROS_SERVICIO);
 		}
 
-		if(procesoRespuestaApiRest.getCodigoRespuestaApi()!=null){
-			return new ResponseEntity<ProcesoRespuestaApiRest>(procesoRespuestaApiRest,HttpStatus.OK);
+		if(procesoRespuestaApiRestLogin.getCodigoRespuestaApi()!=null){
+			return new ResponseEntity<ProcesoRespuestaApiRestLogin>(procesoRespuestaApiRestLogin,HttpStatus.OK);
 		}else {
-			return new ResponseEntity<ProcesoRespuestaApiRest>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+			return new ResponseEntity<ProcesoRespuestaApiRestLogin>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
 		}
 
 
@@ -358,7 +360,7 @@ public class ServicioRestGestionadorUsuario {
 	}
 	
 	@RequestMapping(value = ConstantesApiPathRest.PATH_OBTENER_MODULO, method = RequestMethod.POST)
-	public ResponseEntity<ProcesoRespuestaApiRest> obtenerUsuarioModulos(@RequestBody UsuarioRestDto usuarioRestDto) {
+	public ResponseEntity<ProcesoRespuestaApiRestModulos> obtenerUsuarioModulos(@RequestBody UsuarioRestDto usuarioRestDto) {
 
 		/*
 		 * ==============================================
@@ -367,7 +369,7 @@ public class ServicioRestGestionadorUsuario {
 		 * ************************************************* 
 		 */
 		UsuarioDBDto usuarioDBDto = null;
-		ProcesoRespuestaApiRest procesoRespuestaApiRest = null;
+		ProcesoRespuestaApiRestModulos procesoRespuestaApiRestModulo = null;
 		ProcesoRespuestaApiDb procesoRespuestaApiDb = null;
 
 		/*
@@ -397,32 +399,32 @@ public class ServicioRestGestionadorUsuario {
 				 * =====================================
 				 */
 				if (procesoRespuestaApiDb!= null && procesoRespuestaApiDb.getCodigoRespuestaApi()!=null ) {
-					procesoRespuestaApiRest = new ProcesoRespuestaApiRest();
-					procesoRespuestaApiRest.setModulos(procesoRespuestaApiDb.getModulos());
-					procesoRespuestaApiRest.setCodigoRespuestaApi(procesoRespuestaApiDb.getCodigoRespuestaApi());
-					procesoRespuestaApiRest.setMensajeRespuestaApi(procesoRespuestaApiDb.getMensajeRespuestaApi());
+					procesoRespuestaApiRestModulo = new ProcesoRespuestaApiRestModulos();
+					procesoRespuestaApiRestModulo.setModulos(procesoRespuestaApiDb.getModulos());
+					procesoRespuestaApiRestModulo.setCodigoRespuestaApi(procesoRespuestaApiDb.getCodigoRespuestaApi());
+					procesoRespuestaApiRestModulo.setMensajeRespuestaApi(procesoRespuestaApiDb.getMensajeRespuestaApi());
 
 				}else {
-					procesoRespuestaApiRest = new ProcesoRespuestaApiRest();
-					procesoRespuestaApiRest.setCodigoRespuestaApi(ConstantesCodigosAplicacion.CODIGO_ERROR_SERVICIO);
-					procesoRespuestaApiRest.setMensajeRespuestaApi(ConstantesMensajesAplicacion.CODIGO_MENSAJE_ERROR_SERVICIO);
+					procesoRespuestaApiRestModulo = new ProcesoRespuestaApiRestModulos();
+					procesoRespuestaApiRestModulo.setCodigoRespuestaApi(ConstantesCodigosAplicacion.CODIGO_ERROR_SERVICIO);
+					procesoRespuestaApiRestModulo.setMensajeRespuestaApi(ConstantesMensajesAplicacion.CODIGO_MENSAJE_ERROR_SERVICIO);
 				}
 
 			} catch (Exception e) {
-				procesoRespuestaApiRest = new ProcesoRespuestaApiRest();
-				procesoRespuestaApiRest.setCodigoRespuestaApi(ConstantesCodigosAplicacion.CODIGO_ERROR_SERVICIO);
-				procesoRespuestaApiRest.setMensajeRespuestaApi(ConstantesMensajesAplicacion.CODIGO_MENSAJE_ERROR_SERVICIO);
+				procesoRespuestaApiRestModulo = new ProcesoRespuestaApiRestModulos();
+				procesoRespuestaApiRestModulo.setCodigoRespuestaApi(ConstantesCodigosAplicacion.CODIGO_ERROR_SERVICIO);
+				procesoRespuestaApiRestModulo.setMensajeRespuestaApi(ConstantesMensajesAplicacion.CODIGO_MENSAJE_ERROR_SERVICIO);
 			}
 
 		}else {
-			procesoRespuestaApiRest = new ProcesoRespuestaApiRest();
-			procesoRespuestaApiRest.setCodigoRespuestaApi(ConstantesCodigosAplicacion.CODIGO_ERROR_PARAMETROS_SERVICIO);
-			procesoRespuestaApiRest.setMensajeRespuestaApi(ConstantesMensajesAplicacion.CODIGO_MENSAJE_ERROR_PARAMETROS_SERVICIO);
+			procesoRespuestaApiRestModulo = new ProcesoRespuestaApiRestModulos();
+			procesoRespuestaApiRestModulo.setCodigoRespuestaApi(ConstantesCodigosAplicacion.CODIGO_ERROR_PARAMETROS_SERVICIO);
+			procesoRespuestaApiRestModulo.setMensajeRespuestaApi(ConstantesMensajesAplicacion.CODIGO_MENSAJE_ERROR_PARAMETROS_SERVICIO);
 		}
-		if(procesoRespuestaApiRest.getCodigoRespuestaApi()!=null){
-			return new ResponseEntity<ProcesoRespuestaApiRest>(procesoRespuestaApiRest,HttpStatus.OK);
+		if(procesoRespuestaApiRestModulo.getCodigoRespuestaApi()!=null){
+			return new ResponseEntity<ProcesoRespuestaApiRestModulos>(procesoRespuestaApiRestModulo,HttpStatus.OK);
 		}else {
-			return new ResponseEntity<ProcesoRespuestaApiRest>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+			return new ResponseEntity<ProcesoRespuestaApiRestModulos>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
 		}
 
 

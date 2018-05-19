@@ -1,8 +1,8 @@
-create or replace TYPE             TO_USMO IS
+create or replace TYPE       FS_AUWEB_US.TO_USMO AS
 
-RECORD
+OBJECT
     (
-        MODU_MODU    MO_TMODU.MODU_MODU%type,
-        MODU_NAME    MO_TMODU.MODU_NAME%type
+        MODU_MODU    varchar2(200),
+        MODU_NAME    varchar2(200)
     );
 /
