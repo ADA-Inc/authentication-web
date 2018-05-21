@@ -244,11 +244,13 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QUSER IS
         p_password_usuario_act         IN  US_TUSER.USER_PSWD%type,
         p_cod_rta                      OUT NE_TCRTA.CRTA_CRTA%type
     )IS
-    
+		v_password_md5          VARCHAR2(30);
         v_id_usuario            US_TUSER.USER_USER%type;
         v_cod_rta_tipo          NE_TCRTA.CRTA_CRTA%type;
 
     BEGIN  
+	
+		v_password_md5 := DBMS_OBFUSCATION_TOOLKIT.MD5(INPUT_STRING => p_password_usuario_act);
 
         US_QUSER.buscarUsuarioPorNombre
         (
@@ -259,11 +261,11 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QUSER IS
 
         IF(v_id_usuario IS NOT NULL) THEN
 
-            UPDATE 
+            UPDATE
                 FS_AUWEB_US.US_TUSER
             SET 
                 USER_ALAS = p_nombre_usuario_act, 
-                USER_PSWD = p_password_usuario_act
+                USER_PSWD = v_password_md5
             WHERE 
                 USER_USER = v_id_usuario;
 
