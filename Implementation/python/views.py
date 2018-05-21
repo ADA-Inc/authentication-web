@@ -17,7 +17,6 @@ def login():
 	
 		url = 'http://127.0.0.1:8010/ada-business-logic/api/login'				 
 		headers = {'Content-type': 'application/json'}
-		
 		json_login = json.dumps({"nombreUsuario":form.username.data,
 								 "claveUsuario" :form.password.data})
 						 
