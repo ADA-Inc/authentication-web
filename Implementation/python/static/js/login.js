@@ -13,5 +13,4 @@ function showPassword() {
         $('#key').attr('type', 'password');
         
     }
-    
 }
