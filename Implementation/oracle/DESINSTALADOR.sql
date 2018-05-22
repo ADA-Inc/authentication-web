@@ -7,10 +7,7 @@ REM ******************************************************************
 REM TABLESPACE Y SEGMENTOS DE ROLLBACK
 set feedback off
 spool TMP.lst
-select distinct 'pause DEBE estar conectado con Usuario SYSTEM' || chr(10) || 'ROLL' || chr(10) || 'EXIT'
-from dual
-where user <> 'SYSTEM'
-/
+
 spool off
 start TMP.lst
 set feedback on
@@ -38,8 +35,11 @@ set feedback on
 
 
 	DROP TABLE   "FS_AUWEB_US"."US_TUSER" CASCADE CONSTRAINTS;
+	
 
-
+	
+    DROP TABLE   "FS_AUWEB_US"."NE_TCRTA" CASCADE CONSTRAINTS;
+	
     
  DROP SEQUENCE "FS_AUWEB_US"."MO_SETMODU";
   DROP SEQUENCE "FS_AUWEB_US"."MO_SETROMO";
@@ -47,26 +47,28 @@ set feedback on
     DROP SEQUENCE "FS_AUWEB_US"."US_SETPUSR";
      DROP SEQUENCE "FS_AUWEB_US"."US_SETROLL";
       DROP SEQUENCE "FS_AUWEB_US"."US_SETUSER";
+	  
+          
           
           
     
-    REM USUARIO  DUENHO DEL APLICATIVO FS_AUWEB_US
+REM USUARIO  DUENHO DEL APLICATIVO FS_AUWEB_US
 drop user FS_AUWEB_US cascade;
 
 REM TABLESPACE DE DATOS
 DROP TABLESPACE TS_TAUWEB   INCLUDING CONTENTS AND DATAFILES
     CASCADE CONSTRAINTS;
-/
+
 
 REM TABLESPACE DE INDICES 
 DROP TABLESPACE TS_AUWEB INCLUDING CONTENTS AND DATAFILES
     CASCADE CONSTRAINTS;
-/
+	
 
 REM TABLESPACE TEMPORAL
 DROP tablespace TS_IAUWEB INCLUDING CONTENTS AND DATAFILES
     CASCADE CONSTRAINTS;
-/
+
 
 
 

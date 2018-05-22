@@ -30,7 +30,7 @@ Prompt
 Prompt Comentarios tabla NE_TCRTA
 Prompt
   
-COMMENT ON TABLE FS_AUWEB_US.NE_TCRTA                  IS 'Codigos de respuesta utilizados por los servicios de API';
+COMMENT ON TABLE   FS_AUWEB_US.NE_TCRTA                  IS 'Codigos de respuesta utilizados por los servicios de API';
 COMMENT ON COLUMN  FS_AUWEB_US.NE_TCRTA.CRTA_CRTA        IS 'Identificador interno para codigo de respuesta';
 COMMENT ON COLUMN  FS_AUWEB_US.NE_TCRTA.CRTA_PRCS        IS 'Proceso de API al cual esta asociado el codigo de respuesta';
 COMMENT ON COLUMN  FS_AUWEB_US.NE_TCRTA.CRTA_HTTP_CODE   IS 'Codigo http que se retorna como respuesta. Ver codificacion estandar http 2XX-Peticiones correctas, 3XX-Redirecciones, 4XX-Errores de usuario, 5XX-Errores de servidor' ;
@@ -59,3 +59,4 @@ alter TABLE FS_AUWEB_US.NE_TCRTA
     minextents 1
     maxextents unlimited
   );
+ 

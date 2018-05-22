@@ -19,7 +19,7 @@ def login():
 		headers = {'Content-type': 'application/json'}
 		json_login = json.dumps({"nombreUsuario":form.username.data,
 								 "claveUsuario" :form.password.data})
-						 
+
 		# POST with form-encoded data
 		response = requests.post(url, data=json_login, headers=headers)
 		
@@ -35,4 +35,5 @@ def login():
 @app.route('/homepage')
 def homepage():
 	idUsuario = request.args.get('idUsuario')
-	return idUsuario
+	session   = { 'idUsuario' : idUsuario }
+	return session['idUsuario']

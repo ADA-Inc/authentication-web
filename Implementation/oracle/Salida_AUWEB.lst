@@ -1,0 +1,494 @@
+CORRIENDO SCRIPTS
+================================================================================================
+@INSTALL_SCHEMA.sql
+00_SCHEMA...
+CREANDO TABLESPACES
+
+Tablespace created.
+
+
+Tablespace created.
+
+
+Tablespace created.
+
+CREANDO USER
+drop user "FS_AUWEB_US" cascade
+*
+ERROR at line 1:
+ORA-01940: cannot drop a user that is currently connected 
+
+
+Create user FS_AUWEB_US
+            *
+ERROR at line 1:
+ORA-01920: user name 'FS_AUWEB_US' conflicts with another user or role name 
+
+
+
+Grant succeeded.
+
+CORRIENDO SCRIPTS
+================================================================================================
+@INSTALL_OBJECTS.sql
+
+Session altered.
+
+MO_TMODU.sql...
+
+Table created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Table altered.
+
+MO_TROMO.sql...
+
+Table created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Table altered.
+
+US_TPSNA.sql...
+
+Table created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Table altered.
+
+US_TPUSR.sql...
+
+Table created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Table altered.
+
+US_TROLL.sql...
+
+Table created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Table altered.
+
+US_TUSER.sql...
+
+Table created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Table altered.
+
+NE_TCRTA.sql...
+
+Creando tabla NE_TCRTA
+
+
+Table created.
+
+
+Comentarios tabla NE_TCRTA
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Comment created.
+
+
+Llave Primaria NE_TCRTA
+
+
+Table altered.
+
+MO_TROMO_FK.sql...
+
+Table altered.
+
+
+Table altered.
+
+US_TPUSR_FK.sql...
+
+Table altered.
+
+
+Table altered.
+
+
+Table altered.
+
+MO_TROMO_IND.sql...
+
+Index created.
+
+
+Index created.
+
+US_TPUSR_IND.sql...
+
+Index created.
+
+
+Index created.
+
+
+Index created.
+
+MO_SETMODU.sql...
+
+Sequence created.
+
+MO_SETROMO.sql...
+
+Sequence created.
+
+US_SETPSNA.sql...
+
+Sequence created.
+
+US_SETPUSR.sql...
+
+Sequence created.
+
+US_SETROLL.sql...
+
+Sequence created.
+
+US_SETUSER.sql...
+
+Sequence created.
+
+TO_USMO.sql...
+
+Type created.
+
+TT_USMO.sql...
+
+Warning: Type created with compilation errors.
+
+
+PACKAGE BODY:US_QVAFPUSR
+
+
+Package body created.
+
+MO_QVMODU.sql...
+
+PACKAGE: MO_QVMODU
+
+
+Package created.
+
+
+PACKAGE BODY:MO_QVMODU
+
+
+Package body created.
+
+US_QVPSNA.sql...
+
+PACKAGE: US_QVPSNA
+
+
+Package created.
+
+
+PACKAGE BODY:US_QVPSNA
+
+
+Package body created.
+
+US_QVROLL.sql...
+
+PACKAGE: US_QVROLL
+
+
+Package created.
+
+
+PACKAGE BODY:US_QVROLL
+
+
+Package body created.
+
+US_QVUSER.sql...
+
+PACKAGE: US_QVUSER
+
+
+Package created.
+
+
+PACKAGE BODY:US_QVUSER
+
+
+Package body created.
+
+US_QPSNA.sql...
+
+PACKAGE: US_QPSNA
+
+
+Package created.
+
+
+PACKAGE BODY:US_QPSNA
+
+
+Package body created.
+
+US_QROLL.sql...
+
+PACKAGE: US_QROLL
+
+
+Package created.
+
+
+PACKAGE BODY:US_QROLL
+
+
+Warning: Package Body created with compilation errors.
+
+
+PACKAGE BODY:MO_QMODU
+
+
+Package body created.
+
+US_QUSER.sql...
+
+PACKAGE: US_QUSER
+
+
+Package created.
+
+
+PACKAGE BODY:US_QUSER
+
+
+Package body created.
+
+US_QFPUSR.sql...
+
+PACKAGE: US_QFPUSR
+
+
+Package created.
+
+
+PACKAGE BODY:US_QFPUSR
+
+
+Package body created.
+
+MO_QFROMO.sql...
+
+PACKAGE: MO_QFROMO
+
+
+Warning: Package created with compilation errors.
+
+
+PACKAGE BODY:MO_QFROMO
+
+
+Warning: Package Body created with compilation errors.
+
+PC_API_WEB.sql...
+
+PACKAGE: PC_API_WEB
+
+
+Warning: Package created with compilation errors.
+
+
+PACKAGE BODY:PC_API_WEB
+
+
+Warning: Package Body created with compilation errors.
+
+MO_TMODU.sql...
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+Commit complete.
+
+US_TROLL.sql...
+
+1 row created.
+
+
+1 row created.
+
+
+Commit complete.
+
+US_TUSER.sql...
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+Commit complete.
+
+US_TPSNA.sql...
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+Commit complete.
+
+MO_TROMO.sql...
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+Commit complete.
+
+US_TPUSR.sql...
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+Commit complete.
+
