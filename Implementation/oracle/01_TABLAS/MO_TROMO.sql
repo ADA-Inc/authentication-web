@@ -26,7 +26,7 @@ STORAGE (
 ;
 /* Create Comments, Sequences and Triggers for Autonumber Columns */
 
-COMMENT ON TABLE   "FS_AUWEB_US"."MO_TROMO" IS 'Tabla que contendra la relaciÃ³n entre rol de usuario y columnas'
+COMMENT ON TABLE   "FS_AUWEB_US"."MO_TROMO" IS 'Tabla que contendra la relación entre rol de usuario y columnas'
 ;
 
 COMMENT ON COLUMN  "MO_TROMO"."ROMO_MODU" IS 'Identificador del modulo asociado al rol'

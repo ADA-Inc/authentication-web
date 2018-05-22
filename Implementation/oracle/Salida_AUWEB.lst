@@ -237,37 +237,47 @@ Index created.
 
 Index created.
 
-MO_SETMODU.sql...
+MO_SMODU.sql...
 
 Sequence created.
 
-MO_SETROMO.sql...
+MO_SROMO.sql...
 
 Sequence created.
 
-US_SETPSNA.sql...
+US_SPSNA.sql...
 
 Sequence created.
 
-US_SETPUSR.sql...
+US_SPUSR.sql...
 
 Sequence created.
 
-US_SETROLL.sql...
+US_SROLL.sql...
 
 Sequence created.
 
-US_SETUSER.sql...
+US_SUSER.sql...
 
 Sequence created.
 
-TO_USMO.sql...
+AUW_TO_MO_USMO.sql...
+create or replace TYPE       FS_AUWEB_US.AUW_TO_MO_USMO AS
+*
+ERROR at line 1:
+ORA-02303: cannot drop or replace a type with type or table dependents 
+
+
+AUW_TT_MO_USMO.sql...
 
 Type created.
 
-TT_USMO.sql...
+US_QVAFPUSR.sql...
 
-Warning: Type created with compilation errors.
+PACKAGE: US_QVAFPUSR
+
+
+Package created.
 
 
 PACKAGE BODY:US_QVAFPUSR
@@ -351,7 +361,14 @@ Package created.
 PACKAGE BODY:US_QROLL
 
 
-Warning: Package Body created with compilation errors.
+Package body created.
+
+MO_QMODU.sql...
+
+PACKAGE: MO_QMODU
+
+
+Package created.
 
 
 PACKAGE BODY:MO_QMODU
@@ -390,26 +407,26 @@ MO_QFROMO.sql...
 PACKAGE: MO_QFROMO
 
 
-Warning: Package created with compilation errors.
+Package created.
 
 
 PACKAGE BODY:MO_QFROMO
 
 
-Warning: Package Body created with compilation errors.
+Package body created.
 
 PC_API_WEB.sql...
 
 PACKAGE: PC_API_WEB
 
 
-Warning: Package created with compilation errors.
+Package created.
 
 
 PACKAGE BODY:PC_API_WEB
 
 
-Warning: Package Body created with compilation errors.
+Package body created.
 
 MO_TMODU.sql...
 

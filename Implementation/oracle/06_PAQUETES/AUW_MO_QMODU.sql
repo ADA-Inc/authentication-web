@@ -1,10 +1,10 @@
 prompt
-prompt PACKAGE: MO_QMODU
+prompt PACKAGE: AUW_MO_QMODU
 prompt
-CREATE OR REPLACE PACKAGE FS_AUWEB_US.MO_QMODU IS
+CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_MO_QMODU IS
     --
     -- ===========================================================
-    -- MO_QMODU
+    -- AUW_MO_QMODU
     -- -----------------------------------------------------------
     -- Todas las funciones del MODU
     -- ===========================================================
@@ -50,16 +50,16 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.MO_QMODU IS
     ); 
     -- ------------------------------------------------------------
     
-END MO_QMODU;
+END AUW_MO_QMODU;
 /
 
 
 prompt
-prompt PACKAGE BODY:MO_QMODU
+prompt PACKAGE BODY:AUW_MO_QMODU
 prompt
 
 
-CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QMODU IS
+CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_MO_QMODU IS
   
      --
     -- #VERSION:0000001000
@@ -80,9 +80,9 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QMODU IS
         v_cod_rta_modulo          NE_TCRTA.CRTA_CRTA%type;
 
     BEGIN  
-        v_secuencia := MO_SETMODU.NextVal;
+        v_secuencia := MO_SMODU.NextVal;
 
-        MO_QVMODU.validarModuloPorNombre
+        AUW_MO_QVMODU.validarModuloPorNombre
         (
             p_nombre_modulo,
             v_cod_rta_modulo
@@ -176,7 +176,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QMODU IS
 
     BEGIN  
 
-        MO_QMODU.buscarModuloPorNombre
+        AUW_MO_QMODU.buscarModuloPorNombre
         (
             p_nombre_modulo,             
             v_id_modulo,
@@ -202,5 +202,5 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QMODU IS
                 p_cod_rta  := 'ERROR_NC';
 
     END actualizarModulo;
-END MO_QMODU;
+END AUW_MO_QMODU;
 /

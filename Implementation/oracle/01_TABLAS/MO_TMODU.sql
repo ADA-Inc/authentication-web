@@ -35,7 +35,7 @@ COMMENT ON COLUMN  "MO_TMODU"."MODU_MODU" IS 'Identificador  unico del modulo'
 COMMENT ON COLUMN  "MO_TMODU"."MODU_NAME" IS 'Nombre del modulo'
 ;
 
-COMMENT ON COLUMN  "MO_TMODU"."MODU_DESC" IS 'DescripciÃ³n del modulo'
+COMMENT ON COLUMN  "MO_TMODU"."MODU_DESC" IS 'Descripción del modulo'
 ;
 
 

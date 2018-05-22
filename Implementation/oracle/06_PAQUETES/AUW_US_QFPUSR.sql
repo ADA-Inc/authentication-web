@@ -1,10 +1,10 @@
 prompt
-prompt PACKAGE: US_QFPUSR
+prompt PACKAGE: AUW_US_QFPUSR
 prompt
-CREATE OR REPLACE PACKAGE FS_AUWEB_US.US_QFPUSR IS
+CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_US_QFPUSR IS
     --
     -- ===========================================================
-    -- US_QFPUSR
+    -- AUW_US_QFPUSR
     -- -----------------------------------------------------------
     -- Todas las funciones del PSNA
     -- ===========================================================
@@ -76,16 +76,16 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.US_QFPUSR IS
         p_cod_rta                   OUT NE_TCRTA.CRTA_CRTA%type
     );
 
-END US_QFPUSR;
+END AUW_US_QFPUSR;
 /
 
 
 prompt
-prompt PACKAGE BODY:US_QFPUSR
+prompt PACKAGE BODY:AUW_US_QFPUSR
 prompt
 
 
-CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QFPUSR IS
+CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QFPUSR IS
   
     --
     -- #VERSION:0000001000
@@ -137,19 +137,19 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QFPUSR IS
         v_cod_rta_persona       NE_TCRTA.CRTA_CRTA%type;
 
     BEGIN  
-        US_QROLL.buscarRollPorNombre
+        AUW_US_QROLL.buscarRollPorNombre
         (
             p_nombre_roll,
             v_id_roll,
             v_cod_rta_roll
         );
-        US_QUSER.buscarUsuarioPorNombre
+        AUW_US_QUSER.buscarUsuarioPorNombre
         (
             p_nombre_usuario,
             v_id_usuario,
             v_cod_rta_usuario
         );
-        US_QPSNA.buscarPersonaPorDocumento
+        AUW_US_QPSNA.buscarPersonaPorDocumento
         (
             p_documento_persona,
             v_id_persona,
@@ -218,9 +218,9 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QFPUSR IS
         v_existencia_rolus          BOOLEAN;
 
     BEGIN  
-        v_secuencia := US_SETPUSR.NextVal;
+        v_secuencia := US_SPUSR.NextVal;
 
-        US_QROLL.buscarRollPorNombre
+        AUW_US_QROLL.buscarRollPorNombre
         (
             p_nombre_roll,
             v_id_roll,
@@ -229,14 +229,14 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QFPUSR IS
         
         IF  v_cod_rta_roll ='OK'  THEN
         
-            US_QUSER.buscarUsuarioPorNombre
+            AUW_US_QUSER.buscarUsuarioPorNombre
             (
                 p_nombre_usuario,
                 v_id_usuario,
                 v_cod_rta_usuario
             );
             
-            US_QPSNA.buscarPersonaPorDocumento
+            AUW_US_QPSNA.buscarPersonaPorDocumento
             (
                 p_documento_persona,
                 v_id_persona,
@@ -245,7 +245,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QFPUSR IS
             
             IF  v_cod_rta_usuario <>'OK' AND v_cod_rta_persona<>'OK'  THEN
                 
-                US_QUSER.crearUsuario
+                AUW_US_QUSER.crearUsuario
                 (
                     p_nombre_usuario  ,
                     p_password_usuario,
@@ -253,7 +253,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QFPUSR IS
                     v_cod_rta_usuario
                 );
                 
-                US_QPSNA.crearPersona
+                AUW_US_QPSNA.crearPersona
                 (
                     p_documento_persona,
                     p_nombres_persona  ,
@@ -268,7 +268,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QFPUSR IS
             
             END IF;
             
-            US_QVAFPUSR.validarUserRolSys
+            AUW_US_QVPUSR.validarUserRolSys
             (
                 v_id_usuario,
                 v_id_roll,
@@ -337,9 +337,9 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QFPUSR IS
         v_existencia_rolus          BOOLEAN;
 
     BEGIN  
-        v_secuencia := US_SETPUSR.NextVal;
+        v_secuencia := US_SPUSR.NextVal;
 
-        US_QROLL.buscarRollPorNombre
+        AUW_US_QROLL.buscarRollPorNombre
         (
             p_nombre_roll,
             v_id_roll,
@@ -348,14 +348,14 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QFPUSR IS
         
         IF  v_cod_rta_roll ='OK'  THEN
         
-            US_QUSER.buscarUsuarioPorNombre
+            AUW_US_QUSER.buscarUsuarioPorNombre
             (
                 p_nombre_usuario,
                 v_id_usuario,
                 v_cod_rta_usuario
             );
             
-            US_QPSNA.buscarPersonaPorDocumento
+            AUW_US_QPSNA.buscarPersonaPorDocumento
             (
                 p_documento_persona,
                 v_id_persona,
@@ -363,7 +363,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QFPUSR IS
             );
             
             
-            US_QVAFPUSR.validarUserRolSys
+            AUW_US_QVPUSR.validarUserRolSys
             (
                 v_id_usuario,
                 v_id_roll,
@@ -439,14 +439,14 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QFPUSR IS
 
     BEGIN  
         
-        US_QVPSNA.validarPersonaPorDoct
+        AUW_US_QVPSNA.validarPersonaPorDoct
         (
             p_documento_persona               ,
             v_existencia_persona              ,
             v_cod_rta_persona                         
         );
         
-        US_QVUSER.validarUsuarioPorNombre
+        AUW_US_QVUSER.validarUsuarioPorNombre
         (
             p_nombre_usuario    ,
             v_existencia_user,
@@ -457,7 +457,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QFPUSR IS
             
             IF  NOT (v_existencia_persona) THEN
                 
-                US_QPSNA.actualizarPersona
+                AUW_US_QPSNA.actualizarPersona
                 (
                     p_documento_persona    ,
                     p_documento_persona_act,
@@ -486,7 +486,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QFPUSR IS
             
             IF  NOT (v_existencia_user) THEN
                 
-                US_QUSER.actualizarUsuario
+                AUW_US_QUSER.actualizarUsuario
                 (
                     p_nombre_usuario      ,
                     p_nombre_usuario_act  ,
@@ -513,5 +513,5 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QFPUSR IS
     
     END actualizarUsPe;
     
-END US_QFPUSR;
+END AUW_US_QFPUSR;
 /

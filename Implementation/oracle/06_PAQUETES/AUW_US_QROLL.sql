@@ -1,10 +1,10 @@
 prompt
-prompt PACKAGE: US_QROLL
+prompt PACKAGE: AUW_US_QROLL
 prompt
-CREATE OR REPLACE PACKAGE FS_AUWEB_US.US_QROLL IS
+CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_US_QROLL IS
     --
     -- ===========================================================
-    -- US_QROLL
+    -- AUW_US_QROLL
     -- -----------------------------------------------------------
     -- Todas las funciones del roll
     -- ===========================================================
@@ -49,16 +49,16 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.US_QROLL IS
     ); 
     -- ------------------------------------------------------------
     
-END US_QROLL;
+END AUW_US_QROLL;
 /
 
 
 prompt
-prompt PACKAGE BODY:US_QROLL
+prompt PACKAGE BODY:AUW_US_QROLL
 prompt
 
 
-CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QROLL IS
+CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QROLL IS
   
      --
     -- #VERSION:0000001000
@@ -81,9 +81,9 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QROLL IS
         v_cod_rta_tipo          NE_TCRTA.CRTA_CRTA%type;
 
     BEGIN  
-        v_secuencia := US_SETROLL.NextVal;
+        v_secuencia := US_SROLL.NextVal;
 
-        US_QVROLL.validarRollPorNombre
+        AUW_US_QVROLL.validarRollPorNombre
         (
             p_nombre_roll,
             v_existencia_roll,
@@ -180,7 +180,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QROLL IS
 
     BEGIN  
 
-        US_QROLL.buscarRollPorNombre
+        AUW_US_QROLL.buscarRollPorNombre
         (
             p_nombre_roll,             
             v_id_roll,
@@ -206,4 +206,5 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QROLL IS
                 p_cod_rta  := 'ERROR_NC';
 
     END actualizarRoll;
-END US_QROLL;
+END AUW_US_QROLL;
+/
