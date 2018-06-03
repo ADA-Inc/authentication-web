@@ -4,7 +4,6 @@ REM Realizado por : Master Zen
 REM Base de Datos : FS_AUWEB_US
 REM ******************************************************************
 
-/
 
 /* Create Tables */
 

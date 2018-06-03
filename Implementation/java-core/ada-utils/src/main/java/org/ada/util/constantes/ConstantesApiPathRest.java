@@ -49,8 +49,8 @@ public class ConstantesApiPathRest {
 	/**
 	 * LOGIN
 	 */
-	public static final String PATH_LOGIN      = "/login";
-	
+	public static final String PATH_LOGIN     		 = "/api/login";
+	public static final String PATH_LOGIN_AUWEB      = "/login";
 	
 	/**
 	 * SESSION_CLEAN 
@@ -60,6 +60,7 @@ public class ConstantesApiPathRest {
 	/**
 	 * LOGOUT
 	 */
-	public static final String PATH_LOGOUT = "/api/salir";
+	public static final String PATH_LOGOUT = "/api/logout";
+	public static final String PATH_LOGOUT_AUWEB = "/logout";
 
 }

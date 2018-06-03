@@ -1,10 +1,10 @@
 prompt
-prompt PACKAGE: MO_QFROMO
+prompt PACKAGE: AUW_MO_QFROMO
 prompt
-CREATE OR REPLACE PACKAGE FS_AUWEB_US.MO_QFROMO IS
+CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_MO_QFROMO IS
     --
     -- ===========================================================
-    -- MO_QFROMO
+    -- AUW_MO_QFROMO
     -- -----------------------------------------------------------
     -- Todas las funciones del modulo y rol
     -- ===========================================================
@@ -43,20 +43,20 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.MO_QFROMO IS
   PROCEDURE modulosAccesoUsuario
     (
         p_nombre_usuario          IN  US_TUSER.USER_ALAS%type,
-        p_tt_usmo                 OUT TT_USMO,
+        p_AUW_TT_MO_USMO                 OUT AUW_TT_MO_USMO,
         p_cod_rta                 OUT NE_TCRTA.CRTA_CRTA%type
     );
 
-END MO_QFROMO;
+END AUW_MO_QFROMO;
 /
 
 
 prompt
-prompt PACKAGE BODY:MO_QFROMO
+prompt PACKAGE BODY:AUW_MO_QFROMO
 prompt
 
 
-CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QFROMO IS
+CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_MO_QFROMO IS
   
     --
     -- #VERSION:0000001000
@@ -70,7 +70,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QFROMO IS
    PROCEDURE modulosAccesoUsuario
     (
         p_nombre_usuario          IN  US_TUSER.USER_ALAS%type,
-        p_tt_usmo                 OUT TT_USMO,
+        p_AUW_TT_MO_USMO                 OUT AUW_TT_MO_USMO,
         p_cod_rta                 OUT NE_TCRTA.CRTA_CRTA%type
     )IS
        
@@ -93,14 +93,14 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QFROMO IS
                 pur.PUSR_USER = pc_USER_USER;
 
 
-        v_to_usmo                TO_USMO; 
-        v_tt_usmo                TT_USMO := TT_USMO();
+        v_AUW_TO_MO_USMO                AUW_TO_MO_USMO; 
+        v_AUW_TT_MO_USMO                AUW_TT_MO_USMO := AUW_TT_MO_USMO();
         v_id_usuario             US_TUSER.USER_USER%type;
         v_cod_rta_usuario        NE_TCRTA.CRTA_CRTA%type;
 
     BEGIN 
 
-        US_QUSER.buscarUsuarioPorNombre
+        AUW_US_QUSER.buscarUsuarioPorNombre
         (
             p_nombre_usuario,
             v_id_usuario,
@@ -111,25 +111,25 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QFROMO IS
 
             FOR i IN c_usmo(v_id_usuario) LOOP
          
-                v_to_usmo:=TO_USMO(i.MODU_MODU,i.MODU_NAME);
-                v_tt_usmo.extend;
-                v_tt_usmo(v_tt_usmo.count):=v_to_usmo;
+                v_AUW_TO_MO_USMO:=AUW_TO_MO_USMO(i.MODU_MODU,i.MODU_NAME);
+                v_AUW_TT_MO_USMO.extend;
+                v_AUW_TT_MO_USMO(v_AUW_TT_MO_USMO.count):=v_AUW_TO_MO_USMO;
          
              END LOOP;
 
-             IF (v_tt_usmo.COUNT > 0) THEN 
-                p_tt_usmo   := v_tt_usmo;
+             IF (v_AUW_TT_MO_USMO.COUNT > 0) THEN 
+                p_AUW_TT_MO_USMO   := v_AUW_TT_MO_USMO;
                 p_cod_rta   := 'OK';
             ELSE 
                 p_cod_rta   := 'ER_NULL_USM';
             END IF;
         ELSE
-            p_tt_usmo := NULL;
+            p_AUW_TT_MO_USMO := NULL;
             p_cod_rta   := 'ER_NULL_USER';
         END if;
         EXCEPTION
             WHEN OTHERS THEN
-                p_tt_usmo:= NULL;
+                p_AUW_TT_MO_USMO:= NULL;
                 p_cod_rta  := 'ERROR_NC';
 
     END modulosAccesoUsuario;
@@ -174,13 +174,13 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QFROMO IS
         v_cod_rta_modulo        NE_TCRTA.CRTA_CRTA%type;
 
     BEGIN  
-        US_QROLL.buscarRollPorNombre
+        AUW_US_QROLL.buscarRollPorNombre
         (
             p_nombre_roll,
             v_id_roll,
             v_cod_rta_roll
         );
-        MO_QMODU.buscarModuloPorNombre
+        AUW_MO_QMODU.buscarModuloPorNombre
         (
             p_nombre_modulo,
             v_id_modulo,
@@ -228,16 +228,16 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QFROMO IS
         v_cod_rta_modulo            NE_TCRTA.CRTA_CRTA%type;
 
     BEGIN  
-        v_secuencia := MO_SETROMO.NextVal;
+        v_secuencia := MO_SROMO.NextVal;
 
-        US_QROLL.buscarRollPorNombre
+        AUW_US_QROLL.buscarRollPorNombre
         (
             p_nombre_roll,
             v_id_roll,
             v_cod_rta_roll
         );
 
-        MO_QMODU.buscarModuloPorNombre
+        AUW_MO_QMODU.buscarModuloPorNombre
         (
             p_nombre_modulo  ,
             v_id_modulo,
@@ -264,5 +264,5 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QFROMO IS
                 p_cod_rta  := 'ERROR_NC';
         
     END crearRomo;
-END MO_QFROMO;
+END AUW_MO_QFROMO;
 /

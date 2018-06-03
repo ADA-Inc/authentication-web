@@ -6,7 +6,7 @@ REM ******************************************************************
 
 REM USUARIO DEL APLICATIVO AUWEB_US
 
-drop user FS_AUWEB_US cascade;
+drop user "FS_AUWEB_US" cascade;
 
 Create user FS_AUWEB_US
  Identified by FS_AUWEB_US

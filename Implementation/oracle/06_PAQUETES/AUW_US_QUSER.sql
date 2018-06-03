@@ -1,10 +1,10 @@
 prompt
-prompt PACKAGE: US_QUSER
+prompt PACKAGE: AUW_US_QUSER
 prompt
-CREATE OR REPLACE PACKAGE FS_AUWEB_US.US_QUSER IS
+CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_US_QUSER IS
     --
     -- ===========================================================
-    -- US_QUSER
+    -- AUW_US_QUSER
     -- -----------------------------------------------------------
     -- Todas las funciones del usuario
     -- ===========================================================
@@ -59,16 +59,16 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.US_QUSER IS
     ); 
     -- ------------------------------------------------------------
     
-END US_QUSER;
+END AUW_US_QUSER;
 /
 
 
 prompt
-prompt PACKAGE BODY:US_QUSER
+prompt PACKAGE BODY:AUW_US_QUSER
 prompt
 
 
-CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QUSER IS
+CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QUSER IS
 
 
     --
@@ -149,10 +149,10 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QUSER IS
         v_password_md5          VARCHAR2(30);
 
     BEGIN  
-        v_secuencia := US_SETUSER.NextVal;
+        v_secuencia := US_SUSER.NextVal;
         v_password_md5 := DBMS_OBFUSCATION_TOOLKIT.MD5(INPUT_STRING => p_password_usuario);
 
-        US_QVUSER.validarUsuarioPorNombre
+        AUW_US_QVUSER.validarUsuarioPorNombre
         (
             p_nombre_usuario,
             v_existencia_usuario,
@@ -244,13 +244,15 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QUSER IS
         p_password_usuario_act         IN  US_TUSER.USER_PSWD%type,
         p_cod_rta                      OUT NE_TCRTA.CRTA_CRTA%type
     )IS
-    
+		v_password_md5          VARCHAR2(30);
         v_id_usuario            US_TUSER.USER_USER%type;
         v_cod_rta_tipo          NE_TCRTA.CRTA_CRTA%type;
 
     BEGIN  
+	
+		v_password_md5 := DBMS_OBFUSCATION_TOOLKIT.MD5(INPUT_STRING => p_password_usuario_act);
 
-        US_QUSER.buscarUsuarioPorNombre
+        AUW_US_QUSER.buscarUsuarioPorNombre
         (
             p_nombre_usuario,             
             v_id_usuario,
@@ -259,11 +261,11 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QUSER IS
 
         IF(v_id_usuario IS NOT NULL) THEN
 
-            UPDATE 
+            UPDATE
                 FS_AUWEB_US.US_TUSER
             SET 
                 USER_ALAS = p_nombre_usuario_act, 
-                USER_PSWD = p_password_usuario_act
+                USER_PSWD = v_password_md5
             WHERE 
                 USER_USER = v_id_usuario;
 
@@ -276,5 +278,5 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QUSER IS
                 p_cod_rta  := 'ERROR_NC';
 
     END actualizarUsuario;
-END US_QUSER;
+END AUW_US_QUSER;
 /

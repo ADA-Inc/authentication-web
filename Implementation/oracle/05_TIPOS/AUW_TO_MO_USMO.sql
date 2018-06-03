@@ -1,4 +1,4 @@
-create or replace TYPE       FS_AUWEB_US.TO_USMO AS
+create or replace TYPE       FS_AUWEB_US.AUW_TO_MO_USMO AS
 
 OBJECT
     (

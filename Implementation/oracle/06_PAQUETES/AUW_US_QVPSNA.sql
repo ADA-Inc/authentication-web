@@ -1,12 +1,12 @@
 prompt
-prompt PACKAGE: US_QVROLL
+prompt PACKAGE: AUW_US_QVPSNA
 prompt
-CREATE OR REPLACE PACKAGE FS_AUWEB_US.US_QVROLL IS
+CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_US_QVPSNA IS
     --
     -- ===========================================================
-    -- US_QVROLL
+    -- AUW_US_QVPSNA
     -- -----------------------------------------------------------
-    -- validador de existencia de roll
+    -- validador de existencia de persona por documento
     -- ===========================================================
     --
     -- #VERSION:0000001000
@@ -27,24 +27,24 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.US_QVROLL IS
     -- Declaracion de PROCEDIMIENTOS y FUNCIONES
     -- ============================================================
     
-  PROCEDURE validarRollPorNombre
+  PROCEDURE validarPersonaPorDoct
     (
-        p_nombre_roll                  IN  US_TROLL.ROLL_RLDN%type,
-        p_existencia_roll              OUT BOOLEAN,
-        p_cod_rta                      OUT NE_TCRTA.CRTA_CRTA%type
+        p_documento_persona               IN  US_TPSNA.PSNA_NRID%type,
+        p_existencia_persona              OUT BOOLEAN,
+        p_cod_rta                         OUT NE_TCRTA.CRTA_CRTA%type
     ); 
 
 ----------------------------------------------------------
     
-END US_QVROLL;
+END AUW_US_QVPSNA;
 /
 
 
 prompt
-prompt PACKAGE BODY:US_QVROLL
+prompt PACKAGE BODY:AUW_US_QVPSNA
 prompt
 
-CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QVROLL IS
+CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QVPSNA IS
 
 
     --
@@ -52,48 +52,48 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QVROLL IS
     --
     
     -- ===========================================================
-    -- PROCEDURE validarRollPorNombre
+    -- PROCEDURE validarPersonaPorDoct
     -- -----------------------------------------------------------
-    -- validar existencia de roll
+    -- validar existencia de persona por documento
     -- ===========================================================
-    PROCEDURE validarRollPorNombre
+    PROCEDURE validarPersonaPorDoct
     (
-        p_nombre_roll               IN  US_TROLL.ROLL_RLDN%type,
-        p_existencia_roll           OUT BOOLEAN,
-        p_cod_rta                   OUT NE_TCRTA.CRTA_CRTA%type
+        p_documento_persona               IN  US_TPSNA.PSNA_NRID%type,
+        p_existencia_persona              OUT BOOLEAN,
+        p_cod_rta                         OUT NE_TCRTA.CRTA_CRTA%type
     )IS
         
-        CURSOR c_roll IS
+        CURSOR c_persona IS
             SELECT
-                ROLL_RLDN
+                PSNA_NRID
             FROM
-                FS_AUWEB_US.US_TROLL
+                FS_AUWEB_US.US_TPSNA
             WHERE
-                ROLL_RLDN = p_nombre_roll;
+                PSNA_NRID = p_documento_persona;
 
-            r_roll c_roll%rowtype;
+            r_persona c_persona%rowtype;
         
     BEGIN
       
-        OPEN  c_roll;
-        FETCH c_roll INTO r_roll;
-        CLOSE c_roll;
+        OPEN  c_persona;
+        FETCH c_persona INTO r_persona;
+        CLOSE c_persona;
         
-        IF(r_roll.ROLL_RLDN IS NULL) then
+        IF(r_persona.PSNA_NRID IS NULL) then
         
-            p_existencia_roll := TRUE;
+            p_existencia_persona := TRUE;
             p_cod_rta         := 'OK';
             
         ELSE
-            p_existencia_roll := FALSE;
-            p_cod_rta         := 'ER_EMP_NUL';
+            p_existencia_persona := FALSE;
+            p_cod_rta            := 'ER_EMP_NUL';
         END IF;
     EXCEPTION
         WHEN OTHERS THEN
-            p_existencia_roll := FALSE;
-            p_cod_rta         := 'ERROR_NC';
+            p_existencia_persona := FALSE;
+            p_cod_rta            := 'ERROR_NC';
         
-    END validarRollPorNombre;
+    END validarPersonaPorDoct;
     
-END US_QVROLL;
+END AUW_US_QVPSNA;
 /

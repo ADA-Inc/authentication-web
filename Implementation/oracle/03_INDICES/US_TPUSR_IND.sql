@@ -4,7 +4,6 @@ REM Realizado por : Master Zen
 REM Base de Datos : FS_AUWEB_US
 REM ******************************************************************
 
-/
 
 CREATE INDEX "IXFK_US_TPUSR_US_TPSNA"   
  ON  "US_TPUSR" ("PUSR_PSNA") 

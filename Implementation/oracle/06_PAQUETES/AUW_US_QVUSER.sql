@@ -1,10 +1,10 @@
 prompt
-prompt PACKAGE: US_QVUSER
+prompt PACKAGE: AUW_US_QVUSER
 prompt
-CREATE OR REPLACE PACKAGE FS_AUWEB_US.US_QVUSER IS
+CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_US_QVUSER IS
     --
     -- ===========================================================
-    -- US_QVUSER
+    -- AUW_US_QVUSER
     -- -----------------------------------------------------------
     -- validador de existencia de usuario
     -- ===========================================================
@@ -36,15 +36,15 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.US_QVUSER IS
 
 ----------------------------------------------------------
     
-END US_QVUSER;
+END AUW_US_QVUSER;
 /
 
 
 prompt
-prompt PACKAGE BODY:US_QVUSER
+prompt PACKAGE BODY:AUW_US_QVUSER
 prompt
 
-CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QVUSER IS
+CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QVUSER IS
 
 
     --
@@ -95,5 +95,5 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QVUSER IS
         
     END validarUsuarioPorNombre;
     
-END US_QVUSER;
+END AUW_US_QVUSER;
 /

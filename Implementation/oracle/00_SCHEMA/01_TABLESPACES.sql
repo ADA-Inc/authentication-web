@@ -7,13 +7,13 @@ REM ******************************************************************
 REM TABLESPACE TEMPORAL
 
 Create Temporary tablespace TS_TAUWEB TEMPFILE
-'C:\oraclexe\app\oracle\oradata\XE\TAUWEB.dbf' size 300m
+'C:\oraclexe\app\oracle\oradata\XE\TAUWEB.dbf' size 300m REUSE
          Extent management local uniform size 2m
 ;
 
 REM TABLESPACE DE DATOS
 CREATE TABLESPACE TS_AUWEB DATAFILE 
-  'C:\oraclexe\app\oracle\oradata\XE\DAUWEB.DBF' SIZE 300M AUTOEXTEND ON NEXT 1024M MAXSIZE UNLIMITED
+  'C:\oraclexe\app\oracle\oradata\XE\DAUWEB.DBF' SIZE 300M REUSE AUTOEXTEND ON NEXT 1024M MAXSIZE UNLIMITED
 LOGGING
 ONLINE
 PERMANENT
@@ -26,7 +26,7 @@ FLASHBACK ON;
 REM TABLESPACE DE INDICES 
                                                             
 CREATE TABLESPACE TS_IAUWEB DATAFILE 
-  'C:\oraclexe\app\oracle\oradata\XE\IAUWEB.DBF' SIZE 300M AUTOEXTEND ON NEXT 1024M MAXSIZE UNLIMITED
+  'C:\oraclexe\app\oracle\oradata\XE\IAUWEB.DBF' SIZE 300M REUSE AUTOEXTEND ON NEXT 1024M MAXSIZE UNLIMITED
 LOGGING
 ONLINE
 PERMANENT

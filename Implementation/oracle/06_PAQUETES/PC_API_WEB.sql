@@ -6,7 +6,7 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.PC_API_WEB IS
     -- ===========================================================
     -- PC_API_WEB
     -- -----------------------------------------------------------
-    -- ReÃºne funciones y procedimientos relacionados con la 
+    -- Reúne funciones y procedimientos relacionados con la 
     -- gestion de negocio 
     -- ===========================================================
     --
@@ -14,7 +14,7 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.PC_API_WEB IS
     --
     -- HISTORIAL DE CAMBIOS
     --
-    -- VersiÃ³n        GAP               Solicitud        Fecha        RealizÃ³            DescripciÃ³n
+    -- Versión        GAP               Solicitud        Fecha        Realizó            Descripción
     -- -----------    -------------    -------------    ----------    -------------    ------------------------------------------------------------------------------------------------------------------------------------------
     -- 
     -- -----------    -------------    -------------    ----------    -------------    ------------------------------------------------------------------------------------------------------------------------------------------
@@ -122,7 +122,7 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.PC_API_WEB IS
         PROCEDURE modulosAccesoUsuario
         (
             p_nombre_usuario              IN  US_TUSER.USER_ALAS%type,
-            p_tt_usmo                     OUT TT_USMO,
+            p_AUW_TT_MO_USMO                     OUT AUW_TT_MO_USMO,
             p_cod_rta                     OUT NE_TCRTA.CRTA_CRTA%type,
             p_msj_rta                     OUT NE_TCRTA.CRTA_DESCRI%type
         );
@@ -163,7 +163,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
           v_msj_rta                    NE_TCRTA.CRTA_DESCRI%type;
         BEGIN  
         
-            US_QUSER.loginUsuario
+            AUW_US_QUSER.loginUsuario
             (
                 p_nombre_usuario     ,
                 p_password_usuario   ,
@@ -215,7 +215,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
           v_msj_rta                    NE_TCRTA.CRTA_DESCRI%type;
         BEGIN  
         
-            US_QFPUSR.crearUsPeRo
+            AUW_US_QFPUSR.crearUsPeRo
             (
                 p_nombre_roll       ,
                 p_nombre_usuario    ,
@@ -273,7 +273,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
           v_msj_rta                    NE_TCRTA.CRTA_DESCRI%type;
         BEGIN  
         
-            US_QFPUSR.actualizarUsPe
+            AUW_US_QFPUSR.actualizarUsPe
             (
                 p_nombre_usuario         ,
                 p_documento_persona      ,
@@ -325,7 +325,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
           v_msj_rta                    NE_TCRTA.CRTA_DESCRI%type;
         BEGIN  
         
-            US_QFPUSR.asignarRolUsPe
+            AUW_US_QFPUSR.asignarRolUsPe
             (
                 p_nombre_roll       ,
                 p_nombre_usuario    ,
@@ -371,7 +371,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
           v_msj_rta                    NE_TCRTA.CRTA_DESCRI%type;
         BEGIN  
         
-            MO_QMODU.crearModulo
+            AUW_MO_QMODU.crearModulo
             (
                 p_nombre_modulo      ,
                 p_descripcion_modulo ,
@@ -413,7 +413,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
           v_msj_rta                       NE_TCRTA.CRTA_DESCRI%type;
         BEGIN  
         
-            MO_QMODU.actualizarModulo
+            AUW_MO_QMODU.actualizarModulo
             (
                 p_nombre_modulo               ,
                 p_nombre_modulo_act           ,
@@ -455,7 +455,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
           v_msj_rta                       NE_TCRTA.CRTA_DESCRI%type;
         BEGIN  
         
-            MO_QFROMO.crearRomo
+            AUW_MO_QFROMO.crearRomo
             (
                 p_nombre_roll         ,
                 p_nombre_modulo       ,
@@ -487,7 +487,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
         PROCEDURE modulosAccesoUsuario
         (
             p_nombre_usuario              IN  US_TUSER.USER_ALAS%type,
-            p_tt_usmo                     OUT TT_USMO,
+            p_AUW_TT_MO_USMO                     OUT AUW_TT_MO_USMO,
             p_cod_rta                     OUT NE_TCRTA.CRTA_CRTA%type,
             p_msj_rta                     OUT NE_TCRTA.CRTA_DESCRI%type
         )IS
@@ -497,10 +497,10 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
           v_msj_rta                       NE_TCRTA.CRTA_DESCRI%type;
         BEGIN  
         
-            MO_QFROMO.modulosAccesoUsuario
+            AUW_MO_QFROMO.modulosAccesoUsuario
             (
                 p_nombre_usuario      ,
-                p_tt_usmo             ,
+                p_AUW_TT_MO_USMO             ,
                 v_cod_rta_modulo                     
             );
               

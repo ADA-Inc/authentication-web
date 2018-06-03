@@ -4,11 +4,10 @@ REM Realizado por : Master Zen
 REM Base de Datos : FS_AUWEB_US
 REM ******************************************************************
 
-/
 
 /* Create Tables */
 
-CREATE TABLE  "MO_TROMO"
+CREATE TABLE  "FS_AUWEB_US"."MO_TROMO"
 (
 	"ROMO_ROMO" NUMBER(22) NOT NULL,    -- Identificador unico modulos con rol
 	"ROMO_MODU" NUMBER(22) NULL,
@@ -27,15 +26,19 @@ STORAGE (
 ;
 /* Create Comments, Sequences and Triggers for Autonumber Columns */
 
-COMMENT ON TABLE  "MO_TROMO" IS 'Tabla que contendra la realcion entre rol de usuario y columnas'
+COMMENT ON TABLE   "FS_AUWEB_US"."MO_TROMO" IS 'Tabla que contendra la relación entre rol de usuario y columnas'
 ;
 
-COMMENT ON COLUMN  "MO_TROMO"."ROMO_ROMO" IS 'Identificador unico modulos con rol'
+COMMENT ON COLUMN  "MO_TROMO"."ROMO_MODU" IS 'Identificador del modulo asociado al rol'
 ;
+
+COMMENT ON COLUMN  "MO_TROMO"."ROMO_ROLL" IS 'Identificador del rol asociado al modulo '
+;
+
 
 /* Create Primary Keys, Indexes, Uniques, Checks, Triggers */
 
-ALTER TABLE  "MO_TROMO" 
+ALTER TABLE  "FS_AUWEB_US"."MO_TROMO" 
  ADD CONSTRAINT "PK_ROMO"
 	PRIMARY KEY ("ROMO_ROMO") 
 USING INDEX 

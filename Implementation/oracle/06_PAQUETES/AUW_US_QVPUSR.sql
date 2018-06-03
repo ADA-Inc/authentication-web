@@ -1,10 +1,10 @@
 prompt
-prompt PACKAGE: US_QVAFPUSR
+prompt PACKAGE: AUW_US_QVPUSR
 prompt
-CREATE OR REPLACE PACKAGE FS_AUWEB_US.US_QVAFPUSR IS
+CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_US_QVPUSR IS
     --
     -- ===========================================================
-    -- US_QVAFPUSR
+    -- AUW_US_QVPUSR
     -- -----------------------------------------------------------
     -- validador de existencia de roll
     -- ===========================================================
@@ -37,15 +37,15 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.US_QVAFPUSR IS
     ); 
     
     
-END US_QVAFPUSR;
+END AUW_US_QVPUSR;
 /
 
 
 prompt
-prompt PACKAGE BODY:US_QVAFPUSR
+prompt PACKAGE BODY:AUW_US_QVPUSR
 prompt
 
-CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QVAFPUSR IS
+CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QVPUSR IS
 
 
     --
@@ -100,5 +100,5 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QVAFPUSR IS
         
     END validarUserRolSys;
     
-END US_QVAFPUSR;
+END AUW_US_QVPUSR;
 /

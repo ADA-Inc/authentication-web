@@ -33,7 +33,7 @@ public class ServicioRestGestionadorUsuario {
 	public ResponseEntity<ProcesoRespuestaApiRestLogin> loginUsuario(@RequestBody UsuarioRestDto usuarioRestDto) {
 
 		/*
-		 * ==============================================
+		 * =================================================
 		 * Se realiza instacia de objetos que se utilizaran 
 		 * en el medoto.
 		 * ************************************************* 
