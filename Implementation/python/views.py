@@ -4,10 +4,12 @@ from flask		 import render_template
 from flask	     import request
 from flask       import jsonify
 
+# index.html
 @app.route('/')
 def index():
 	return render_template('index.html')
 
+# Login.html
 @app.route('/login',methods=['GET','POST'])
 def login():
 	form = LoginForm()
