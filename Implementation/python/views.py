@@ -40,4 +40,4 @@ def login():
 def homepage():
 	idUsuario = request.args.get('idUsuario')
 	session   = { 'idUsuario' : idUsuario }
-	return session['idUsuario']
+	return render_template('homepage.html')
