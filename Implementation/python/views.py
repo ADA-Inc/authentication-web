@@ -1,6 +1,6 @@
 from run 	     import app
 from forms 		 import LoginForm
-from flask 		 import Flask,redirect,url_for,request
+from flask 		 import Flask,redirect,url_for,request,session
 from flask		 import render_template 
 from flask       import jsonify
 
@@ -30,14 +30,19 @@ def login():
 		login_response = json.loads(response.text)
 		
 		if login_response['codigoRespuestaApi'] == 'OK' :
-			return redirect(url_for('homepage',idUsuario = login_response['idUsuario']))
+			session['idUsuario'] = login_response['idUsuario']
+			return redirect(url_for('homepage'))
 		else:
 			return '<script>alert("'+login_response['mensajeRespuestaApi']+'");window.location.href="login";</script>'
 						
 	return render_template('login.html',form=form)
 
+@app.route('/logout')
+def logout():
+   # remove the username from the session if it is there
+   session.pop('idUsuario', None)
+   return redirect(url_for('index'))
+
 @app.route('/homepage')
 def homepage():
-	idUsuario = request.args.get('idUsuario')
-	session   = { 'idUsuario' : idUsuario }
 	return render_template('homepage.html')

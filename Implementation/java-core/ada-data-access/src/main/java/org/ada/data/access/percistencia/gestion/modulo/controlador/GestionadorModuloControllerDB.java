@@ -57,7 +57,7 @@ public class GestionadorModuloControllerDB {
 		 * ==============================================
 		 * Se se realiza el mapeo de los parametros 
 		 * de entrada que necesita el servicio ofrecido por 
-		 * la API 
+		 * la API
 		 * ************************************************* 
 		 */
 		
