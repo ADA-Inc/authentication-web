@@ -1,10 +1,10 @@
 prompt
-prompt PACKAGE: AUW_MO_QMODU
+prompt PACKAGE: MO_QMODU
 prompt
-CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_MO_QMODU IS
-    --
+CREATE OR REPLACE PACKAGE FS_AUWEB_US.MO_QMODU IS
+     --
     -- ===========================================================
-    -- AUW_MO_QMODU
+    -- MO_QMODU
     -- -----------------------------------------------------------
     -- Todas las funciones del MODU
     -- ===========================================================
@@ -33,14 +33,14 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_MO_QMODU IS
         p_descripcion_modulo          IN  MO_TMODU.MODU_DESC%type,
         p_cod_rta                     OUT NE_TCRTA.CRTA_CRTA%type
     );
- 
+
   PROCEDURE buscarModuloPorNombre
     (
         p_nombre_modulo               IN  MO_TMODU.MODU_NAME%type,
         p_id_modulo                   OUT MO_TMODU.MODU_MODU%type,
         p_cod_rta                     OUT NE_TCRTA.CRTA_CRTA%type
     ); 
-    
+
   PROCEDURE actualizarModulo
     (
         p_nombre_modulo               IN  MO_TMODU.MODU_NAME%type,
@@ -50,18 +50,18 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_MO_QMODU IS
     ); 
     -- ------------------------------------------------------------
     
-END AUW_MO_QMODU;
+END MO_QMODU;
 /
 
 
 prompt
-prompt PACKAGE BODY:AUW_MO_QMODU
+prompt PACKAGE BODY:MO_QMODU
 prompt
 
 
-CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_MO_QMODU IS
+CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QMODU IS
   
-     --
+    --
     -- #VERSION:0000001000
     --
     
@@ -80,9 +80,9 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_MO_QMODU IS
         v_cod_rta_modulo          NE_TCRTA.CRTA_CRTA%type;
 
     BEGIN  
-        v_secuencia := MO_SMODU.NextVal;
+        v_secuencia := MO_SETMODU.NextVal;
 
-        AUW_MO_QVMODU.validarModuloPorNombre
+        MO_QVMODU.validarModuloPorNombre
         (
             p_nombre_modulo,
             v_cod_rta_modulo
@@ -112,7 +112,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_MO_QMODU IS
     --
     -- #VERSION:0000001000
     --
-    
+
     -- ===========================================================
     -- PROCEDURE homologarCoreWebModulo
     -- -----------------------------------------------------------
@@ -141,7 +141,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_MO_QMODU IS
         OPEN  c_MODU;
         FETCH c_MODU INTO r_MODU;
         CLOSE c_MODU;
-          
+
         IF(r_MODU.MODU_MODU IS NOT NULL) THEN
           p_id_modulo  :=  r_MODU.MODU_MODU;
           p_cod_rta     := 'OK';
@@ -151,12 +151,12 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_MO_QMODU IS
         EXCEPTION
             WHEN OTHERS THEN
                 p_cod_rta  := 'ERROR_NC';
-        
+
     END buscarModuloPorNombre;
     --
     -- #VERSION:0000001000
     --
-    
+
     -- ===========================================================
     -- PROCEDURE homologarWebCoreModulo
     -- -----------------------------------------------------------
@@ -170,13 +170,13 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_MO_QMODU IS
         p_descripcion_modulo_act      IN  MO_TMODU.MODU_DESC%type,
         p_cod_rta                     OUT NE_TCRTA.CRTA_CRTA%type
     )IS
-    
+
         v_id_modulo            MO_TMODU.MODU_MODU%type;
         v_cod_rta_tipo         NE_TCRTA.CRTA_CRTA%type;
 
     BEGIN  
 
-        AUW_MO_QMODU.buscarModuloPorNombre
+        MO_QMODU.buscarModuloPorNombre
         (
             p_nombre_modulo,             
             v_id_modulo,
@@ -202,5 +202,5 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_MO_QMODU IS
                 p_cod_rta  := 'ERROR_NC';
 
     END actualizarModulo;
-END AUW_MO_QMODU;
+END MO_QMODU;
 /

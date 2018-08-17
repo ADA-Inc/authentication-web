@@ -1,10 +1,10 @@
 prompt
-prompt PACKAGE: AUW_US_QPSNA
+prompt PACKAGE: US_QPSNA
 prompt
-CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_US_QPSNA IS
+CREATE OR REPLACE PACKAGE FS_AUWEB_US.US_QPSNA IS
     --
     -- ===========================================================
-    -- AUW_US_QPSNA
+    -- US_QPSNA
     -- -----------------------------------------------------------
     -- Todas las funciones del PSNA
     -- ===========================================================
@@ -39,14 +39,14 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_US_QPSNA IS
         p_id_persona                OUT US_TPSNA.PSNA_PSNA%type,
         p_cod_rta                   OUT NE_TCRTA.CRTA_CRTA%type
     );
- 
+
   PROCEDURE buscarPersonaPorDocumento
     (
         p_documento_persona         IN  US_TPSNA.PSNA_NRID%type,
         p_id_persona                OUT US_TPSNA.PSNA_PSNA%type,
         p_cod_rta                   OUT NE_TCRTA.CRTA_CRTA%type
     ); 
-    
+
   PROCEDURE actualizarPersona
     (
         p_documento_persona         IN  US_TPSNA.PSNA_NRID%type,
@@ -60,17 +60,18 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_US_QPSNA IS
         p_cod_rta                   OUT NE_TCRTA.CRTA_CRTA%type
     ); 
     -- ------------------------------------------------------------
+
     
-END AUW_US_QPSNA;
+END US_QPSNA;
 /
 
 
 prompt
-prompt PACKAGE BODY:AUW_US_QPSNA
+prompt PACKAGE BODY:US_QPSNA
 prompt
 
 
-CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QPSNA IS
+CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QPSNA IS
   
     --
     -- #VERSION:0000001000
@@ -99,15 +100,15 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QPSNA IS
         v_cod_rta_tipo             NE_TCRTA.CRTA_CRTA%type;
 
     BEGIN  
-        v_secuencia := US_SPSNA.NextVal;
+        v_secuencia := US_SETPSNA.NextVal;
 
-        AUW_US_QVPSNA.validarPersonaPorDoct
+        US_QVPSNA.validarPersonaPorDoct
         (
             p_documento_persona,
             v_existencia_persona,
             v_cod_rta_tipo
         );
-          
+
         IF(v_existencia_persona) THEN
           INSERT INTO US_TPSNA(
             PSNA_PSNA,
@@ -137,13 +138,13 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QPSNA IS
         EXCEPTION
             WHEN OTHERS THEN
                 p_cod_rta  := 'ERROR_NC';
-        
+
     END crearPersona;
 
     --
     -- #VERSION:0000001000
     --
-    
+
     -- ===========================================================
     -- PROCEDURE buscarPersonaPorDocumento
     -- -----------------------------------------------------------
@@ -171,7 +172,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QPSNA IS
         OPEN  c_persona;
         FETCH c_persona INTO r_persona;
         CLOSE c_persona;
-          
+
         IF(r_persona.PSNA_PSNA IS NOT NULL) THEN
           p_id_persona  :=  r_persona.PSNA_PSNA;
           p_cod_rta     := 'OK';
@@ -181,12 +182,12 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QPSNA IS
         EXCEPTION
             WHEN OTHERS THEN
                 p_cod_rta  := 'ERROR_NC';
-        
+
     END buscarPersonaPorDocumento;
     --
     -- #VERSION:0000001000
     --
-    
+
     -- ===========================================================
     -- PROCEDURE actualizarPersona
     -- -----------------------------------------------------------
@@ -204,13 +205,13 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QPSNA IS
         p_pais_persona_act          IN  US_TPSNA.PSNA_PAIS%type,
         p_cod_rta                   OUT NE_TCRTA.CRTA_CRTA%type
     )IS
-    
+
         v_id_persona                US_TPSNA.PSNA_PSNA%type;
         v_cod_rta_tipo              NE_TCRTA.CRTA_CRTA%type;
 
     BEGIN  
 
-        AUW_US_QPSNA.buscarPersonaPorDocumento
+        US_QPSNA.buscarPersonaPorDocumento
         (
             p_documento_persona,             
             v_id_persona,
@@ -241,5 +242,5 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QPSNA IS
                 p_cod_rta  := 'ERROR_NC';
 
     END actualizarPersona;
-END AUW_US_QPSNA;
+END US_QPSNA;
 /

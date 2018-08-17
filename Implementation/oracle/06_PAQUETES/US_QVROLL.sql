@@ -1,10 +1,10 @@
 prompt
-prompt PACKAGE: AUW_US_QVROLL
+prompt PACKAGE: US_QVROLL
 prompt
-CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_US_QVROLL IS
+CREATE OR REPLACE PACKAGE FS_AUWEB_US.US_QVROLL IS
     --
     -- ===========================================================
-    -- AUW_US_QVROLL
+    -- US_QVROLL
     -- -----------------------------------------------------------
     -- validador de existencia de roll
     -- ===========================================================
@@ -36,17 +36,15 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_US_QVROLL IS
 
 ----------------------------------------------------------
     
-END AUW_US_QVROLL;
+END US_QVROLL;
 /
 
 
 prompt
-prompt PACKAGE BODY:AUW_US_QVROLL
+prompt PACKAGE BODY:US_QVROLL
 prompt
 
-CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QVROLL IS
-
-
+CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QVROLL IS
     --
     -- #VERSION:0000001000
     --
@@ -72,18 +70,18 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QVROLL IS
                 ROLL_RLDN = p_nombre_roll;
 
             r_roll c_roll%rowtype;
-        
+
     BEGIN
-      
+
         OPEN  c_roll;
         FETCH c_roll INTO r_roll;
         CLOSE c_roll;
-        
+
         IF(r_roll.ROLL_RLDN IS NULL) then
-        
+
             p_existencia_roll := TRUE;
             p_cod_rta         := 'OK';
-            
+
         ELSE
             p_existencia_roll := FALSE;
             p_cod_rta         := 'ER_EMP_NUL';
@@ -92,8 +90,8 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QVROLL IS
         WHEN OTHERS THEN
             p_existencia_roll := FALSE;
             p_cod_rta         := 'ERROR_NC';
-        
+
     END validarRollPorNombre;
     
-END AUW_US_QVROLL;
+END US_QVROLL;
 /

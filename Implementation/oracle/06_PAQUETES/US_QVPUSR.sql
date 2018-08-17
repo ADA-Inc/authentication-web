@@ -1,10 +1,10 @@
 prompt
-prompt PACKAGE: AUW_US_QVPUSR
+prompt PACKAGE: US_QVPUSR
 prompt
-CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_US_QVPUSR IS
+CREATE OR REPLACE PACKAGE FS_AUWEB_US.US_QVPUSR IS
     --
     -- ===========================================================
-    -- AUW_US_QVPUSR
+    -- US_QVFPUSR
     -- -----------------------------------------------------------
     -- validador de existencia de roll
     -- ===========================================================
@@ -37,17 +37,15 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_US_QVPUSR IS
     ); 
     
     
-END AUW_US_QVPUSR;
+END US_QVPUSR;
 /
 
 
 prompt
-prompt PACKAGE BODY:AUW_US_QVPUSR
+prompt PACKAGE BODY:US_QVPUSR
 prompt
 
-CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QVPUSR IS
-
-
+CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QVPUSR IS
     --
     -- #VERSION:0000001000
     --
@@ -77,18 +75,18 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QVPUSR IS
                pusr_psna = p_id_persona;
 
             r_fu_usuario c_fu_usuario%rowtype;
-        
+
     BEGIN
-      
+
         OPEN  c_fu_usuario;
         FETCH c_fu_usuario INTO r_fu_usuario;
         CLOSE c_fu_usuario;
-        
+
         IF(r_fu_usuario.pusr_pusr IS NULL) then
-        
+
             p_existencia_rolus := TRUE;
             p_cod_rta         := 'OK';
-            
+
         ELSE
             p_existencia_rolus := FALSE;
             p_cod_rta         := 'ER_EMP_NUL';
@@ -97,8 +95,8 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QVPUSR IS
         WHEN OTHERS THEN
             p_existencia_rolus := FALSE;
             p_cod_rta         := 'ERROR_NC';
-        
+
     END validarUserRolSys;
     
-END AUW_US_QVPUSR;
+END US_QVPUSR;
 /

@@ -1,10 +1,10 @@
 prompt
-prompt PACKAGE: AUW_MO_QVMODU
+prompt PACKAGE: MO_QVMODU
 prompt
-CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_MO_QVMODU IS
+CREATE OR REPLACE PACKAGE FS_AUWEB_US.MO_QVMODU IS
     --
     -- ===========================================================
-    -- AUW_MO_QVMODU
+    -- MO_QVMODU
     -- -----------------------------------------------------------
     -- validador de existencia de modulo por Nombre
     -- ===========================================================
@@ -35,16 +35,15 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_MO_QVMODU IS
 
 ----------------------------------------------------------
     
-END AUW_MO_QVMODU;
+END MO_QVMODU;
 /
 
 
 prompt
-prompt PACKAGE BODY:AUW_MO_QVMODU
+prompt PACKAGE BODY:MO_QVMODU
 prompt
 
-CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_MO_QVMODU IS
-
+CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.MO_QVMODU IS
 
     --
     -- #VERSION:0000001000
@@ -89,5 +88,5 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_MO_QVMODU IS
 
     END validarmoduloPorNombre;
     
-END AUW_MO_QVMODU;
+END MO_QVMODU;
 /

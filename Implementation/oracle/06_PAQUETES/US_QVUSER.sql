@@ -1,10 +1,10 @@
 prompt
-prompt PACKAGE: AUW_US_QVUSER
+prompt PACKAGE: US_QVUSER
 prompt
-CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_US_QVUSER IS
+CREATE OR REPLACE PACKAGE FS_AUWEB_US.US_QVUSER IS
     --
     -- ===========================================================
-    -- AUW_US_QVUSER
+    -- US_QVUSER
     -- -----------------------------------------------------------
     -- validador de existencia de usuario
     -- ===========================================================
@@ -34,19 +34,17 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_US_QVUSER IS
         p_cod_rta                      OUT NE_TCRTA.CRTA_CRTA%type
     ); 
 
-----------------------------------------------------------
+    ----------------------------------------------------------
     
-END AUW_US_QVUSER;
+END US_QVUSER;
 /
 
 
 prompt
-prompt PACKAGE BODY:AUW_US_QVUSER
+prompt PACKAGE BODY:US_QVUSER
 prompt
 
-CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QVUSER IS
-
-
+CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QVUSER IS
     --
     -- #VERSION:0000001000
     --
@@ -64,26 +62,26 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QVUSER IS
     )IS
         
         CURSOR c_usuario IS
-			SELECT
-				USER_ALAS
-			FROM
-				FS_AUWEB_US.US_TUSER
+            SELECT
+                USER_ALAS
+            FROM
+                FS_AUWEB_US.US_TUSER
             WHERE
                 USER_ALAS = p_nombre_usuario;
 
-			r_usuario c_usuario%rowtype;
-        
+            r_usuario c_usuario%rowtype;
+
     BEGIN
-      
+
         OPEN  c_usuario;
         FETCH c_usuario INTO r_usuario;
         CLOSE c_usuario;
-        
+
         IF(r_usuario.USER_ALAS IS NULL) then
-        
-			p_existencia_usuario := TRUE;
+
+            p_existencia_usuario := TRUE;
             p_cod_rta            := 'OK';
-            
+
         ELSE
             p_existencia_usuario := FALSE;
             p_cod_rta            := 'ER_EMP_NUL';
@@ -92,8 +90,8 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QVUSER IS
         WHEN OTHERS THEN
             p_existencia_usuario := FALSE;
             p_cod_rta            := 'ERROR_NC';
-        
+
     END validarUsuarioPorNombre;
     
-END AUW_US_QVUSER;
+END US_QVUSER;
 /

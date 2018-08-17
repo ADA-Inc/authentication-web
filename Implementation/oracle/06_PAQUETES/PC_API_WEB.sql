@@ -6,7 +6,7 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.PC_API_WEB IS
     -- ===========================================================
     -- PC_API_WEB
     -- -----------------------------------------------------------
-    -- Re�ne funciones y procedimientos relacionados con la 
+    -- ReÃºne funciones y procedimientos relacionados con la 
     -- gestion de negocio 
     -- ===========================================================
     --
@@ -14,7 +14,7 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.PC_API_WEB IS
     --
     -- HISTORIAL DE CAMBIOS
     --
-    -- Versi�n        GAP               Solicitud        Fecha        Realiz�            Descripci�n
+    -- VersiÃ³n        GAP               Solicitud        Fecha        RealizÃ³            DescripciÃ³n
     -- -----------    -------------    -------------    ----------    -------------    ------------------------------------------------------------------------------------------------------------------------------------------
     -- 
     -- -----------    -------------    -------------    ----------    -------------    ------------------------------------------------------------------------------------------------------------------------------------------
@@ -58,7 +58,7 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.PC_API_WEB IS
             p_msj_rta                   OUT NE_TCRTA.CRTA_DESCRI%type
         );
         -- ------------------------------------------------------------
-        
+
         PROCEDURE actualizarUsPe
         (
             p_nombre_usuario            IN  US_TUSER.USER_ALAS%type,
@@ -84,7 +84,7 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.PC_API_WEB IS
             p_cod_rta                   OUT NE_TCRTA.CRTA_CRTA%type,
             p_msj_rta                   OUT NE_TCRTA.CRTA_DESCRI%type
         );
-    
+
     -- ------------------------------------------------------------   
     -- ___________________________________________________________ 
 
@@ -122,11 +122,11 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.PC_API_WEB IS
         PROCEDURE modulosAccesoUsuario
         (
             p_nombre_usuario              IN  US_TUSER.USER_ALAS%type,
-            p_AUW_TT_MO_USMO                     OUT AUW_TT_MO_USMO,
+            p_tt_usmo                     OUT TT_USMO,
             p_cod_rta                     OUT NE_TCRTA.CRTA_CRTA%type,
             p_msj_rta                     OUT NE_TCRTA.CRTA_DESCRI%type
         );
-    
+
     -- ------------------------------------------------------------   
     -- ___________________________________________________________ 
     
@@ -139,6 +139,7 @@ prompt PACKAGE BODY:PC_API_WEB
 prompt
 
 CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
+
 
     -- ***********************************************************
     -- Procedimientos funcionalidad usuarios
@@ -162,15 +163,15 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
           v_cod_rta                    NE_TCRTA.CRTA_CRTA%type;
           v_msj_rta                    NE_TCRTA.CRTA_DESCRI%type;
         BEGIN  
-        
-            AUW_US_QUSER.loginUsuario
+
+            US_QUSER.loginUsuario
             (
                 p_nombre_usuario     ,
                 p_password_usuario   ,
                 v_id_usuario         ,
                 v_cod_rta_ruser     
             );
-              
+
             IF(v_cod_rta_ruser = 'OK') THEN
               v_cod_rta     := 'OK';
               p_id_usuario  :=  v_id_usuario;
@@ -187,7 +188,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
                 p_id_usuario  :=  NULL;
                 p_cod_rta     := 'ERROR_NC';
                 p_msj_rta     := 'Error Negocio No se registro el usuario';
-            
+
         END loginUsuario;
         -- ===========================================================
         -- PROCEDURE crearUsPeRo
@@ -209,13 +210,13 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
             p_cod_rta                   OUT NE_TCRTA.CRTA_CRTA%type,
             p_msj_rta                   OUT NE_TCRTA.CRTA_DESCRI%type
         )IS
-        
+
           v_cod_rta_ruser              NE_TCRTA.CRTA_CRTA%type;
           v_cod_rta                    NE_TCRTA.CRTA_CRTA%type;
           v_msj_rta                    NE_TCRTA.CRTA_DESCRI%type;
         BEGIN  
-        
-            AUW_US_QFPUSR.crearUsPeRo
+
+            US_QFPUSR.crearUsPeRo
             (
                 p_nombre_roll       ,
                 p_nombre_usuario    ,
@@ -229,7 +230,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
                 p_pais_persona      ,
                 v_cod_rta_ruser     
             );
-              
+
             IF(v_cod_rta_ruser = 'OK') THEN
               v_cod_rta     := 'OK';
               v_msj_rta := 'Se registro correctamente el usuario';
@@ -243,7 +244,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
             WHEN OTHERS THEN
                 p_cod_rta  := 'ERROR_NC';
                 p_msj_rta  := 'Error Negocio No se registro el usuario';
-            
+
         END crearUsPeRo;
 
         -- ===========================================================
@@ -267,13 +268,13 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
             p_cod_rta                   OUT NE_TCRTA.CRTA_CRTA%type,
             p_msj_rta                   OUT NE_TCRTA.CRTA_DESCRI%type
         )IS
-        
+
           v_cod_rta_ruser              NE_TCRTA.CRTA_CRTA%type;
           v_cod_rta                    NE_TCRTA.CRTA_CRTA%type;
           v_msj_rta                    NE_TCRTA.CRTA_DESCRI%type;
         BEGIN  
-        
-            AUW_US_QFPUSR.actualizarUsPe
+
+            US_QFPUSR.actualizarUsPe
             (
                 p_nombre_usuario         ,
                 p_documento_persona      ,
@@ -288,7 +289,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
                 p_password_usuario_act   ,
                 v_cod_rta_ruser                
             );
-              
+
             IF(v_cod_rta_ruser = 'OK') THEN
               v_cod_rta     := 'OK';
               v_msj_rta     := 'Se actualizando correctamente el usuario';
@@ -302,7 +303,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
             WHEN OTHERS THEN
                 p_cod_rta  := 'ERROR_NC';
                 p_msj_rta  := 'Error Negocio No se actualizando el usuario';
-            
+
         END actualizarUsPe;        
 
 
@@ -319,20 +320,20 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
             p_cod_rta                   OUT NE_TCRTA.CRTA_CRTA%type,
             p_msj_rta                   OUT NE_TCRTA.CRTA_DESCRI%type
         )IS
-        
+
           v_cod_rta_ruser              NE_TCRTA.CRTA_CRTA%type;
           v_cod_rta                    NE_TCRTA.CRTA_CRTA%type;
           v_msj_rta                    NE_TCRTA.CRTA_DESCRI%type;
         BEGIN  
-        
-            AUW_US_QFPUSR.asignarRolUsPe
+
+            US_QFPUSR.asignarRolUsPe
             (
                 p_nombre_roll       ,
                 p_nombre_usuario    ,
                 p_documento_persona ,
                 v_cod_rta_ruser           
             );
-              
+
             IF(v_cod_rta_ruser = 'OK') THEN
               v_cod_rta     := 'OK';
               v_msj_rta := 'se puede asignar rol el correctamente del usuario';
@@ -346,7 +347,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
             WHEN OTHERS THEN
                 p_cod_rta  := 'ERROR_NC';
                 p_msj_rta  := 'Error Negocio no se actualizando el usuario';
-            
+
         END asignarRolUsPe;        
     -- ___________________________________________________________  
 
@@ -365,19 +366,19 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
             p_cod_rta                     OUT NE_TCRTA.CRTA_CRTA%type,
             p_msj_rta                     OUT NE_TCRTA.CRTA_DESCRI%type
         )IS
-        
+
           v_cod_rta_modulo             NE_TCRTA.CRTA_CRTA%type;
           v_cod_rta                    NE_TCRTA.CRTA_CRTA%type;
           v_msj_rta                    NE_TCRTA.CRTA_DESCRI%type;
         BEGIN  
-        
-            AUW_MO_QMODU.crearModulo
+
+            MO_QMODU.crearModulo
             (
                 p_nombre_modulo      ,
                 p_descripcion_modulo ,
                 v_cod_rta_modulo
             );
-              
+
             IF(v_cod_rta_modulo = 'OK') THEN
               v_cod_rta     := 'OK';
               v_msj_rta := 'Creacion de modulo exitosa exitoso';
@@ -391,7 +392,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
             WHEN OTHERS THEN
                 p_cod_rta  := 'ERROR_NC';
                 p_msj_rta  := 'Error Negocio no se registro el modulo';
-            
+
         END crearModulo;
 
         -- ===========================================================
@@ -407,20 +408,20 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
             p_cod_rta                     OUT NE_TCRTA.CRTA_CRTA%type,
             p_msj_rta                     OUT NE_TCRTA.CRTA_DESCRI%type
         )IS
-        
+
           v_cod_rta_modulo                NE_TCRTA.CRTA_CRTA%type;
           v_cod_rta                       NE_TCRTA.CRTA_CRTA%type;
           v_msj_rta                       NE_TCRTA.CRTA_DESCRI%type;
         BEGIN  
-        
-            AUW_MO_QMODU.actualizarModulo
+
+            MO_QMODU.actualizarModulo
             (
                 p_nombre_modulo               ,
                 p_nombre_modulo_act           ,
                 p_descripcion_modulo_act      ,
                 v_cod_rta_modulo                     
             );
-              
+
             IF(v_cod_rta_modulo = 'OK') THEN
               v_cod_rta     := 'OK';
               v_msj_rta     := 'Actualizacion del modulo exitosa';
@@ -434,7 +435,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
             WHEN OTHERS THEN
                 p_cod_rta  := 'ERROR_NC';
                 p_msj_rta  := 'Error Negocio no se actualizo el modulo';
-            
+
         END actualizarModulo;
 
         -- ===========================================================
@@ -449,19 +450,19 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
             p_cod_rta                     OUT NE_TCRTA.CRTA_CRTA%type,
             p_msj_rta                     OUT NE_TCRTA.CRTA_DESCRI%type
         )IS
-        
+
           v_cod_rta_modulo                NE_TCRTA.CRTA_CRTA%type;
           v_cod_rta                       NE_TCRTA.CRTA_CRTA%type;
           v_msj_rta                       NE_TCRTA.CRTA_DESCRI%type;
         BEGIN  
-        
-            AUW_MO_QFROMO.crearRomo
+
+            MO_QFROMO.crearRomo
             (
                 p_nombre_roll         ,
                 p_nombre_modulo       ,
                 v_cod_rta_modulo                     
             );
-              
+
             IF(v_cod_rta_modulo = 'OK') THEN
               v_cod_rta     := 'OK';
               v_msj_rta     := 'Asignacion del modulo con rol exitosa';
@@ -475,7 +476,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
             WHEN OTHERS THEN
                 p_cod_rta  := 'ERROR_NC';
                 p_msj_rta  := 'Error Negocio No se asigno el rol al modulo';
-            
+
         END crearRomo;
 
         -- ===========================================================
@@ -487,23 +488,23 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
         PROCEDURE modulosAccesoUsuario
         (
             p_nombre_usuario              IN  US_TUSER.USER_ALAS%type,
-            p_AUW_TT_MO_USMO                     OUT AUW_TT_MO_USMO,
+            p_tt_usmo                     OUT TT_USMO,
             p_cod_rta                     OUT NE_TCRTA.CRTA_CRTA%type,
             p_msj_rta                     OUT NE_TCRTA.CRTA_DESCRI%type
         )IS
-        
+
           v_cod_rta_modulo                NE_TCRTA.CRTA_CRTA%type;
           v_cod_rta                       NE_TCRTA.CRTA_CRTA%type;
           v_msj_rta                       NE_TCRTA.CRTA_DESCRI%type;
         BEGIN  
-        
-            AUW_MO_QFROMO.modulosAccesoUsuario
+
+            MO_QFROMO.modulosAccesoUsuario
             (
                 p_nombre_usuario      ,
-                p_AUW_TT_MO_USMO             ,
+                p_tt_usmo             ,
                 v_cod_rta_modulo                     
             );
-              
+
             IF(v_cod_rta_modulo = 'OK') THEN
               v_cod_rta     := 'OK';
               v_msj_rta     := 'Busqueda exitosa';
@@ -517,9 +518,10 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.PC_API_WEB IS
             WHEN OTHERS THEN
                 p_cod_rta  := 'ERROR_NC';
                 p_msj_rta  := 'Error Negocio No encontro el resultado';
-            
+
         END modulosAccesoUsuario;
     -- ___________________________________________________________  
+
         
 END PC_API_WEB;
 /

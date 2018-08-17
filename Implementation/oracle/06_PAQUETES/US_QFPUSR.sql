@@ -1,10 +1,10 @@
 prompt
-prompt PACKAGE: AUW_US_QFPUSR
+prompt PACKAGE: US_QFPUSR
 prompt
-CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_US_QFPUSR IS
+CREATE OR REPLACE PACKAGE FS_AUWEB_US.US_QFPUSR IS
     --
     -- ===========================================================
-    -- AUW_US_QFPUSR
+    -- US_QFPUSR
     -- -----------------------------------------------------------
     -- Todas las funciones del PSNA
     -- ===========================================================
@@ -51,7 +51,7 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_US_QFPUSR IS
         p_pais_persona              IN  US_TPSNA.PSNA_PAIS%type,
         p_cod_rta                   OUT NE_TCRTA.CRTA_CRTA%type
     );
-    
+
     PROCEDURE asignarRolUsPe
     (
         p_nombre_roll               IN  US_TROLL.ROLL_RLDN%type,
@@ -59,7 +59,7 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_US_QFPUSR IS
         p_documento_persona         IN  US_TPSNA.PSNA_NRID%type,
         p_cod_rta                   OUT NE_TCRTA.CRTA_CRTA%type
     );
-    
+
     PROCEDURE actualizarUsPe
     (
         p_nombre_usuario            IN  US_TUSER.USER_ALAS%type,
@@ -76,16 +76,16 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_US_QFPUSR IS
         p_cod_rta                   OUT NE_TCRTA.CRTA_CRTA%type
     );
 
-END AUW_US_QFPUSR;
+END US_QFPUSR;
 /
 
 
 prompt
-prompt PACKAGE BODY:AUW_US_QFPUSR
+prompt PACKAGE BODY:US_QFPUSR
 prompt
 
 
-CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QFPUSR IS
+CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QFPUSR IS
   
     --
     -- #VERSION:0000001000
@@ -137,19 +137,19 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QFPUSR IS
         v_cod_rta_persona       NE_TCRTA.CRTA_CRTA%type;
 
     BEGIN  
-        AUW_US_QROLL.buscarRollPorNombre
+        US_QROLL.buscarRollPorNombre
         (
             p_nombre_roll,
             v_id_roll,
             v_cod_rta_roll
         );
-        AUW_US_QUSER.buscarUsuarioPorNombre
+        US_QUSER.buscarUsuarioPorNombre
         (
             p_nombre_usuario,
             v_id_usuario,
             v_cod_rta_usuario
         );
-        AUW_US_QPSNA.buscarPersonaPorDocumento
+        US_QPSNA.buscarPersonaPorDocumento
         (
             p_documento_persona,
             v_id_persona,
@@ -166,7 +166,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QFPUSR IS
             v_cod_rta_persona='OK'  AND
             r_uspero.PUSR_PUSR IS NOT NULL
         ) THEN
-    
+
             p_id_uspero := r_uspero.PUSR_PUSR;
             p_id_rol    := r_uspero.PUSR_ROLL;
             p_id_user   := r_uspero.PUSR_USER;
@@ -180,13 +180,13 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QFPUSR IS
             WHEN OTHERS THEN
                 p_id_uspero:= NULL;
                 p_cod_rta  := 'ERROR_NC';
-            
+
     END obtenerUsperoId;
 
      --
     -- #VERSION:0000001000
     --
-    
+
     -- ===========================================================
     -- PROCEDURE crearUsPeRo
     -- -----------------------------------------------------------
@@ -218,42 +218,42 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QFPUSR IS
         v_existencia_rolus          BOOLEAN;
 
     BEGIN  
-        v_secuencia := US_SPUSR.NextVal;
+        v_secuencia := US_SETPUSR.NextVal;
 
-        AUW_US_QROLL.buscarRollPorNombre
+        US_QROLL.buscarRollPorNombre
         (
             p_nombre_roll,
             v_id_roll,
             v_cod_rta_roll
         );
-        
+
         IF  v_cod_rta_roll ='OK'  THEN
-        
-            AUW_US_QUSER.buscarUsuarioPorNombre
+
+            US_QUSER.buscarUsuarioPorNombre
             (
                 p_nombre_usuario,
                 v_id_usuario,
                 v_cod_rta_usuario
             );
-            
-            AUW_US_QPSNA.buscarPersonaPorDocumento
+
+            US_QPSNA.buscarPersonaPorDocumento
             (
                 p_documento_persona,
                 v_id_persona,
                 v_cod_rta_persona
             );
-            
+
             IF  v_cod_rta_usuario <>'OK' AND v_cod_rta_persona<>'OK'  THEN
-                
-                AUW_US_QUSER.crearUsuario
+
+                US_QUSER.crearUsuario
                 (
                     p_nombre_usuario  ,
                     p_password_usuario,
                     v_id_usuario,
                     v_cod_rta_usuario
                 );
-                
-                AUW_US_QPSNA.crearPersona
+
+                US_QPSNA.crearPersona
                 (
                     p_documento_persona,
                     p_nombres_persona  ,
@@ -265,10 +265,10 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QFPUSR IS
                     v_id_persona       ,
                     v_cod_rta_persona
                 );
-            
+
             END IF;
-            
-            AUW_US_QVPUSR.validarUserRolSys
+
+            US_QVFPUSR.validarUserRolSys
             (
                 v_id_usuario,
                 v_id_roll,
@@ -276,7 +276,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QFPUSR IS
                 v_existencia_rolus,
                 v_cod_rta_vupr
             );
-            
+
             IF  (v_existencia_rolus)  THEN
                 IF  v_cod_rta_roll='OK' AND v_cod_rta_usuario='OK' AND v_cod_rta_persona='OK' THEN
                    INSERT INTO US_TPUSR(
@@ -299,20 +299,20 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QFPUSR IS
                 END IF;
             ELSE
                 v_cod_rta     := 'ER_YA_ROL_USR';
-                
+
             END IF;
-            
+
         ELSE
             v_cod_rta     := 'ER_NO_ROL';
         END IF;
         p_cod_rta  := v_cod_rta;
     EXCEPTION
        WHEN OTHERS THEN
-            
+
            p_cod_rta  := 'ERROR_NC';
            ROLLBACK;
     END crearUsPeRo;
-    
+
     -- ===========================================================
     -- PROCEDURE asignarRolUsPe
     -- -----------------------------------------------------------
@@ -337,33 +337,33 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QFPUSR IS
         v_existencia_rolus          BOOLEAN;
 
     BEGIN  
-        v_secuencia := US_SPUSR.NextVal;
+        v_secuencia := US_SETPUSR.NextVal;
 
-        AUW_US_QROLL.buscarRollPorNombre
+        US_QROLL.buscarRollPorNombre
         (
             p_nombre_roll,
             v_id_roll,
             v_cod_rta_roll
         );
-        
+
         IF  v_cod_rta_roll ='OK'  THEN
-        
-            AUW_US_QUSER.buscarUsuarioPorNombre
+
+            US_QUSER.buscarUsuarioPorNombre
             (
                 p_nombre_usuario,
                 v_id_usuario,
                 v_cod_rta_usuario
             );
-            
-            AUW_US_QPSNA.buscarPersonaPorDocumento
+
+            US_QPSNA.buscarPersonaPorDocumento
             (
                 p_documento_persona,
                 v_id_persona,
                 v_cod_rta_persona
             );
-            
-            
-            AUW_US_QVPUSR.validarUserRolSys
+
+
+            US_QVFPUSR.validarUserRolSys
             (
                 v_id_usuario,
                 v_id_roll,
@@ -371,7 +371,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QFPUSR IS
                 v_existencia_rolus,
                 v_cod_rta_vupr
             );
-            
+
             IF  (v_existencia_rolus)  THEN
                 IF  v_cod_rta_roll='OK' AND v_cod_rta_usuario='OK' AND v_cod_rta_persona='OK' THEN
                    INSERT INTO US_TPUSR(
@@ -394,9 +394,9 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QFPUSR IS
                 END IF;
             ELSE
                 v_cod_rta     := 'ER_YA_ROL_USR';
-            
+
             END IF;
-            
+
         ELSE
             v_cod_rta     := 'ER_NO_ROL';
         END IF;
@@ -405,9 +405,9 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QFPUSR IS
        WHEN OTHERS THEN
            p_cod_rta  := 'ERROR_NC';
            ROLLBACK;
-    
+
     END asignarRolUsPe;
-    
+
      -- ===========================================================
     -- PROCEDURE actualizarUsPe
     -- -----------------------------------------------------------
@@ -428,7 +428,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QFPUSR IS
         p_password_usuario_act      IN  US_TUSER.USER_PSWD%type,
         p_cod_rta                   OUT NE_TCRTA.CRTA_CRTA%type
     )IS
- 
+
         v_cod_rta_usuario           NE_TCRTA.CRTA_CRTA%type;
         v_cod_rta_act_usuario       NE_TCRTA.CRTA_CRTA%type;
         v_cod_rta_persona           NE_TCRTA.CRTA_CRTA%type;
@@ -438,26 +438,26 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QFPUSR IS
         v_existencia_user             BOOLEAN;
 
     BEGIN  
-        
-        AUW_US_QVPSNA.validarPersonaPorDoct
+
+        US_QVPSNA.validarPersonaPorDoct
         (
             p_documento_persona               ,
             v_existencia_persona              ,
             v_cod_rta_persona                         
         );
-        
-        AUW_US_QVUSER.validarUsuarioPorNombre
+
+        US_QVUSER.validarUsuarioPorNombre
         (
             p_nombre_usuario    ,
             v_existencia_user,
             v_cod_rta_usuario             
         );
-        
-        IF  v_cod_rta_persona<>'OK' THEN
-            
+
+        IF  v_cod_rta_persona <> 'OK' THEN
+
             IF  NOT (v_existencia_persona) THEN
-                
-                AUW_US_QPSNA.actualizarPersona
+
+                US_QPSNA.actualizarPersona
                 (
                     p_documento_persona    ,
                     p_documento_persona_act,
@@ -481,12 +481,12 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QFPUSR IS
         ELSE
             v_cod_rta     := 'ER_NULL';
         END IF;
-        
+
         IF  v_cod_rta_usuario<>'OK' THEN
-            
+
             IF  NOT (v_existencia_user) THEN
-                
-                AUW_US_QUSER.actualizarUsuario
+
+                US_QUSER.actualizarUsuario
                 (
                     p_nombre_usuario      ,
                     p_nombre_usuario_act  ,
@@ -510,8 +510,9 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QFPUSR IS
        WHEN OTHERS THEN
            p_cod_rta  := 'ERROR_NC';
            ROLLBACK;
-    
+
     END actualizarUsPe;
+
     
-END AUW_US_QFPUSR;
+END US_QFPUSR;
 /

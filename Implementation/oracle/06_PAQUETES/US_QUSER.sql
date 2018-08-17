@@ -1,10 +1,10 @@
 prompt
-prompt PACKAGE: AUW_US_QUSER
+prompt PACKAGE: US_QUSER
 prompt
-CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_US_QUSER IS
+CREATE OR REPLACE PACKAGE FS_AUWEB_US.US_QUSER IS
     --
     -- ===========================================================
-    -- AUW_US_QUSER
+    -- US_QUSER
     -- -----------------------------------------------------------
     -- Todas las funciones del usuario
     -- ===========================================================
@@ -34,7 +34,7 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_US_QUSER IS
         p_id_usuario                   OUT US_TUSER.USER_USER%type,
         p_cod_rta                      OUT NE_TCRTA.CRTA_CRTA%type
     );
-  
+
   PROCEDURE crearUsuario
     (
         p_nombre_usuario               IN  US_TUSER.USER_ALAS%type,
@@ -42,14 +42,14 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_US_QUSER IS
         p_id_usuario                   OUT US_TUSER.USER_USER%type,
         p_cod_rta                      OUT NE_TCRTA.CRTA_CRTA%type
     );
- 
+
   PROCEDURE buscarUsuarioPorNombre
     (
         p_nombre_usuario               IN  US_TUSER.USER_ALAS%type,
         p_id_usuario                   OUT US_TUSER.USER_USER%type,
         p_cod_rta                      OUT NE_TCRTA.CRTA_CRTA%type
     ); 
-    
+
   PROCEDURE actualizarUsuario
     (
         p_nombre_usuario               IN  US_TUSER.USER_ALAS%type,
@@ -59,18 +59,16 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_US_QUSER IS
     ); 
     -- ------------------------------------------------------------
     
-END AUW_US_QUSER;
+END US_QUSER;
 /
 
 
 prompt
-prompt PACKAGE BODY:AUW_US_QUSER
+prompt PACKAGE BODY:US_QUSER
 prompt
 
 
-CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QUSER IS
-
-
+CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QUSER IS
     --
     -- #VERSION:0000001000
     --
@@ -111,7 +109,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QUSER IS
         OPEN  c_usuario(v_password_md5);
         FETCH c_usuario INTO r_usuario;
         CLOSE c_usuario;
-          
+
         IF(r_usuario.USER_USER IS NOT NULL) THEN
           p_id_usuario := r_usuario.USER_USER;
           p_cod_rta     := 'OK';
@@ -123,13 +121,13 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QUSER IS
             WHEN OTHERS THEN
                 p_id_usuario := NULL;
                 p_cod_rta  := 'ERROR_NC';
-        
+
     END loginUsuario;
-  
+
      --
     -- #VERSION:0000001000
     --
-    
+
     -- ===========================================================
     -- PROCEDURE crearUsuario
     -- -----------------------------------------------------------
@@ -149,16 +147,16 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QUSER IS
         v_password_md5          VARCHAR2(30);
 
     BEGIN  
-        v_secuencia := US_SUSER.NextVal;
+        v_secuencia := US_SETUSER.NextVal;
         v_password_md5 := DBMS_OBFUSCATION_TOOLKIT.MD5(INPUT_STRING => p_password_usuario);
 
-        AUW_US_QVUSER.validarUsuarioPorNombre
+        US_QVUSER.validarUsuarioPorNombre
         (
             p_nombre_usuario,
             v_existencia_usuario,
             v_cod_rta_tipo
         );
-          
+
         IF(v_existencia_usuario) THEN
           INSERT INTO US_TUSER(
             USER_USER,
@@ -178,13 +176,13 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QUSER IS
         EXCEPTION
             WHEN OTHERS THEN
                 p_cod_rta  := 'ERROR_NC';
-        
+
     END crearUsuario;
 
     --
     -- #VERSION:0000001000
     --
-    
+
     -- ===========================================================
     -- PROCEDURE homologarCoreWebModulo
     -- -----------------------------------------------------------
@@ -213,7 +211,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QUSER IS
         OPEN  c_usuario;
         FETCH c_usuario INTO r_usuario;
         CLOSE c_usuario;
-          
+
         IF(r_usuario.USER_USER IS NOT NULL) THEN
           p_id_usuario  :=  r_usuario.USER_USER;
           p_cod_rta     := 'OK';
@@ -225,12 +223,12 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QUSER IS
             WHEN OTHERS THEN
                 p_id_usuario  := NULL;
                 p_cod_rta  := 'ERROR_NC';
-        
+
     END buscarUsuarioPorNombre;
     --
     -- #VERSION:0000001000
     --
-    
+
     -- ===========================================================
     -- PROCEDURE homologarWebCoreModulo
     -- -----------------------------------------------------------
@@ -244,15 +242,13 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QUSER IS
         p_password_usuario_act         IN  US_TUSER.USER_PSWD%type,
         p_cod_rta                      OUT NE_TCRTA.CRTA_CRTA%type
     )IS
-		v_password_md5          VARCHAR2(30);
+
         v_id_usuario            US_TUSER.USER_USER%type;
         v_cod_rta_tipo          NE_TCRTA.CRTA_CRTA%type;
 
     BEGIN  
-	
-		v_password_md5 := DBMS_OBFUSCATION_TOOLKIT.MD5(INPUT_STRING => p_password_usuario_act);
 
-        AUW_US_QUSER.buscarUsuarioPorNombre
+        US_QUSER.buscarUsuarioPorNombre
         (
             p_nombre_usuario,             
             v_id_usuario,
@@ -261,11 +257,11 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QUSER IS
 
         IF(v_id_usuario IS NOT NULL) THEN
 
-            UPDATE
+            UPDATE 
                 FS_AUWEB_US.US_TUSER
             SET 
                 USER_ALAS = p_nombre_usuario_act, 
-                USER_PSWD = v_password_md5
+                USER_PSWD = p_password_usuario_act
             WHERE 
                 USER_USER = v_id_usuario;
 
@@ -278,5 +274,5 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QUSER IS
                 p_cod_rta  := 'ERROR_NC';
 
     END actualizarUsuario;
-END AUW_US_QUSER;
+END US_QUSER;
 /

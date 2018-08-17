@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.ada.data.access.percistencia.mapper.GestionadorUsuariosMapper;
-import org.ada.security.model.persistencia.respuesta.ProcesoRespuestaApiDb;
+import org.ada.security.model.persistencia.respuesta.ProcesoRespuestaApiDbModulos;
 import org.ada.security.model.persistencia.usuario.UsuarioActualizarDBDto;
 import org.ada.security.model.persistencia.usuario.UsuarioDBDto;
 import org.ada.security.model.usuario.UsuarioModuloArray;
@@ -40,7 +40,7 @@ public class GestionadorUsuarioControllerDB {
 	@Autowired
 	GestionadorUsuariosMapper gestionUsuariosMapper;
 	
-	public ProcesoRespuestaApiDb loginUsuario( UsuarioDBDto usuarioDBDto)  throws Exception{
+	public ProcesoRespuestaApiDbModulos loginUsuario( UsuarioDBDto usuarioDBDto)  throws Exception{
 
 
 		/*
@@ -51,7 +51,7 @@ public class GestionadorUsuarioControllerDB {
 		 */
 
 		HashMap<Object, Object> parametrosInOout = new HashMap<Object, Object>();
-		ProcesoRespuestaApiDb  respuestaApiDb = null;
+		ProcesoRespuestaApiDbModulos  respuestaApiDb = null;
 
 
 
@@ -69,7 +69,7 @@ public class GestionadorUsuarioControllerDB {
 		parametrosInOout.put("p_cod_rta", null);
 		parametrosInOout.put("p_msj_rta", null);
 		gestionUsuariosMapper.loginUsuario(parametrosInOout);
-		respuestaApiDb = new ProcesoRespuestaApiDb();
+		respuestaApiDb = new ProcesoRespuestaApiDbModulos();
 		
 		respuestaApiDb.setIdUsuario( 		  (String) parametrosInOout.get("p_id_usuario"));
 		respuestaApiDb.setCodigoRespuestaApi( (String) parametrosInOout.get("p_cod_rta"));
@@ -85,7 +85,7 @@ public class GestionadorUsuarioControllerDB {
 
 	}
 
-	public ProcesoRespuestaApiDb registrarUsuarioRol( UsuarioDBDto usuarioDBDto)  throws Exception{
+	public ProcesoRespuestaApiDbModulos registrarUsuarioRol( UsuarioDBDto usuarioDBDto)  throws Exception{
 
 
 		/*
@@ -96,7 +96,7 @@ public class GestionadorUsuarioControllerDB {
 		 */
 
 		HashMap<Object, Object> parametrosInOout = new HashMap<Object, Object>();
-		ProcesoRespuestaApiDb  respuestaApiDb = null;
+		ProcesoRespuestaApiDbModulos  respuestaApiDb = null;
 
 
 
@@ -121,7 +121,7 @@ public class GestionadorUsuarioControllerDB {
 		parametrosInOout.put("p_cod_rta", null);
 		parametrosInOout.put("p_msj_rta", null);
 		gestionUsuariosMapper.crearUsuarioConRol(parametrosInOout);
-		respuestaApiDb = new ProcesoRespuestaApiDb();
+		respuestaApiDb = new ProcesoRespuestaApiDbModulos();
 		
 		respuestaApiDb.setCodigoRespuestaApi( (String) parametrosInOout.get("p_cod_rta"));
 		respuestaApiDb.setMensajeRespuestaApi( (String) parametrosInOout.get("p_msj_rta"));
@@ -140,7 +140,7 @@ public class GestionadorUsuarioControllerDB {
 	}
 	
 	
-	public ProcesoRespuestaApiDb actualizarUsuarioPersona( UsuarioDBDto usuarioDBDto,UsuarioActualizarDBDto usuarioActualizarDBDto)  throws Exception{
+	public ProcesoRespuestaApiDbModulos actualizarUsuarioPersona( UsuarioDBDto usuarioDBDto,UsuarioActualizarDBDto usuarioActualizarDBDto)  throws Exception{
 
 
 		/*
@@ -151,7 +151,7 @@ public class GestionadorUsuarioControllerDB {
 		 */
 
 		HashMap<Object, Object> parametrosInOout = new HashMap<Object, Object>();
-		ProcesoRespuestaApiDb  respuestaApiDb = null;
+		ProcesoRespuestaApiDbModulos  respuestaApiDb = null;
 
 
 
@@ -179,7 +179,7 @@ public class GestionadorUsuarioControllerDB {
 		parametrosInOout.put("p_cod_rta", null);
 		parametrosInOout.put("p_msj_rta", null);
 		gestionUsuariosMapper.actualizarUsuarioPersona(parametrosInOout);
-		respuestaApiDb = new ProcesoRespuestaApiDb();
+		respuestaApiDb = new ProcesoRespuestaApiDbModulos();
 		
 		respuestaApiDb.setCodigoRespuestaApi( (String) parametrosInOout.get("p_cod_rta"));
 		respuestaApiDb.setMensajeRespuestaApi( (String) parametrosInOout.get("p_msj_rta"));
@@ -195,7 +195,7 @@ public class GestionadorUsuarioControllerDB {
 	}
 
 	
-	public ProcesoRespuestaApiDb asignarRolUsuarioPersona( UsuarioDBDto usuarioDBDto)  throws Exception{
+	public ProcesoRespuestaApiDbModulos asignarRolUsuarioPersona( UsuarioDBDto usuarioDBDto)  throws Exception{
 
 
 		/*
@@ -206,7 +206,7 @@ public class GestionadorUsuarioControllerDB {
 		 */
 
 		HashMap<Object, Object> parametrosInOout = new HashMap<Object, Object>();
-		ProcesoRespuestaApiDb  respuestaApiDb = null;
+		ProcesoRespuestaApiDbModulos  respuestaApiDb = null;
 
 
 
@@ -226,7 +226,7 @@ public class GestionadorUsuarioControllerDB {
 		parametrosInOout.put("p_cod_rta", null);
 		parametrosInOout.put("p_msj_rta", null);
 		gestionUsuariosMapper.asignarRolUsuarioPersona(parametrosInOout);
-		respuestaApiDb = new ProcesoRespuestaApiDb();
+		respuestaApiDb = new ProcesoRespuestaApiDbModulos();
 		
 		respuestaApiDb.setCodigoRespuestaApi( (String) parametrosInOout.get("p_cod_rta"));
 		respuestaApiDb.setMensajeRespuestaApi( (String) parametrosInOout.get("p_msj_rta"));
@@ -241,7 +241,7 @@ public class GestionadorUsuarioControllerDB {
 
 	}	
 	
-	public ProcesoRespuestaApiDb obtenerUsuarioModulos(UsuarioDBDto usuarioDBDto)  throws Exception{
+	public ProcesoRespuestaApiDbModulos obtenerUsuarioModulos(UsuarioDBDto usuarioDBDto)  throws Exception{
 
 
 		/*
@@ -252,7 +252,7 @@ public class GestionadorUsuarioControllerDB {
 		 */
 
 		HashMap<Object, Object> parametrosInOout = new HashMap<Object, Object>();
-		ProcesoRespuestaApiDb  respuestaApiDb = null;
+		ProcesoRespuestaApiDbModulos  respuestaApiDb = null;
 		
 		List<UsuarioModuloArray> modulos = null;
 		String setCodRespuesta;
@@ -272,7 +272,7 @@ public class GestionadorUsuarioControllerDB {
 		parametrosInOout.put("p_cod_rta", null);
 		parametrosInOout.put("p_msj_rta", null);
 		gestionUsuariosMapper.modulosAccesoUsuario(parametrosInOout);
-		respuestaApiDb = new ProcesoRespuestaApiDb();
+		respuestaApiDb = new ProcesoRespuestaApiDbModulos();
 		
 		respuestaApiDb.setModulos((List<UsuarioModuloArray>) parametrosInOout.get("p_tt_usmo"));
 		respuestaApiDb.setCodigoRespuestaApi( (String) parametrosInOout.get("p_cod_rta"));

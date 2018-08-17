@@ -16,7 +16,7 @@ import org.ada.security.model.usuario.UsuarioModuloArray;
 
 /**
  *
- * <h1>ProcesoRespuestaApiDb
+ * <h1>ProcesoRespuestaApiDbModulos
  *
  * Description
  *
@@ -24,7 +24,7 @@ import org.ada.security.model.usuario.UsuarioModuloArray;
  * @version 1.0
  * 
  */
-public class ProcesoRespuestaApiDb {
+public class ProcesoRespuestaApiDbModulos {
 	
 	private String idUsuario;
 	private List<UsuarioModuloArray> modulos;

@@ -13,7 +13,7 @@ package org.ada.data.access.percistencia.gestion.modulo.controlador;
 import java.util.HashMap;
 
 import org.ada.data.access.percistencia.mapper.GestionadorModulosMapper;
-import org.ada.security.model.persistencia.respuesta.ProcesoRespuestaApiDb;
+import org.ada.security.model.persistencia.respuesta.ProcesoRespuestaApiDbModulos;
 import org.ada.security.model.persistencia.modulo.ModuloActualizarDBDto;
 import org.ada.security.model.persistencia.modulo.ModuloDBDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class GestionadorModuloControllerDB {
 	@Autowired
 	GestionadorModulosMapper gestionModulosMapper;
 
-	public ProcesoRespuestaApiDb registrarModulo( ModuloDBDto moduloDBDto)  throws Exception{
+	public ProcesoRespuestaApiDbModulos registrarModulo( ModuloDBDto moduloDBDto)  throws Exception{
 
 
 		/*
@@ -49,7 +49,7 @@ public class GestionadorModuloControllerDB {
 		 */
 
 		HashMap<Object, Object> parametrosInOout = new HashMap<Object, Object>();
-		ProcesoRespuestaApiDb  respuestaApiDb = null;
+		ProcesoRespuestaApiDbModulos  respuestaApiDb = null;
 
 
 
@@ -67,7 +67,7 @@ public class GestionadorModuloControllerDB {
 		parametrosInOout.put("p_cod_rta", null);
 		parametrosInOout.put("p_msj_rta", null);
 		gestionModulosMapper.crearModulo(parametrosInOout);
-		respuestaApiDb = new ProcesoRespuestaApiDb();
+		respuestaApiDb = new ProcesoRespuestaApiDbModulos();
 		
 		respuestaApiDb.setCodigoRespuestaApi( (String) parametrosInOout.get("p_cod_rta"));
 		respuestaApiDb.setMensajeRespuestaApi( (String) parametrosInOout.get("p_msj_rta"));
@@ -86,7 +86,7 @@ public class GestionadorModuloControllerDB {
 	}
 	
 	
-	public ProcesoRespuestaApiDb actualizarModuloPersona( ModuloDBDto moduloDBDto,ModuloActualizarDBDto moduloActualizarDBDto)  throws Exception{
+	public ProcesoRespuestaApiDbModulos actualizarModuloPersona( ModuloDBDto moduloDBDto,ModuloActualizarDBDto moduloActualizarDBDto)  throws Exception{
 
 
 		/*
@@ -97,7 +97,7 @@ public class GestionadorModuloControllerDB {
 		 */
 
 		HashMap<Object, Object> parametrosInOout = new HashMap<Object, Object>();
-		ProcesoRespuestaApiDb  respuestaApiDb = null;
+		ProcesoRespuestaApiDbModulos  respuestaApiDb = null;
 
 
 
@@ -117,7 +117,7 @@ public class GestionadorModuloControllerDB {
 		parametrosInOout.put("p_cod_rta", null);
 		parametrosInOout.put("p_msj_rta", null);
 		gestionModulosMapper.actualizarModulo(parametrosInOout);
-		respuestaApiDb = new ProcesoRespuestaApiDb();
+		respuestaApiDb = new ProcesoRespuestaApiDbModulos();
 		
 		respuestaApiDb.setCodigoRespuestaApi( (String) parametrosInOout.get("p_cod_rta"));
 		respuestaApiDb.setMensajeRespuestaApi( (String) parametrosInOout.get("p_msj_rta"));
@@ -133,7 +133,7 @@ public class GestionadorModuloControllerDB {
 	}
 
 	
-	public ProcesoRespuestaApiDb asignarRolModulo( ModuloDBDto moduloDBDto)  throws Exception{
+	public ProcesoRespuestaApiDbModulos asignarRolModulo( ModuloDBDto moduloDBDto)  throws Exception{
 
 
 		/*
@@ -144,7 +144,7 @@ public class GestionadorModuloControllerDB {
 		 */
 
 		HashMap<Object, Object> parametrosInOout = new HashMap<Object, Object>();
-		ProcesoRespuestaApiDb  respuestaApiDb = null;
+		ProcesoRespuestaApiDbModulos  respuestaApiDb = null;
 
 
 
@@ -164,7 +164,7 @@ public class GestionadorModuloControllerDB {
 		parametrosInOout.put("p_cod_rta", null);
 		parametrosInOout.put("p_msj_rta", null);
 		gestionModulosMapper.asignarRolModulo(parametrosInOout);
-		respuestaApiDb = new ProcesoRespuestaApiDb();
+		respuestaApiDb = new ProcesoRespuestaApiDbModulos();
 		
 		respuestaApiDb.setCodigoRespuestaApi( (String) parametrosInOout.get("p_cod_rta"));
 		respuestaApiDb.setMensajeRespuestaApi( (String) parametrosInOout.get("p_msj_rta"));

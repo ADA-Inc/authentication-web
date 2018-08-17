@@ -1,10 +1,10 @@
 prompt
-prompt PACKAGE: AUW_US_QVPSNA
+prompt PACKAGE: US_QVPSNA
 prompt
-CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_US_QVPSNA IS
+CREATE OR REPLACE PACKAGE FS_AUWEB_US.US_QVPSNA IS
     --
     -- ===========================================================
-    -- AUW_US_QVPSNA
+    -- US_QVPSNA
     -- -----------------------------------------------------------
     -- validador de existencia de persona por documento
     -- ===========================================================
@@ -36,17 +36,15 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_US_QVPSNA IS
 
 ----------------------------------------------------------
     
-END AUW_US_QVPSNA;
+END US_QVPSNA;
 /
 
 
 prompt
-prompt PACKAGE BODY:AUW_US_QVPSNA
+prompt PACKAGE BODY:US_QVPSNA
 prompt
 
-CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QVPSNA IS
-
-
+CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QVPSNA IS
     --
     -- #VERSION:0000001000
     --
@@ -72,18 +70,18 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QVPSNA IS
                 PSNA_NRID = p_documento_persona;
 
             r_persona c_persona%rowtype;
-        
+    
     BEGIN
-      
+
         OPEN  c_persona;
         FETCH c_persona INTO r_persona;
         CLOSE c_persona;
-        
+
         IF(r_persona.PSNA_NRID IS NULL) then
-        
+
             p_existencia_persona := TRUE;
             p_cod_rta         := 'OK';
-            
+
         ELSE
             p_existencia_persona := FALSE;
             p_cod_rta            := 'ER_EMP_NUL';
@@ -92,8 +90,8 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QVPSNA IS
         WHEN OTHERS THEN
             p_existencia_persona := FALSE;
             p_cod_rta            := 'ERROR_NC';
-        
+
     END validarPersonaPorDoct;
     
-END AUW_US_QVPSNA;
+END US_QVPSNA;
 /

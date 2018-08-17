@@ -1,10 +1,10 @@
 prompt
-prompt PACKAGE: AUW_US_QROLL
+prompt PACKAGE: US_QROLL
 prompt
-CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_US_QROLL IS
+CREATE OR REPLACE PACKAGE FS_AUWEB_US.US_QROLL IS
     --
     -- ===========================================================
-    -- AUW_US_QROLL
+    -- US_QROLL
     -- -----------------------------------------------------------
     -- Todas las funciones del roll
     -- ===========================================================
@@ -33,14 +33,14 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_US_QROLL IS
         p_id_roll                   OUT US_TROLL.ROLL_ROLL%type,
         p_cod_rta                   OUT NE_TCRTA.CRTA_CRTA%type
     );
- 
+
   PROCEDURE buscarRollPorNombre
     (
         p_nombre_roll               IN  US_TROLL.ROLL_RLDN%type,
         p_id_roll                   OUT US_TROLL.ROLL_ROLL%type,
         p_cod_rta                   OUT NE_TCRTA.CRTA_CRTA%type
     ); 
-    
+
   PROCEDURE actualizarRoll
     (
         p_nombre_roll               IN  US_TROLL.ROLL_RLDN%type,
@@ -49,16 +49,16 @@ CREATE OR REPLACE PACKAGE FS_AUWEB_US.AUW_US_QROLL IS
     ); 
     -- ------------------------------------------------------------
     
-END AUW_US_QROLL;
+END US_QROLL;
 /
 
 
 prompt
-prompt PACKAGE BODY:AUW_US_QROLL
+prompt PACKAGE BODY:US_QROLL
 prompt
 
 
-CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QROLL IS
+CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.US_QROLL IS
   
      --
     -- #VERSION:0000001000
@@ -81,15 +81,15 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QROLL IS
         v_cod_rta_tipo          NE_TCRTA.CRTA_CRTA%type;
 
     BEGIN  
-        v_secuencia := US_SROLL.NextVal;
+        v_secuencia := US_SETROLL.NextVal;
 
-        AUW_US_QVROLL.validarRollPorNombre
+        US_QVROLL.validarRollPorNombre
         (
             p_nombre_roll,
             v_existencia_roll,
             v_cod_rta_tipo
         );
-          
+
         IF(v_existencia_roll) THEN
           INSERT INTO US_TROLL(
             ROLL_ROLL,
@@ -109,13 +109,13 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QROLL IS
         EXCEPTION
             WHEN OTHERS THEN
                 p_cod_rta  := 'ERROR_NC';
-        
+
     END crearRoll;
 
     --
     -- #VERSION:0000001000
     --
-    
+
     -- ===========================================================
     -- PROCEDURE homologarCoreWebModulo
     -- -----------------------------------------------------------
@@ -144,7 +144,7 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QROLL IS
         OPEN  c_roll;
         FETCH c_roll INTO r_roll;
         CLOSE c_roll;
-          
+
         IF(r_roll.ROLL_ROLL IS NOT NULL) THEN
           p_id_roll  :=  r_roll.ROLL_ROLL;
           p_cod_rta     := 'OK';
@@ -156,12 +156,12 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QROLL IS
             WHEN OTHERS THEN
                 p_id_roll  := NULL;
                 p_cod_rta  := 'ERROR_NC';
-        
+
     END buscarRollPorNombre;
     --
     -- #VERSION:0000001000
     --
-    
+
     -- ===========================================================
     -- PROCEDURE homologarWebCoreModulo
     -- -----------------------------------------------------------
@@ -174,13 +174,13 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QROLL IS
         p_nombre_roll_act           IN  US_TROLL.ROLL_RLDN%type,
         p_cod_rta                   OUT NE_TCRTA.CRTA_CRTA%type
     )IS
-    
+
         v_id_roll            US_TROLL.ROLL_ROLL%type;
         v_cod_rta_tipo       NE_TCRTA.CRTA_CRTA%type;
 
     BEGIN  
 
-        AUW_US_QROLL.buscarRollPorNombre
+        US_QROLL.buscarRollPorNombre
         (
             p_nombre_roll,             
             v_id_roll,
@@ -206,5 +206,5 @@ CREATE OR REPLACE PACKAGE BODY FS_AUWEB_US.AUW_US_QROLL IS
                 p_cod_rta  := 'ERROR_NC';
 
     END actualizarRoll;
-END AUW_US_QROLL;
+END US_QROLL;
 /

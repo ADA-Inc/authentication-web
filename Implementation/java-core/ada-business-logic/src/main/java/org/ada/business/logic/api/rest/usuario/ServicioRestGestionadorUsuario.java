@@ -1,7 +1,7 @@
 package org.ada.business.logic.api.rest.usuario;
 
 import org.ada.data.access.percistencia.gestion.usuario.controlador.GestionadorUsuarioControllerDB;
-import org.ada.security.model.persistencia.respuesta.ProcesoRespuestaApiDb;
+import org.ada.security.model.persistencia.respuesta.ProcesoRespuestaApiDbModulos;
 import org.ada.security.model.persistencia.usuario.UsuarioActualizarDBDto;
 import org.ada.security.model.persistencia.usuario.UsuarioDBDto;
 import org.ada.security.model.rest.respuesta.ProcesoRespuestaApiRest;
@@ -40,7 +40,7 @@ public class ServicioRestGestionadorUsuario {
 		 */
 		UsuarioDBDto usuarioDBDto = null;
 		ProcesoRespuestaApiRestLogin procesoRespuestaApiRestLogin = null;
-		ProcesoRespuestaApiDb procesoRespuestaApiDb = null;
+		ProcesoRespuestaApiDbModulos procesoRespuestaApiDbModulos = null;
 
 		/*
 		 * ==============================================
@@ -63,18 +63,18 @@ public class ServicioRestGestionadorUsuario {
 				usuarioDBDto.setP_NOMBRE_USUARIO(usuarioRestDto.getNombreUsuario());
 				usuarioDBDto.setP_PASSWORD_USUARIO(usuarioRestDto.getClaveUsuario());
 
-				procesoRespuestaApiDb = gestionadorUsuarioControllerDB.loginUsuario(usuarioDBDto);
+				procesoRespuestaApiDbModulos = gestionadorUsuarioControllerDB.loginUsuario(usuarioDBDto);
 
 				/*
 				 * =====================================
 				 * Este if se encarga de ...
 				 * =====================================
 				 */
-				if (procesoRespuestaApiDb!= null && procesoRespuestaApiDb.getCodigoRespuestaApi()!=null ) {
+				if (procesoRespuestaApiDbModulos!= null && procesoRespuestaApiDbModulos.getCodigoRespuestaApi()!=null ) {
 					procesoRespuestaApiRestLogin = new ProcesoRespuestaApiRestLogin();
-					procesoRespuestaApiRestLogin.setIdUsuario(procesoRespuestaApiDb.getIdUsuario());
-					procesoRespuestaApiRestLogin.setCodigoRespuestaApi(procesoRespuestaApiDb.getCodigoRespuestaApi());
-					procesoRespuestaApiRestLogin.setMensajeRespuestaApi(procesoRespuestaApiDb.getMensajeRespuestaApi());
+					procesoRespuestaApiRestLogin.setIdUsuario(procesoRespuestaApiDbModulos.getIdUsuario());
+					procesoRespuestaApiRestLogin.setCodigoRespuestaApi(procesoRespuestaApiDbModulos.getCodigoRespuestaApi());
+					procesoRespuestaApiRestLogin.setMensajeRespuestaApi(procesoRespuestaApiDbModulos.getMensajeRespuestaApi());
 
 				}else {
 					procesoRespuestaApiRestLogin = new ProcesoRespuestaApiRestLogin();
@@ -114,7 +114,7 @@ public class ServicioRestGestionadorUsuario {
 		 */
 		UsuarioDBDto usuarioDBDto = null;
 		ProcesoRespuestaApiRest procesoRespuestaApiRest = null;
-		ProcesoRespuestaApiDb procesoRespuestaApiDb = null;
+		ProcesoRespuestaApiDbModulos procesoRespuestaApiDbModulos = null;
 
 		/*
 		 * ==============================================
@@ -145,17 +145,17 @@ public class ServicioRestGestionadorUsuario {
 				usuarioDBDto.setP_PASSWORD_USUARIO(usuarioRestDto.getClaveUsuario());
 				usuarioDBDto.setP_TELEFONO_PERSONA(usuarioRestDto.getTelefonoPersona());
 
-				procesoRespuestaApiDb = gestionadorUsuarioControllerDB.registrarUsuarioRol(usuarioDBDto);
+				procesoRespuestaApiDbModulos = gestionadorUsuarioControllerDB.registrarUsuarioRol(usuarioDBDto);
 
 				/*
 				 * =====================================
 				 * Este if se encarga de ...
 				 * =====================================
 				 */
-				if (procesoRespuestaApiDb!= null && procesoRespuestaApiDb.getCodigoRespuestaApi()!=null ) {
+				if (procesoRespuestaApiDbModulos!= null && procesoRespuestaApiDbModulos.getCodigoRespuestaApi()!=null ) {
 					procesoRespuestaApiRest = new ProcesoRespuestaApiRest();
-					procesoRespuestaApiRest.setCodigoRespuestaApi(procesoRespuestaApiDb.getCodigoRespuestaApi());
-					procesoRespuestaApiRest.setMensajeRespuestaApi(procesoRespuestaApiDb.getMensajeRespuestaApi());
+					procesoRespuestaApiRest.setCodigoRespuestaApi(procesoRespuestaApiDbModulos.getCodigoRespuestaApi());
+					procesoRespuestaApiRest.setMensajeRespuestaApi(procesoRespuestaApiDbModulos.getMensajeRespuestaApi());
 
 				}else {
 					procesoRespuestaApiRest = new ProcesoRespuestaApiRest();
@@ -198,7 +198,7 @@ public class ServicioRestGestionadorUsuario {
 		UsuarioActualizarRestDto usuarioActualizarRestDto  = null;
 		UsuarioActualizarDBDto usuarioActualizarDBDto= null;
 		ProcesoRespuestaApiRest procesoRespuestaApiRest = null;
-		ProcesoRespuestaApiDb procesoRespuestaApiDb = null;
+		ProcesoRespuestaApiDbModulos procesoRespuestaApiDbModulos = null;
 
 		/*
 		  * =====================================
@@ -242,17 +242,17 @@ public class ServicioRestGestionadorUsuario {
 				usuarioActualizarDBDto.setP_PASSWORD_USUARIO_ACT(usuarioActualizarRestDto.getClaveUsuarioActualizar());
 				usuarioActualizarDBDto.setP_TELEFONO_PERSONA_ACT(usuarioActualizarRestDto.getTelefonoPersonaActualizar());
 
-				procesoRespuestaApiDb = gestionadorUsuarioControllerDB.actualizarUsuarioPersona(usuarioDBDto,usuarioActualizarDBDto);
+				procesoRespuestaApiDbModulos = gestionadorUsuarioControllerDB.actualizarUsuarioPersona(usuarioDBDto,usuarioActualizarDBDto);
 
 				/*
 				 * =====================================
 				 * Este if se encarga de ...
 				 * =====================================
 				 */
-				if (procesoRespuestaApiDb!= null && procesoRespuestaApiDb.getCodigoRespuestaApi()!=null ) {
+				if (procesoRespuestaApiDbModulos!= null && procesoRespuestaApiDbModulos.getCodigoRespuestaApi()!=null ) {
 					procesoRespuestaApiRest = new ProcesoRespuestaApiRest();
-					procesoRespuestaApiRest.setCodigoRespuestaApi(procesoRespuestaApiDb.getCodigoRespuestaApi());
-					procesoRespuestaApiRest.setMensajeRespuestaApi(procesoRespuestaApiDb.getMensajeRespuestaApi());
+					procesoRespuestaApiRest.setCodigoRespuestaApi(procesoRespuestaApiDbModulos.getCodigoRespuestaApi());
+					procesoRespuestaApiRest.setMensajeRespuestaApi(procesoRespuestaApiDbModulos.getMensajeRespuestaApi());
 
 				}else {
 					procesoRespuestaApiRest = new ProcesoRespuestaApiRest();
@@ -296,7 +296,7 @@ public class ServicioRestGestionadorUsuario {
 		 */
 		UsuarioDBDto usuarioDBDto = null;
 		ProcesoRespuestaApiRest procesoRespuestaApiRest = null;
-		ProcesoRespuestaApiDb procesoRespuestaApiDb = null;
+		ProcesoRespuestaApiDbModulos procesoRespuestaApiDbModulos = null;
 
 		/*
 		 * ==============================================
@@ -321,17 +321,17 @@ public class ServicioRestGestionadorUsuario {
 				usuarioDBDto.setP_NOMBRE_ROLL(usuarioRestDto.getNombreRol());
 
 
-				procesoRespuestaApiDb = gestionadorUsuarioControllerDB.asignarRolUsuarioPersona(usuarioDBDto);
+				procesoRespuestaApiDbModulos = gestionadorUsuarioControllerDB.asignarRolUsuarioPersona(usuarioDBDto);
 
 				/*
 				 * =====================================
 				 * Este if se encarga de ...
 				 * =====================================
 				 */
-				if (procesoRespuestaApiDb!= null && procesoRespuestaApiDb.getCodigoRespuestaApi()!=null ) {
+				if (procesoRespuestaApiDbModulos!= null && procesoRespuestaApiDbModulos.getCodigoRespuestaApi()!=null ) {
 					procesoRespuestaApiRest = new ProcesoRespuestaApiRest();
-					procesoRespuestaApiRest.setCodigoRespuestaApi(procesoRespuestaApiDb.getCodigoRespuestaApi());
-					procesoRespuestaApiRest.setMensajeRespuestaApi(procesoRespuestaApiDb.getMensajeRespuestaApi());
+					procesoRespuestaApiRest.setCodigoRespuestaApi(procesoRespuestaApiDbModulos.getCodigoRespuestaApi());
+					procesoRespuestaApiRest.setMensajeRespuestaApi(procesoRespuestaApiDbModulos.getMensajeRespuestaApi());
 
 				}else {
 					procesoRespuestaApiRest = new ProcesoRespuestaApiRest();
@@ -370,7 +370,7 @@ public class ServicioRestGestionadorUsuario {
 		 */
 		UsuarioDBDto usuarioDBDto = null;
 		ProcesoRespuestaApiRestModulos procesoRespuestaApiRestModulo = null;
-		ProcesoRespuestaApiDb procesoRespuestaApiDb = null;
+		ProcesoRespuestaApiDbModulos procesoRespuestaApiDbModulos = null;
 
 		/*
 		 * ==============================================
@@ -391,18 +391,18 @@ public class ServicioRestGestionadorUsuario {
 				
 				usuarioDBDto.setP_NOMBRE_USUARIO(usuarioRestDto.getNombreUsuario());
 
-				procesoRespuestaApiDb = gestionadorUsuarioControllerDB.obtenerUsuarioModulos(usuarioDBDto);
+				procesoRespuestaApiDbModulos = gestionadorUsuarioControllerDB.obtenerUsuarioModulos(usuarioDBDto);
 
 				/*
 				 * =====================================
 				 * Este if se encarga de ...
 				 * =====================================
 				 */
-				if (procesoRespuestaApiDb!= null && procesoRespuestaApiDb.getCodigoRespuestaApi()!=null ) {
+				if (procesoRespuestaApiDbModulos!= null && procesoRespuestaApiDbModulos.getCodigoRespuestaApi()!=null ) {
 					procesoRespuestaApiRestModulo = new ProcesoRespuestaApiRestModulos();
-					procesoRespuestaApiRestModulo.setModulos(procesoRespuestaApiDb.getModulos());
-					procesoRespuestaApiRestModulo.setCodigoRespuestaApi(procesoRespuestaApiDb.getCodigoRespuestaApi());
-					procesoRespuestaApiRestModulo.setMensajeRespuestaApi(procesoRespuestaApiDb.getMensajeRespuestaApi());
+					procesoRespuestaApiRestModulo.setModulos(procesoRespuestaApiDbModulos.getModulos());
+					procesoRespuestaApiRestModulo.setCodigoRespuestaApi(procesoRespuestaApiDbModulos.getCodigoRespuestaApi());
+					procesoRespuestaApiRestModulo.setMensajeRespuestaApi(procesoRespuestaApiDbModulos.getMensajeRespuestaApi());
 
 				}else {
 					procesoRespuestaApiRestModulo = new ProcesoRespuestaApiRestModulos();
